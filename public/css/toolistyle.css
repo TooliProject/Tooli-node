@@ -1,0 +1,107 @@
+body {
+    height: 100vh;
+}
+
+.theader {
+    height: 5vh;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.tnavbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1400;
+    height: inherit;
+    background-color: lightgray;
+}
+
+.twrapper {
+    /* Tomato Salsa Crispy Wrap */
+    background-color: white;
+}
+
+.tside {
+    width: 300px;
+}
+
+.tsidebar {
+    position: fixed;
+    width: inherit;
+    height: 95vh;
+    background-color: lightblue;
+    overflow-y: auto;
+}
+
+.tsidetop {
+    display: list-item;
+}
+
+.tsidetopcontent {
+    position: fixed;
+    z-index: 1400;
+}
+
+.tcontent {
+    margin: 0px;
+}
+
+#entries {
+    border-style: dotted;
+    border-width: 1px;
+    border-color: black;
+}
+
+.entryitem {
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+    margin: 5px;
+    display: flex;
+}
+
+.toolilogolink {
+    top: 0px;
+    position: fixed;
+    max-width: 10vh;
+    left: 50%;
+    z-index: 1500;
+}
+
+.toolilogo {
+    left: -50%;
+    width: 100%;
+    position: relative;
+}
+
+.chatarea {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 300px;
+    height: 50%;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.chatform{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 35px;
+}
+
+.chatbutton{
+    float: right;
+    height: 100%;
+}
+.chatinputbox{
+    overflow: hidden;
+    height: 100%;   
+}
+.chatinputtext{
+    width: 100%;
+    height: inherit;
+}

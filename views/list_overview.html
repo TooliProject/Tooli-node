@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lists</title>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+</head>
+
+<body>
+    <h1>Lists</h1>
+    <a href="/new-list"> New List</a>
+    <div id="lists">
+        <% result.forEach(function(list){ %>
+        <div id="listsItem">
+            <a href="list/<%= list.PI %>"><%= list.name %></a>
+        </div>
+        <% }) %>
+    </div>
+</body>
+
+</html>

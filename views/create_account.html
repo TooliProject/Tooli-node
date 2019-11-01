@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            var username;
+
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+                username = $("#username").val();
+                alert("test");
+
+                $.post("http://localhost:8080/login", {
+                        username: username
+                    },
+                    function (data) {
+                        if (data === 'ok') {
+                            //window.location.href = "/";
+                        } else {
+                            $("#loginFailedText").show();
+                        }
+                    }
+                );
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <form action="/" id="loginForm">
+        <span>Username:</span>
+        <input type="text" name="username" placeholder="Enter Username">
+        <input type="submit" value="Log In">
+    </form>
+    <p id="loginFailedText" style="color:red;display: none;">Login failed</p>
+</body>
+
+</html>
