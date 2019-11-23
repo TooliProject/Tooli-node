@@ -17,6 +17,13 @@ var sqlCon = mysql.createConnection({
 	database: "tooli"
 });
 
+//db
+const accounts = require('./database/mysql/accounts');
+const lists = require('./database/mysql/lists');
+const entries = require('./database/mysql/entries');
+const chats = require('./database/mysql/chats');
+
+
 app.engine('.html', require('ejs').__express);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -37,7 +44,7 @@ app.use(express.urlencoded({
 }));
 
 app.get('/', function (req, res) {
-	if (req.session.userid) {
+	if (req.session.account.id) {
 		res.redirect('/list/' + req.session.listid);
 	} else {
 		res.redirect('/login');
@@ -47,72 +54,55 @@ app.get('/login', function (req, res) {
 	res.render('login.html');
 });
 
-app.post('/login', function (req, res) {
 
+app.post('/login', function (req, res) {
 	console.log(req.body.username + " tried to log in");
-	var sql = "SELECT PI,Name,mylist_id FROM account WHERE Name like '" + req.body.username + "'";
-	sqlCon.query(sql, function (err, result, fields) {
-		if (err) throw err;
-		//res.render('index',{result: result});
-		//console.log(result);
-		if (result.length == 1) {
-			console.log("valid");
-			req.session.username = req.body.username;
-			req.session.userid = result[0].PI;
-			//console.log(req.session);
-			res.redirect("/list/" + result[0].mylist_id);
+	accounts.findByName(req.body.username, function (account, err) {
+		if (err) {
+			console.log(err);
+			res.send(err);
 		} else {
-			console.log("invalid");
-			res.end("");
+			console.log("valid");
+			req.session.account = account;
+
+			//Note: account.myListId can be omitted since id is in session.
+			res.redirect("/list/" + account.myListId);
 		}
 	});
-});
-
-app.get('/list-overview', function (req, res) { //unused
-
-	if (req.session.userid) {
-		var sql = "SELECT list.PI, list.name FROM list INNER JOIN list_account ON list_account.list_id=list.PI WHERE list_account.account_id=" + req.session.userid;
-		sqlCon.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			//console.log(result);
-			res.render('list_overview.html', {
-				result: result
-			});
-			//res.send(result);
-		});
-	} else {
-		res.write('<h1>Please login first.</h1>');
-		res.write('<a href="/">Login</a>');
-		res.end();
-	}
 });
 
 //GET overview
 app.get('/list/:listid', function (req, res) {
 	var listid = req.params.listid;
 	req.session.listid = listid;
-	if (req.session.userid) {
-		var sql = "SELECT list.PI, list.name FROM list INNER JOIN list_account ON list_account.list_id=list.PI WHERE list_account.account_id=" + req.session.userid;
-		sqlCon.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			var selData = {
-				resList: result,
-				resEntry: null,
-				resChat: null
-			};
-			sql = "SELECT * FROM entry where list_id = " + listid;
-			sqlCon.query(sql, function (err, result, fields) {
-				if (err) throw err;
-				selData.resEntry = result;
-				//console.log(selData);
-				sql = "SELECT account.name as sender, chat.message FROM chat,account WHERE chat.acc_id = account.PI AND chat.list_id = " + listid;
-				sqlCon.query(sql, function (err, result, fields) {
-					if (err) throw err;
-					selData.resChat = result;
-					//console.log(selData);
-					res.render('list.html', selData);
+	if (req.session.account.id) {
+
+		lists.findByAccountId(req.session.account.id, function (resList, err) {
+			if (err) {
+				console.log(err);
+				res.send(err);
+			} else {
+				entries.findByListId(req.session.listid, function (resEntry, err) {
+					if (err) {
+						console.log(err);
+						res.send(err);
+					} else {
+						chats.findByListId(req.session.listid, function (resChat, err) {
+							if (err) {
+								console.log(err);
+								res.send(err);
+							} else {
+								res.render('list.html', {
+									resList: resList,
+									resEntry: resEntry,
+									resChat: resChat,
+									account: req.session.account
+								});
+							}
+						});
+					}
 				});
-			});
+			}
 		});
 
 	} else {
@@ -128,12 +118,17 @@ app.get('/list/:listid', function (req, res) {
 app.post('/list/:listid', function (req, res) {
 	var listid = req.params.listid;
 	console.log(listid + " : add entry : " + req.body.newEntryName);
-	var sql = "INSERT INTO `entry` ( `list_id` , `Name` , `Status` ) VALUES ('" + listid + "','" + req.body.newEntryName + "','0')";
-	console.log(sql);
+	entries.InsertEntry({
+		listId: listid,
+		name: req.body.newEntryName
+	}, function (result, err) {
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			console.log('1 entry inserted');
+		}
 
-	sqlCon.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("1 record inserted");
 	});
 
 	res.redirect('/list/' + listid);
@@ -141,51 +136,50 @@ app.post('/list/:listid', function (req, res) {
 
 //Delete Entry
 app.post('/deleteEntry', function (req, res) {
-	var sql = "DELETE FROM entry WHERE PI = " + req.body.deleteEntryId;
-	sqlCon.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("1 record deleted");
+	entries.DeleteById(req.body.deleteEntryId, function (result, err) {
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			console.log('1 entry deleted');
+		}
 	});
 	res.redirect("/list/" + req.session.listid);
 });
 
 //Create List
 app.post('/new-list', function (req, res) {
-	console.log(req.body.newListName + " created by " + req.session.userid);
-	var sql = "INSERT INTO `list` ( `name` ) VALUES ('" + req.body.newListName + "')";
-	console.log(sql);
 
-	sqlCon.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("1 record inserted");
-		sql = "INSERT INTO `list_account` ( `account_id`, `list_id` ) VALUES ('" + req.session.userid + "','" + result.insertId + "')";
-		console.log(sql);
-		sqlCon.query(sql, function (err, result) {
-			if (err) throw err;
-			console.log("1 record inserted");
-		});
-		res.redirect('/list/' + result.insertId);
+	lists.InsertList(req.body.newListName, function (result, err) {
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			lists.InsertListAccRel(req.session.account.id, result.insertId, function (result, err) {
+				if (err) {
+					console.log(err);
+					res.send(err);
+				} else {
+					res.redirect('/list/' + result.insertId);
+				}
+			});
+		}
 	});
 });
 
 //Delete List
 app.post('/deleteList', function (req, res) {
-	var sql = "DELETE FROM list WHERE PI = " + req.body.deleteListId;
-	sqlCon.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("1 record deleted");
+
+	lists.DeleteList(req.body.deleteListId, function (result, err) {
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			console.log('list deleted, wow');
+		}
+
 	});
-	sql = "DELETE FROM entry WHERE list_id = " + req.body.deleteListId;
-	sqlCon.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log(result.affectedRows + " record(s) deleted");
-	});
-	sql = "DELETE FROM list_account WHERE list_id = " + req.body.deleteListId;
-	sqlCon.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log(result.affectedRows + " record(s) deleted");
-	});
-	res.redirect("/list/" + req.session.listid);
+	res.redirect("/list/" + req.session.account.myListId);
 });
 
 //GET new list 
@@ -205,6 +199,50 @@ app.get('/logout', function (req, res) {
 
 });
 
+//Create Chat
+app.post('/chat', function(req, res){
+	chats.InsertChat({listId:req.session.listid,accId:req.session.account.id,message:req.body.chatmessage}, function(result, err){
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			res.redirect('/list/' + req.session.listid);
+		}
+	});
+});
+
+//Delete Chat
+app.post('/deleteChat', function(req,res){
+	chats.DeleteChatById(req.body.deleteChatId, function(result, err){
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			res.redirect('/list/' + req.session.listid);
+		}
+	});
+});
+
+//AddUserToList
+app.post('/addUserToList', function(req, res){
+	accounts.findByName(req.body.addUserName, function(account, err){
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			lists.InsertListAccRel(req.session.listid, account.id, function(result, err){
+				if (err) {
+					console.log(err);
+					res.send(err);
+				} else {
+					res.redirect('/list/' + req.session.listid);
+				}
+			});
+		}
+	});
+	
+});
+
 io.on('connection', function (socket) {
 	console.log('a user connected to socket');
 	socket.on('disconnect', function () {
@@ -212,10 +250,14 @@ io.on('connection', function (socket) {
 	});
 	/* socket msgs here*/
 	socket.on('checkEntryChange', function (msg) {
-		var sql = "UPDATE entry SET entry.Status=" + msg.st + " WHERE entry.PI=" + msg.id;
-		sqlCon.query(sql, function (err, result) {
-			if (err) throw err;
-			//console.log("1 record updated");
+		entries.updateEntryStatus(msg.id, msg.st, function (result, err) {
+			if (err) {
+				console.log(err);
+				res.send(err);
+			} else {
+				console.log('1 entry updated');
+			}
+
 		});
 		io.emit('checkEntryChange', msg);
 	});

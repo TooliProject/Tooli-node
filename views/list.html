@@ -38,13 +38,13 @@
 <body>
     <div class="theader">
         <div class="tnavbar">
-            <nav>
-                <a class="a" href="">Tooli</a>
+            <nav class="tnavLinks">
+                <a class="acc" href="/acc/<%=account.id%>"><%=account.name%></a>
             </nav>
         </div>
     </div>
     <a class="toolilogolink" href="#">
-        <img src="/testbild.png" alt="Logo" class="toolilogo">
+        <img src="/_testbild.png" alt="Logo" class="toolilogo">
     </a>
     <div class="twrapper">
         <div class="tside">
@@ -57,9 +57,9 @@
                 <ul id="lists">
                     <% resList.forEach(function(list){ %>
                     <li id="listsItem">
-                        <a href="/list/<%= list.PI %>"><%= list.name %></a>
+                        <a href="/list/<%= list.id %>"><%= list.name %></a>
                         <form method="POST" action="/deleteList">
-                            <input type="hidden" name="deleteListId" value="<%=list.PI%>" />
+                            <input type="hidden" name="deleteListId" value="<%=list.id%>" />
                             <input type="submit" value="X"></input>
                         </form>
                     </li>
@@ -73,11 +73,11 @@
                 <div id="entries">
                     <% resEntry.forEach(function(entry){ %>
                     <div id="entryItem" class="entryitem">
-                        <input id="entryCheck<%=entry.PI%>" class="entryCheck" value="<%=entry.PI%>" type="checkbox"
-                            <% if (entry.Status>0) { %> checked <% } %>></input>
-                        <span><%= entry.Name %></span>
+                        <input id="entryCheck<%=entry.id%>" class="entryCheck" value="<%=entry.id%>" type="checkbox"
+                            <% if (entry.status>0) { %> checked <% } %>></input>
+                        <span><%= entry.name %></span>
                         <form method="POST" action="/deleteEntry">
-                            <input type="hidden" name="deleteEntryId" value="<%=entry.PI%>" />
+                            <input type="hidden" name="deleteEntryId" value="<%=entry.id%>" />
                             <input type="submit" value="X"></input>
                         </form>
                     </div>
@@ -87,21 +87,29 @@
                     <input type="text" name="newEntryName" id="newEntryName" placeholder="Neuer Eintrag" />
                     <input type="submit" id="newEntrySub" value="ok">
                 </form>
+                <form method="POST" action="/addUserToList">
+                    <input type="text" name="addUserName" value="" placeholder="Username" />
+                    <input type="submit" value="Add"></input>
+                </form>
             </div>
         </div>
     </div>
     <div class="chatarea">
         <ul class="chatitems">
-            <% resChat.forEach(function(chatmsg){ %>
+            <% resChat.forEach(function(Chat){ %>
             <li class="chatitem">
-                <%=chatmsg.sender%> &#58; <%=chatmsg.message%>
+                <%=Chat.senderName%> &#58; <%=Chat.message%>
+                <form method="POST" action="/deleteChat">
+                    <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />
+                    <input type="submit" value="X"></input>
+                </form>
             </li>
             <% }) %>
         </ul>
-        <form action="" class="chatform" method="POST">
+        <form action="/chat" class="chatform" method="POST">
             <button class="chatbutton">Send</button>
             <div class="chatinputbox">
-                <input id="chatmessage" class="chatinputtext" autocomplete="off" />
+                <input name="chatmessage" class="chatinputtext" autocomplete="off" />
             </div>
         </form>
     </div>
