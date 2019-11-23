@@ -20,7 +20,7 @@ module.exports = {
       results.forEach(element => {
         result.push(new Chat(element.PI, element.senderId, element.sender, element.message, element.timestamp));
       });
-      callback(result, null);
+      callback(result, err);
     });
   },
   InsertChat: (newChatMsg, callback) => {

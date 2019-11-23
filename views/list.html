@@ -106,10 +106,11 @@
             </li>
             <% }) %>
         </ul>
-        <form action="/chat" class="chatform" method="POST">
+        <form id="chatform" action="/chat" class="chatform" method="POST">
             <button class="chatbutton">Send</button>
             <div class="chatinputbox">
-                <input name="chatmessage" class="chatinputtext" autocomplete="off" />
+                <input id="chatmessage" name="chatmessage" class="chatinputtext" autocomplete="off" />
+                <input type="hidden" id="accountid" value="<%=account.id%>"/>
             </div>
         </form>
     </div>
@@ -117,7 +118,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         $(document).ready(function () {
-            var socket = io();
+            const socket = io('/listNsp');
+            socket.emit('joinRoom',{rid:'R' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)});
+            //Status Change
             $('.entryCheck').change(function (e) {
                 //e.preventDefault(); // prevents page reloading
                 var status = 0;
@@ -134,6 +137,10 @@
                 if (msg.st == 0)
                     checked = false;
                 $('#entryCheck' + msg.id).prop('checked', checked);
+            });
+            socket.on('chatMessage', function (msg) {
+                var $newli = '<li class="chatitem">'+msg.sender+' : '+msg.message+'<form method="POST" action="/deleteChat"><input type="hidden" name="deleteChatId" value="'+msg.id+'"><input type="submit" value="X"></form></li>';
+                $('.chatitems').append($newli); //TODO fix this
             });
         });
     </script>

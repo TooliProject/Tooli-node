@@ -200,20 +200,36 @@ app.get('/logout', function (req, res) {
 });
 
 //Create Chat
-app.post('/chat', function(req, res){
-	chats.InsertChat({listId:req.session.listid,accId:req.session.account.id,message:req.body.chatmessage}, function(result, err){
+app.post('/chat', function (req, res) {
+	chats.InsertChat({
+		listId: req.session.listid,
+		accId: req.session.account.id,
+		message: req.body.chatmessage
+	}, function (result, err) {
 		if (err) {
 			console.log(err);
 			res.send(err);
 		} else {
 			res.redirect('/list/' + req.session.listid);
+			accounts.findById(req.session.account.id, function (account, err) {
+				if (err) {
+					console.log(err);
+					res.send(err);
+				} else {
+					nspLists.to('R'+req.session.listid).emit('chatMessage', {
+						message: req.body.chatmessage,
+						sender: account.name,
+						id: result.insertId
+					});
+				}
+			});
 		}
 	});
 });
 
 //Delete Chat
-app.post('/deleteChat', function(req,res){
-	chats.DeleteChatById(req.body.deleteChatId, function(result, err){
+app.post('/deleteChat', function (req, res) {
+	chats.DeleteChatById(req.body.deleteChatId, function (result, err) {
 		if (err) {
 			console.log(err);
 			res.send(err);
@@ -224,13 +240,13 @@ app.post('/deleteChat', function(req,res){
 });
 
 //AddUserToList
-app.post('/addUserToList', function(req, res){
-	accounts.findByName(req.body.addUserName, function(account, err){
+app.post('/addUserToList', function (req, res) {
+	accounts.findByName(req.body.addUserName, function (account, err) {
 		if (err) {
 			console.log(err);
 			res.send(err);
 		} else {
-			lists.InsertListAccRel(req.session.listid, account.id, function(result, err){
+			lists.InsertListAccRel(req.session.listid, account.id, function (result, err) {
 				if (err) {
 					console.log(err);
 					res.send(err);
@@ -240,15 +256,19 @@ app.post('/addUserToList', function(req, res){
 			});
 		}
 	});
-	
-});
 
-io.on('connection', function (socket) {
+});
+const nspLists = io.of('/listNsp');
+nspLists.on('connection', function (socket) {
 	console.log('a user connected to socket');
 	socket.on('disconnect', function () {
 		console.log('user has disconnected from socket');
 	});
 	/* socket msgs here*/
+	socket.on('joinRoom',function(msg){
+		socket.join(msg.rid);
+		console.log('User joined Room: '+msg.rid);
+	});
 	socket.on('checkEntryChange', function (msg) {
 		entries.updateEntryStatus(msg.id, msg.st, function (result, err) {
 			if (err) {
@@ -259,7 +279,12 @@ io.on('connection', function (socket) {
 			}
 
 		});
-		io.emit('checkEntryChange', msg);
+		nspLists.emit('checkEntryChange', msg);
+	});
+	socket.on('chatMessage', function (msg) {
+		console.log('chat message recived');
+		console.log(msg);
+		nspLists.emit('chatMessage', msg);
 	});
 });
 
