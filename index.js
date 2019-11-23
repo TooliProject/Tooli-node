@@ -155,7 +155,7 @@ app.post('/new-list', function (req, res) {
 			console.log(err);
 			res.send(err);
 		} else {
-			lists.InsertListAccRel(req.session.account.id, result.insertId, function (result, err) {
+			lists.InsertListAccRel(result.insertId,req.session.account.id, function (result, err) {
 				if (err) {
 					console.log(err);
 					res.send(err);
@@ -221,9 +221,6 @@ app.post('/chat', function (req, res) {
 						sender: account.name,
 						id: result.insertId
 					});
-					if(req.body.chatmessage.includes('EXTRABLATT')){
-						io.emit('newsMessage',{text:req.body.chatmessage});
-					}
 				}
 			});
 		}
@@ -260,6 +257,26 @@ app.post('/addUserToList', function (req, res) {
 		}
 	});
 
+});
+
+//Remove User from List/leave
+app.post('/removeUserFromList', function (req, res) {
+	var accId = req.body.accountId;
+	var leaveListId = req.session.listid;
+	console.log(req.body.accountId + ' trying to leave '+ req.session.listid);
+	if (accId == req.session.account.id && leaveListId == req.session.account.myListId) { //can't leave personal list
+		console.log('cant');
+		res.redirect('/list/' + req.session.listid);
+	} else {
+		lists.DeleteListAccRel(leaveListId, accId, function (account, err) {
+			if (err) {
+				console.log(err);
+				res.send(err);
+			} else {
+				res.redirect('/list/' + req.session.account.myListId);
+			}
+		});
+	}
 });
 
 

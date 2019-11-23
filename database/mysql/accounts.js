@@ -4,9 +4,8 @@ const connection = require('./connection');
 const Account = require('../../entity/Account');
 
 const queryFindByName = 'select pi, name, mylist_id from account where name like ?;';
-const queryFindById = 'SELECT pi, name FROM account WHERE pi = ?;'
-
-const queryDeleteListAccRelByAccountId = 'DELETE FROM list_account WHERE account_id = ?;';
+const queryFindById = 'SELECT pi, name FROM account WHERE pi = ?;';
+const queryInsertAccount = 'INSERT INTO account (Name) VALUES ( ? );'; //mylist is created by trigger
 
 module.exports = {
   findByName: (name, callback) => {

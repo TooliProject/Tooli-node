@@ -43,9 +43,7 @@
                 <a class="acc" href="/acc/<%=account.id%>"><%=account.name%></a>
             </nav>
         </div>
-    </div>
-    <marquee id="newsMarq" style="background-color: cyan;color: tomato;font-weight: 700;">NICE</marquee>
-    
+    </div>    
     <a class="toolilogolink" href="#">
         <img src="/testbild.png" alt="Logo" class="toolilogo">
     </a>
@@ -94,6 +92,10 @@
                 <form method="POST" action="/addUserToList">
                     <input type="text" name="addUserName" value="" placeholder="Username" />
                     <input type="submit" value="Add"></input>
+                </form>
+                <form method="POST" action="/removeUserFromList">
+                    <input type="hidden" name="accountId" value="<%=account.id%>" />
+                    <input type="submit" value="Leave"></input>
                 </form>
             </div>
         </div>
@@ -148,7 +150,7 @@
                 $('.chatitems').append($newli); //TODO fix this
             });
             globalSkt.on('newsMessage', function(msg){
-                $('#newsMarq').html(msg.text);
+                //news go here
             });
         });
     </script>
