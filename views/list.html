@@ -18,6 +18,7 @@
         $(document).ready(function () {
             var newEntryName, deleteEntryID;
 
+            
             $(".newEntrySub").click(function () {
                 newEntryName = $(".newEnrtyName").val();
 
@@ -43,9 +44,12 @@
             </nav>
         </div>
     </div>
+    <marquee id="newsMarq" style="background-color: cyan;color: tomato;font-weight: 700;">NICE</marquee>
+    
     <a class="toolilogolink" href="#">
-        <img src="/_testbild.png" alt="Logo" class="toolilogo">
+        <img src="/testbild.png" alt="Logo" class="toolilogo">
     </a>
+            
     <div class="twrapper">
         <div class="tside">
             <div class="tsidebar">
@@ -118,29 +122,33 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         $(document).ready(function () {
-            const socket = io('/listNsp');
-            socket.emit('joinRoom',{rid:'R' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)});
+            const listNsp = io('/listNsp');
+            const globalSkt = io();
+            listNsp.emit('joinRoom',{rid:'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)});
             //Status Change
             $('.entryCheck').change(function (e) {
                 //e.preventDefault(); // prevents page reloading
                 var status = 0;
                 if (this.checked)
                     status = 1;
-                socket.emit('checkEntryChange', {
+                    listNsp.emit('checkEntryChange', {
                     id: e.target.getAttribute("value"),
                     st: status
                 });
                 return false;
             });
-            socket.on('checkEntryChange', function (msg) {
+            listNsp.on('checkEntryChange', function (msg) {
                 var checked = true;
                 if (msg.st == 0)
                     checked = false;
                 $('#entryCheck' + msg.id).prop('checked', checked);
             });
-            socket.on('chatMessage', function (msg) {
+            listNsp.on('chatMessage', function (msg) {
                 var $newli = '<li class="chatitem">'+msg.sender+' : '+msg.message+'<form method="POST" action="/deleteChat"><input type="hidden" name="deleteChatId" value="'+msg.id+'"><input type="submit" value="X"></form></li>';
                 $('.chatitems').append($newli); //TODO fix this
+            });
+            globalSkt.on('newsMessage', function(msg){
+                $('#newsMarq').html(msg.text);
             });
         });
     </script>

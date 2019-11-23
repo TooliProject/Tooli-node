@@ -216,11 +216,14 @@ app.post('/chat', function (req, res) {
 					console.log(err);
 					res.send(err);
 				} else {
-					nspLists.to('R'+req.session.listid).emit('chatMessage', {
+					nspLists.to('L'+req.session.listid).emit('chatMessage', {
 						message: req.body.chatmessage,
 						sender: account.name,
 						id: result.insertId
 					});
+					if(req.body.chatmessage.includes('EXTRABLATT')){
+						io.emit('newsMessage',{text:req.body.chatmessage});
+					}
 				}
 			});
 		}
@@ -258,7 +261,15 @@ app.post('/addUserToList', function (req, res) {
 	});
 
 });
+
+
 const nspLists = io.of('/listNsp');
+io.on('connection', function (socket) {
+	console.log('a user connected to the global socket');
+	socket.on('disconnect', function () {
+		console.log('user has disconnected from the global socket');
+	});
+});
 nspLists.on('connection', function (socket) {
 	console.log('a user connected to socket');
 	socket.on('disconnect', function () {
