@@ -53,7 +53,7 @@ app.get('/', function (req, res) {
 app.get('/login', function (req, res) {
 	res.render('login.html');
 });
-app.get('/createAccount', function(req, res){
+app.get('/createAccount', function (req, res) {
 	res.render('createAccount.html');
 });
 
@@ -158,7 +158,7 @@ app.post('/new-list', function (req, res) {
 			console.log(err);
 			res.send(err);
 		} else {
-			lists.InsertListAccRel(result.insertId,req.session.account.id, function (result, err) {
+			lists.InsertListAccRel(result.insertId, req.session.account.id, function (result, err) {
 				if (err) {
 					console.log(err);
 					res.send(err);
@@ -175,7 +175,7 @@ app.post('/deleteList', function (req, res) {
 
 	console.log(req.session.account.id + ' is trying to delete ' + req.body.deleteListId);
 	console.log('personal list: ' + req.session.account.myListId);
-	
+
 	if (req.body.deleteListId == req.session.account.myListId) { //can't delete personal list
 		console.log('cant');
 	} else {
@@ -215,6 +215,12 @@ app.get('/logout', function (req, res) {
 
 //Create Chat
 app.post('/chat', function (req, res) {
+	console.log('Create Chat');
+	console.log({
+		listId: req.session.listid,
+		accId: req.session.account.id,
+		message: req.body.chatmessage
+	});
 	chats.InsertChat({
 		listId: req.session.listid,
 		accId: req.session.account.id,
@@ -230,7 +236,7 @@ app.post('/chat', function (req, res) {
 					console.log(err);
 					res.send(err);
 				} else {
-					nspLists.to('L'+req.session.listid).emit('chatMessage', {
+					nspLists.to('L' + req.session.listid).emit('chatMessage', {
 						message: req.body.chatmessage,
 						sender: account.name,
 						id: result.insertId
@@ -243,6 +249,8 @@ app.post('/chat', function (req, res) {
 
 //Delete Chat
 app.post('/deleteChat', function (req, res) {
+	console.log('Delete Chat');
+	console.log(req.body.deleteChatId);
 	chats.DeleteChatById(req.body.deleteChatId, function (result, err) {
 		if (err) {
 			console.log(err);
@@ -277,7 +285,7 @@ app.post('/addUserToList', function (req, res) {
 app.post('/removeUserFromList', function (req, res) {
 	var accId = req.body.accountId;
 	var leaveListId = req.session.listid;
-	console.log(req.body.accountId + ' trying to leave '+ req.session.listid);
+	console.log(req.body.accountId + ' trying to leave ' + req.session.listid);
 	if (accId == req.session.account.id && leaveListId == req.session.account.myListId) { //can't leave personal list
 		console.log('cant');
 		res.redirect('/list/' + req.session.listid);
@@ -293,13 +301,12 @@ app.post('/removeUserFromList', function (req, res) {
 	}
 });
 
-app.post('/createAccount', function(req,res) { //TODO: Same username check
-	accounts.InsertAccount(req.body.newUserName, function(result, err){
-		if(err){
+app.post('/createAccount', function (req, res) { //TODO: Same username check
+	accounts.InsertAccount(req.body.newUserName, function (result, err) {
+		if (err) {
 			console.log(err);
 			res.send(err);
-		}
-		else{
+		} else {
 			//login
 			accounts.findById(result.insertId, function (account, err) {
 				if (err) {
@@ -308,7 +315,7 @@ app.post('/createAccount', function(req,res) { //TODO: Same username check
 				} else {
 					console.log("valid");
 					req.session.account = account;
-					
+
 					res.redirect("/list/" + account.myListId);
 				}
 			});
@@ -319,20 +326,17 @@ app.post('/createAccount', function(req,res) { //TODO: Same username check
 
 const nspLists = io.of('/listNsp');
 io.on('connection', function (socket) {
-	console.log('a user connected to the global socket');
+	//console.log('a user connected to the global socket');
 	socket.on('disconnect', function () {
-		console.log('user has disconnected from the global socket');
+		//console.log('user has disconnected from the global socket');
 	});
 });
 nspLists.on('connection', function (socket) {
-	console.log('a user connected to socket');
-	socket.on('disconnect', function () {
-		console.log('user has disconnected from socket');
-	});
+	socket.on('disconnect', function () {});
 	/* socket msgs here*/
-	socket.on('joinRoom',function(msg){
+	socket.on('joinRoom', function (msg) {
 		socket.join(msg.rid);
-		console.log('User joined Room: '+msg.rid);
+		console.log('User joined Room: ' + msg.rid);
 	});
 	socket.on('checkEntryChange', function (msg) {
 		entries.updateEntryStatus(msg.id, msg.st, function (result, err) {

@@ -18,19 +18,10 @@
         $(document).ready(function () {
             var newEntryName, deleteEntryID;
 
-            
-            $(".newEntrySub").click(function () {
-                newEntryName = $(".newEnrtyName").val();
-
-                $.post("list/" + window.location.pathname.substring(window
-                        .location.pathname.lastIndexOf('/') + 1), {
-                        name: newEntryName
-                    },
-                    function (data) {
-                        document.location.reload(true);
-
-                    }
-                );
+            $('.ajaxForm').submit(function (e) {
+                e.preventDefault();
+                $.post($(this).attr('action'), $(this).serialize());
+                $(this).find('.clearOnSubmit').val('');
             });
         });
     </script>
@@ -44,11 +35,11 @@
                 <a class="acc" href="/acc/<%=account.id%>"><%=account.name%></a>
             </nav>
         </div>
-    </div>    
+    </div>
     <a class="toolilogolink" href="#">
-        <img src="/testbild.png" alt="Logo" class="toolilogo">
+        <img src="/_testbild.png" alt="Logo" class="toolilogo">
     </a>
-            
+
     <div class="twrapper">
         <div class="tside">
             <div class="tsidebar">
@@ -86,8 +77,8 @@
                     </div>
                     <% }) %>
                 </div>
-                <form action="" method="post">
-                    <input type="text" name="newEntryName" id="newEntryName" placeholder="Neuer Eintrag" />
+                <form action="" class="" method="post">
+                    <input type="text" name="newEntryName" id="newEntryName" class="" placeholder="Neuer Eintrag" />
                     <input type="submit" id="newEntrySub" value="ok">
                 </form>
                 <form method="POST" action="/addUserToList">
@@ -113,11 +104,11 @@
             </li>
             <% }) %>
         </ul>
-        <form id="chatform" action="/chat" class="chatform" method="POST">
+        <form id="chatform" class="chatform ajaxForm" action="/chat">
             <button class="chatbutton">Send</button>
             <div class="chatinputbox">
-                <input id="chatmessage" name="chatmessage" class="chatinputtext" autocomplete="off" />
-                <input type="hidden" id="accountid" value="<%=account.id%>"/>
+                <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit" autocomplete="off" />
+                <input type="hidden" id="accountid" value="<%=account.id%>" />
             </div>
         </form>
     </div>
@@ -127,14 +118,16 @@
         $(document).ready(function () {
             const listNsp = io('/listNsp');
             const globalSkt = io();
-            listNsp.emit('joinRoom',{rid:'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)});
+            listNsp.emit('joinRoom', {
+                rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
+            });
             //Status Change
             $('.entryCheck').change(function (e) {
                 //e.preventDefault(); // prevents page reloading
                 var status = 0;
                 if (this.checked)
                     status = 1;
-                    listNsp.emit('checkEntryChange', {
+                listNsp.emit('checkEntryChange', {
                     id: e.target.getAttribute("value"),
                     st: status
                 });
@@ -147,10 +140,12 @@
                 $('#entryCheck' + msg.id).prop('checked', checked);
             });
             listNsp.on('chatMessage', function (msg) {
-                var $newli = '<li class="chatitem">'+msg.sender+' : '+msg.message+'<form method="POST" action="/deleteChat"><input type="hidden" name="deleteChatId" value="'+msg.id+'"><input type="submit" value="X"></form></li>';
+                var $newli = '<li class="chatitem">' + msg.sender + ' : ' + msg.message +
+                    '<form method="POST" action="/deleteChat"><input type="hidden" name="deleteChatId" value="' +
+                    msg.id + '"><input type="submit" value="X"></form></li>';
                 $('.chatitems').append($newli); //TODO fix this
             });
-            globalSkt.on('newsMessage', function(msg){
+            globalSkt.on('newsMessage', function (msg) {
                 //news go here
             });
         });
