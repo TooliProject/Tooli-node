@@ -53,6 +53,9 @@ app.get('/', function (req, res) {
 app.get('/login', function (req, res) {
 	res.render('login.html');
 });
+app.get('/createAccount', function(req, res){
+	res.render('createAccount.html');
+});
 
 
 app.post('/login', function (req, res) {
@@ -170,16 +173,27 @@ app.post('/new-list', function (req, res) {
 //Delete List
 app.post('/deleteList', function (req, res) {
 
-	lists.DeleteList(req.body.deleteListId, function (result, err) {
-		if (err) {
-			console.log(err);
-			res.send(err);
-		} else {
-			console.log('list deleted, wow');
-		}
+	console.log(req.session.account.id + ' is trying to delete ' + req.body.deleteListId);
+	console.log('personal list: ' + req.session.account.myListId);
+	
+	if (req.body.deleteListId == req.session.account.myListId) { //can't delete personal list
+		console.log('cant');
+	} else {
 
-	});
-	res.redirect("/list/" + req.session.account.myListId);
+		lists.DeleteList(req.body.deleteListId, function (result, err) {
+			if (err) {
+				console.log(err);
+				res.send(err);
+			} else {
+				console.log('list deleted, wow');
+			}
+		});
+	}
+	if (req.body.deleteListId == req.session.listid) {
+		res.redirect("/list/" + req.session.account.myListId);
+	} else {
+		res.redirect('/list/' + req.session.listid);
+	}
 });
 
 //GET new list 
@@ -277,6 +291,29 @@ app.post('/removeUserFromList', function (req, res) {
 			}
 		});
 	}
+});
+
+app.post('/createAccount', function(req,res) { //TODO: Same username check
+	accounts.InsertAccount(req.body.newUserName, function(result, err){
+		if(err){
+			console.log(err);
+			res.send(err);
+		}
+		else{
+			//login
+			accounts.findById(result.insertId, function (account, err) {
+				if (err) {
+					console.log(err);
+					res.send(err);
+				} else {
+					console.log("valid");
+					req.session.account = account;
+					
+					res.redirect("/list/" + account.myListId);
+				}
+			});
+		}
+	});
 });
 
 
