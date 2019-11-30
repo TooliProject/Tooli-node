@@ -29,15 +29,15 @@
             });
             $('#toggleChat').click(function (e) {
                 e.preventDefault();
-                var chatarea = $('.chatarea');
-                if (chatarea.css('right') == '0px') {
-                    chatarea.css('right', '-300px');
+                var chatwrapper = $('.chatwrapper');
+                if (chatwrapper.css('right') == '0px') {
+                    chatwrapper.css('right', '-300px');
                 } else {
-                    chatarea.css('right', '0px');
+                    chatwrapper.css('right', '0px');
                 }
             });
             $('#chatform').submit(function (e) {
-                // $('.chatitems').animate({ scrollTop: $('.chatitems').prop('scrollHeight')}, 1000);
+                 $('.chatitems').animate({ scrollTop: $('.chatitems').prop('scrollHeight')}, 1000);
             });
 
         });
@@ -48,7 +48,6 @@
     <div class="theader">
         <div class="tnavbar">
             <a id="toggleSidebar" href="">toggleSide</a>
-            <a id="toggleChat" href="">toggleChat</a>
             <nav class="tnavLinks">
                 <a href="/logout">Logout</a>
                 <a class="acc" href="/acc/<%=account.id%>"><%=account.name%></a>
@@ -111,6 +110,8 @@
             </div>
         </div>
     </div>
+    <div class="chatwrapper">
+        <a id="toggleChat" class="toggleChatButton" href=""><img style="width: inherit; height: inherit;"src="/chatTMP.png" alt=""></a>
     <div class="chatarea">
         <div class="chatitems">
             <% resChat.forEach(function(Chat){ %>
@@ -131,6 +132,7 @@
             </div>
         </form>
     </div>
+</div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>

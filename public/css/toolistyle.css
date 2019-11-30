@@ -93,13 +93,25 @@ body {
     width: 100%;
     position: relative;
 }
-
-.chatarea {
+.chatwrapper{
     position: fixed;
     bottom: 0px;
     right: 0px;
-    width: 300px;
+    width: 330px;
     height: 50%;
+    display: flex;
+    align-items: flex-end;
+
+    transition: ease-in;
+    transition-duration: 300ms;
+}
+.toggleChatButton{
+    height: 30px;
+    width: 30px;
+}
+.chatarea {
+    width: 300px;
+    height: 100%;
     border-color: black;
     border-style: solid;
     border-width: 1px;
