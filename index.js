@@ -7,7 +7,7 @@ var io = require('socket.io')(http);
 var mysql = require('mysql');
 var path = require('path');
 
-process.env.PWD = process.cwd()
+process.env.PWD = process.cwd();
 app.use(express.static(process.env.PWD + '/public'));
 
 var sqlCon = mysql.createConnection({
@@ -35,16 +35,25 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-
-
 // register the bodyParser middleware for processing forms
 app.use(express.json());
 app.use(express.urlencoded({
 	extended: true
 }));
 
+var authenticate = function (req, res) {
+	if (!req.session.account) {
+		res.write('<h1>Please login first.</h1>');
+		res.write('<a href="/login">Login</a>');
+		res.end();
+		console.log('Authentication failed');
+		return false; //NOT OK
+	}
+	return true; //OK
+};
+
 app.get('/', function (req, res) {
-	if (req.session.account.id) {
+	if (req.session.account) {
 		res.redirect('/list/' + req.session.listid);
 	} else {
 		res.redirect('/login');
@@ -76,49 +85,48 @@ app.post('/login', function (req, res) {
 
 //GET overview
 app.get('/list/:listid', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
 	var listid = req.params.listid;
 	req.session.listid = listid;
-	if (req.session.account.id) {
 
-		lists.findByAccountId(req.session.account.id, function (resList, err) {
-			if (err) {
-				console.log(err);
-				res.send(err);
-			} else {
-				entries.findByListId(req.session.listid, function (resEntry, err) {
-					if (err) {
-						console.log(err);
-						res.send(err);
-					} else {
-						chats.findByListId(req.session.listid, function (resChat, err) {
-							if (err) {
-								console.log(err);
-								res.send(err);
-							} else {
-								res.render('list.html', {
-									resList: resList,
-									resEntry: resEntry,
-									resChat: resChat,
-									account: req.session.account
-								});
-							}
-						});
-					}
-				});
-			}
-		});
-
-	} else {
-		res.write('<h1>Please login first.</h1>');
-		res.write('<a href="/">Login</a>');
-		res.end();
-	}
+	lists.findByAccountId(req.session.account.id, function (resList, err) {
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			entries.findByListId(req.session.listid, function (resEntry, err) {
+				if (err) {
+					console.log(err);
+					res.send(err);
+				} else {
+					chats.findByListId(req.session.listid, function (resChat, err) {
+						if (err) {
+							console.log(err);
+							res.send(err);
+						} else {
+							res.render('list.html', {
+								resList: resList,
+								resEntry: resEntry,
+								resChat: resChat,
+								account: req.session.account
+							});
+						}
+					});
+				}
+			});
+		}
+	});
 });
 
 
 
 //Create Entry
 app.post('/list/:listid', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
 	var listid = req.params.listid;
 	console.log(listid + " : add entry : " + req.body.newEntryName);
 	entries.InsertEntry({
@@ -138,7 +146,10 @@ app.post('/list/:listid', function (req, res) {
 });
 
 //Delete Entry
-app.post('/deleteEntry', function (req, res) {
+app.post('/deleteEntry', function (req, res) { // list owner?
+	if (!authenticate(req, res)) {
+		return;
+	}
 	entries.DeleteById(req.body.deleteEntryId, function (result, err) {
 		if (err) {
 			console.log(err);
@@ -152,6 +163,9 @@ app.post('/deleteEntry', function (req, res) {
 
 //Create List
 app.post('/new-list', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
 
 	lists.InsertList(req.body.newListName, function (result, err) {
 		if (err) {
@@ -171,7 +185,10 @@ app.post('/new-list', function (req, res) {
 });
 
 //Delete List
-app.post('/deleteList', function (req, res) {
+app.post('/deleteList', function (req, res) { //can only be done by list owner
+	if (!authenticate(req, res)) {
+		return;
+	}
 
 	console.log(req.session.account.id + ' is trying to delete ' + req.body.deleteListId);
 	console.log('personal list: ' + req.session.account.myListId);
@@ -198,6 +215,9 @@ app.post('/deleteList', function (req, res) {
 
 //GET new list 
 app.get('/new-list', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
 	res.render('new_List.html');
 });
 
@@ -215,6 +235,9 @@ app.get('/logout', function (req, res) {
 
 //Create Chat
 app.post('/chat', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
 	console.log('Create Chat');
 	console.log({
 		listId: req.session.listid,
@@ -249,6 +272,9 @@ app.post('/chat', function (req, res) {
 
 //Delete Chat
 app.post('/deleteChat', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
 	console.log('Delete Chat');
 	console.log(req.body.deleteChatId);
 	chats.DeleteChatById(req.body.deleteChatId, function (result, err) {
@@ -257,12 +283,18 @@ app.post('/deleteChat', function (req, res) {
 			res.send(err);
 		} else {
 			res.redirect('/list/' + req.session.listid);
+			nspLists.to('L' + req.session.listid).emit('deleteChatMsg', {
+				deleteChatId: req.body.deleteChatId
+			});
 		}
 	});
 });
 
 //AddUserToList
-app.post('/addUserToList', function (req, res) {
+app.post('/addUserToList', function (req, res) { //TODO: can only be done by list owner
+	if (!authenticate(req, res)) {
+		return;
+	}
 	accounts.findByName(req.body.addUserName, function (account, err) {
 		if (err) {
 			console.log(err);
@@ -282,7 +314,10 @@ app.post('/addUserToList', function (req, res) {
 });
 
 //Remove User from List/leave
-app.post('/removeUserFromList', function (req, res) {
+app.post('/removeUserFromList', function (req, res) { //TODO: can only be done by list owner
+	if (!authenticate(req, res)) {
+		return;
+	}
 	var accId = req.body.accountId;
 	var leaveListId = req.session.listid;
 	console.log(req.body.accountId + ' trying to leave ' + req.session.listid);

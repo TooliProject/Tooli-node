@@ -3,14 +3,22 @@
 
 <head>
     <title>Create Account</title>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <%- include ejs/scriptsAndStyle.ejs %>
 </head>
 
 <body>
+    <div class="theader">
+        <div class="tnavbar">
+        </div>
+    </div>
+    <a class="toolilogolink" href="/">
+        <img src="/testbild.png" alt="Logo" class="toolilogo">
+    </a>
     <form method="POST" action="/createAccount">
         <input type="text" name="newUserName" value="" placeholder="Username" />
         <input type="submit" value="Create Account"></input>
     </form>
+    <%- include ejs/footerPublic.ejs %>
 </body>
 
 </html>

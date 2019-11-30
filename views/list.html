@@ -3,16 +3,7 @@
 
 <head>
     <title>List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-    <link rel="stylesheet" href="/css/toolistyle.css">
+    <%- include ejs/scriptsAndStyle.ejs %>
 
     <script>
         $(document).ready(function () {
@@ -23,6 +14,32 @@
                 $.post($(this).attr('action'), $(this).serialize());
                 $(this).find('.clearOnSubmit').val('');
             });
+            $('#toggleSidebar').click(function (e) {
+                e.preventDefault();
+                var side = $('.tside');
+                if (side.css('width') == '0px') {
+                    if ($(window).innerWidth() < 768) {
+                        side.css('width', '75%');
+                    } else {
+                        side.css('width', '');
+                    }
+                } else {
+                    side.css('width', '0%');
+                }
+            });
+            $('#toggleChat').click(function (e) {
+                e.preventDefault();
+                var chatarea = $('.chatarea');
+                if (chatarea.css('right') == '0px') {
+                    chatarea.css('right', '-300px');
+                } else {
+                    chatarea.css('right', '0px');
+                }
+            });
+            $('#chatform').submit(function (e) {
+                // $('.chatitems').animate({ scrollTop: $('.chatitems').prop('scrollHeight')}, 1000);
+            });
+
         });
     </script>
 </head>
@@ -30,14 +47,16 @@
 <body>
     <div class="theader">
         <div class="tnavbar">
+            <a id="toggleSidebar" href="">toggleSide</a>
+            <a id="toggleChat" href="">toggleChat</a>
             <nav class="tnavLinks">
                 <a href="/logout">Logout</a>
                 <a class="acc" href="/acc/<%=account.id%>"><%=account.name%></a>
             </nav>
         </div>
     </div>
-    <a class="toolilogolink" href="#">
-        <img src="/_testbild.png" alt="Logo" class="toolilogo">
+    <a class="toolilogolink" href="/">
+        <img src="/testbild.png" alt="Logo" class="toolilogo">
     </a>
 
     <div class="twrapper">
@@ -45,7 +64,7 @@
             <div class="tsidebar">
                 <div class="tsidetop">
                     <div class="tsidetopcontent">
-                        <a href="/new-list" style="position: fixed"> New List</a>
+                        <a href="/new-list"> New List</a>
                     </div>
                 </div>
                 <ul id="lists">
@@ -93,17 +112,17 @@
         </div>
     </div>
     <div class="chatarea">
-        <ul class="chatitems">
+        <div class="chatitems">
             <% resChat.forEach(function(Chat){ %>
-            <li class="chatitem">
+            <div class="chatitem">
                 <%=Chat.senderName%> &#58; <%=Chat.message%>
-                <form method="POST" action="/deleteChat">
+                <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">
                     <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />
                     <input type="submit" value="X"></input>
                 </form>
-            </li>
+            </div>
             <% }) %>
-        </ul>
+        </div>
         <form id="chatform" class="chatform ajaxForm" action="/chat">
             <button class="chatbutton">Send</button>
             <div class="chatinputbox">
@@ -140,10 +159,18 @@
                 $('#entryCheck' + msg.id).prop('checked', checked);
             });
             listNsp.on('chatMessage', function (msg) {
-                var $newli = '<li class="chatitem">' + msg.sender + ' : ' + msg.message +
-                    '<form method="POST" action="/deleteChat"><input type="hidden" name="deleteChatId" value="' +
-                    msg.id + '"><input type="submit" value="X"></form></li>';
+                var $newli = '<div class="chatitem">' + msg.sender + ' : ' + msg.message +
+                    '<form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat"><input type="hidden" name="deleteChatId" value="' +
+                    msg.id + '"><input type="submit" value="X"></form></div>';
                 $('.chatitems').append($newli); //TODO fix this
+                $('.chatitems').animate({
+                    scrollTop: $('.chatitems').prop('scrollHeight')
+                }, 1000);
+            });
+            listNsp.on('deleteChatMsg', function (msg) {
+                var delChat = $("input[name='deleteChatId'][value='" + msg.deleteChatId + "'").parents(
+                    '.chatitem'); //parentus deletus
+                delChat.remove();
             });
             globalSkt.on('newsMessage', function (msg) {
                 //news go here

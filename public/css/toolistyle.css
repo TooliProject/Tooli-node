@@ -1,16 +1,20 @@
+/* i hate css */
 body {
     height: 100vh;
+    background-color: burlywood;
 }
 
 .theader {
-    height: 5vh;
     top: 0px;
     left: 0px;
     width: 100%;
+    height: 5vh;
+    min-height: 50px;
 }
 
 .tnavbar {
     position: fixed;
+    min-height: inherit;
     width: 100%;
     z-index: 1400;
     height: inherit;
@@ -19,11 +23,25 @@ body {
 
 .twrapper {
     /* Tomato Salsa Crispy Wrap */
-    background-color: white;
+    background-color: coral;
 }
 
 .tside {
-    width: 300px;
+    z-index: 1000;
+    /* width: 75%; */
+    width: 0%;
+    transition: ease-in;
+    transition-duration: 300ms;
+}
+
+.tside * {
+    z-index: 1000;
+}
+
+@media (min-width: 768px) {
+    .tside {
+        width: 25%;
+    }
 }
 
 .tsidebar {
@@ -32,14 +50,15 @@ body {
     height: 95vh;
     background-color: lightblue;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .tsidetop {
-    display: list-item;
+    height: 30px;
 }
 
 .tsidetopcontent {
-    position: fixed;
     z-index: 1400;
 }
 
@@ -84,27 +103,62 @@ body {
     border-color: black;
     border-style: solid;
     border-width: 1px;
+    background-color: darkgreen;
+
+    transition: ease-in;
+    transition-duration: 300ms;
 }
 
-.chatform{
-    position: absolute;
-    bottom: 0px;
+.chatitems {
+    width: 100%;
+    /* Firefox */
+    height: -moz-calc(100% - 35px);
+    /* WebKit */
+    height: -webkit-calc(100% - 35px);
+    /* Opera */
+    height: -o-calc(100% - 35px);
+    /* Standard */
+    height: calc(100% - 35px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatitem {
+    background-color: khaki;
+    margin: 3px;
+}
+.chatform {
     width: 100%;
     height: 35px;
 }
 
-.chatbutton{
+.chatbutton {
     float: right;
     height: 100%;
 }
-.chatinputbox{
+
+.chatinputbox {
     overflow: hidden;
-    height: 100%;   
+    height: 100%;
 }
-.chatinputtext{
+
+.chatinputtext {
     width: 100%;
     height: inherit;
 }
-.tnavLinks{
+
+.tnavLinks {
     float: right;
 }
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: gray;
+    text-align: center;
+  }
+  .footer a {
+      color: lightskyblue;
+  }
