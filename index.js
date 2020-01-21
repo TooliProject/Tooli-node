@@ -10,12 +10,6 @@ var path = require('path');
 process.env.PWD = process.cwd();
 app.use(express.static(process.env.PWD + '/public'));
 
-var sqlCon = mysql.createConnection({
-	host: "192.168.1.15",
-	user: "root",
-	password: "admin",
-	database: "tooli"
-});
 
 //db
 const accounts = require('./database/mysql/accounts');
@@ -41,6 +35,9 @@ app.use(express.urlencoded({
 	extended: true
 }));
 
+/**
+ * authentication function
+ */
 var authenticate = function (req, res) {
 	if (!req.session.account) {
 		res.write('<h1>Please login first.</h1>');
@@ -66,18 +63,17 @@ app.get('/createAccount', function (req, res) {
 	res.render('createAccount.html');
 });
 
-
+//login
 app.post('/login', function (req, res) {
 	console.log(req.body.username + " tried to log in");
 	accounts.findByName(req.body.username, function (account, err) {
 		if (err) {
 			console.log(err);
 			res.send(err);
-		} else {
+		} else {//successful login
 			console.log("valid");
 			req.session.account = account;
-
-			//Note: account.myListId can be omitted since id is in session.
+			//io.join('U' + req.session.account.id);
 			res.redirect("/list/" + account.myListId);
 		}
 	});
@@ -90,7 +86,7 @@ app.get('/list/:listid', function (req, res) {
 	}
 	var listid = req.params.listid;
 	req.session.listid = listid;
-
+	
 	lists.findByAccountId(req.session.account.id, function (resList, err) {
 		if (err) {
 			console.log(err);
@@ -221,6 +217,7 @@ app.get('/new-list', function (req, res) {
 	res.render('new_List.html');
 });
 
+//GET logout
 app.get('/logout', function (req, res) {
 
 	req.session.destroy(function (err) {
@@ -259,11 +256,16 @@ app.post('/chat', function (req, res) {
 					console.log(err);
 					res.send(err);
 				} else {
-					nspLists.to('L' + req.session.listid).emit('chatMessage', {
+					nspLists.to('L' + req.session.listid).emit('chatMsg', {
 						message: req.body.chatmessage,
 						sender: account.name,
 						id: result.insertId
 					});
+					for (var socketid in io.sockets.sockets) {
+						io.sockets.connected[socketid].emit('popupMsg', {
+							text: 'id is ' + socketid
+						});
+					}
 				}
 			});
 		}
@@ -336,6 +338,7 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 	}
 });
 
+//create Account
 app.post('/createAccount', function (req, res) { //TODO: Same username check
 	accounts.InsertAccount(req.body.newUserName, function (result, err) {
 		if (err) {
@@ -350,7 +353,7 @@ app.post('/createAccount', function (req, res) { //TODO: Same username check
 				} else {
 					console.log("valid");
 					req.session.account = account;
-
+					
 					res.redirect("/list/" + account.myListId);
 				}
 			});
@@ -362,15 +365,21 @@ app.post('/createAccount', function (req, res) { //TODO: Same username check
 const nspLists = io.of('/listNsp');
 io.on('connection', function (socket) {
 	//console.log('a user connected to the global socket');
+	socket.on('connectUser', function(){
+		console.log('connectuser message recieved');
+	});
 	socket.on('disconnect', function () {
 		//console.log('user has disconnected from the global socket');
 	});
 });
 nspLists.on('connection', function (socket) {
+	//console.log('a user connected to the nsp socket');
 	socket.on('disconnect', function () {});
 	/* socket msgs here*/
 	socket.on('joinRoom', function (msg) {
-		socket.join(msg.rid);
+		socket.join(msg.rid,function() {
+			console.log(socket.rooms);
+		});
 		console.log('User joined Room: ' + msg.rid);
 	});
 	socket.on('checkEntryChange', function (msg) {
@@ -381,14 +390,13 @@ nspLists.on('connection', function (socket) {
 			} else {
 				console.log('1 entry updated');
 			}
-
 		});
 		nspLists.emit('checkEntryChange', msg);
 	});
-	socket.on('chatMessage', function (msg) {
-		console.log('chat message recived');
+	socket.on('chatMsg', function (msg) {
+		console.log('chat message received');
 		console.log(msg);
-		nspLists.emit('chatMessage', msg);
+		nspLists.emit('chatMsg', msg);
 	});
 });
 

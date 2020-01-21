@@ -8,4 +8,10 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="/css/toolistyle.css">
-    <link rel="shortcut icon" type="image/png" href="Tooli2ChristmasHat.png"/>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function () {
+            io().emit('connectUser');
+        });
+    </script>

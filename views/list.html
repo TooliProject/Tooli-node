@@ -29,15 +29,15 @@
             });
             $('#toggleChat').click(function (e) {
                 e.preventDefault();
-                var chatarea = $('.chatarea');
-                if (chatarea.css('right') == '0px') {
-                    chatarea.css('right', '-300px');
+                var chatwrapper = $('.chatwrapper');
+                if (chatwrapper.css('right') == '0px') {
+                    chatwrapper.css('right', '-300px');
                 } else {
-                    chatarea.css('right', '0px');
+                    chatwrapper.css('right', '0px');
                 }
             });
             $('#chatform').submit(function (e) {
-                // $('.chatitems').animate({ scrollTop: $('.chatitems').prop('scrollHeight')}, 1000);
+                 $('.chatitems').animate({ scrollTop: $('.chatitems').prop('scrollHeight')}, 1000);
             });
 
         });
@@ -48,7 +48,6 @@
     <div class="theader">
         <div class="tnavbar">
             <a id="toggleSidebar" href="">toggleSide</a>
-            <a id="toggleChat" href="">toggleChat</a>
             <nav class="tnavLinks">
                 <a href="/logout">Logout</a>
                 <a class="acc" href="/acc/<%=account.id%>"><%=account.name%></a>
@@ -56,7 +55,7 @@
         </div>
     </div>
     <a class="toolilogolink" href="/">
-        <img src="/testbild.png" alt="Logo" class="toolilogo">
+        <img src="/_testbild.png" alt="Logo" class="toolilogo">
     </a>
 
     <div class="twrapper">
@@ -108,9 +107,12 @@
                     <input type="hidden" name="accountId" value="<%=account.id%>" />
                     <input type="submit" value="Leave"></input>
                 </form>
+                <div id="testForPopup"></div>
             </div>
         </div>
     </div>
+    <div class="chatwrapper">
+        <a id="toggleChat" class="toggleChatButton" href=""><img style="width: inherit; height: inherit;"src="/chatTMP.png" alt=""></a>
     <div class="chatarea">
         <div class="chatitems">
             <% resChat.forEach(function(Chat){ %>
@@ -126,16 +128,18 @@
         <form id="chatform" class="chatform ajaxForm" action="/chat">
             <button class="chatbutton">Send</button>
             <div class="chatinputbox">
-                <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit" autocomplete="off" />
+                <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit" placeholder="Message List Members..." autocomplete="off" />
                 <input type="hidden" id="accountid" value="<%=account.id%>" />
             </div>
         </form>
     </div>
+</div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         $(document).ready(function () {
             const listNsp = io('/listNsp');
+            //const userNsp = io('/userNsp');
             const globalSkt = io();
             listNsp.emit('joinRoom', {
                 rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
@@ -158,7 +162,7 @@
                     checked = false;
                 $('#entryCheck' + msg.id).prop('checked', checked);
             });
-            listNsp.on('chatMessage', function (msg) {
+            listNsp.on('chatMsg', function (msg) {
                 var $newli = '<div class="chatitem">' + msg.sender + ' : ' + msg.message +
                     '<form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat"><input type="hidden" name="deleteChatId" value="' +
                     msg.id + '"><input type="submit" value="X"></form></div>';
@@ -172,8 +176,11 @@
                     '.chatitem'); //parentus deletus
                 delChat.remove();
             });
-            globalSkt.on('newsMessage', function (msg) {
+            globalSkt.on('newsMsg', function (msg) {
                 //news go here
+            });
+            globalSkt.on('popupMsg', function (msg) {
+                $('#testForPopup').append("<p>" + msg.text + "</p>")
             });
         });
     </script>
