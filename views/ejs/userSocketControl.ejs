@@ -1,0 +1,10 @@
+/*SocketControl for User-Socket Communication*/
+<script>
+    const userNsp = io('/userNsp');
+    userNsp.emit('connectUser', {
+        rid: 'U<%=account.id%>'
+    });
+    userNsp.on('listNotif', function (msg) {
+        $('#listItemElement' + msg.listid).css("font-weight","Bold");
+    });
+</script>

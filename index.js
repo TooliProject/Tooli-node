@@ -10,13 +10,11 @@ var path = require('path');
 process.env.PWD = process.cwd();
 app.use(express.static(process.env.PWD + '/public'));
 
-
 //db
 const accounts = require('./database/mysql/accounts');
 const lists = require('./database/mysql/lists');
 const entries = require('./database/mysql/entries');
 const chats = require('./database/mysql/chats');
-
 
 app.engine('.html', require('ejs').__express);
 app.set('views', path.join(__dirname, 'views'));
@@ -70,10 +68,10 @@ app.post('/login', function (req, res) {
 		if (err) {
 			console.log(err);
 			res.send(err);
-		} else {//successful login
+		} else { //successful login
 			console.log("valid");
 			req.session.account = account;
-			//io.join('U' + req.session.account.id);
+
 			res.redirect("/list/" + account.myListId);
 		}
 	});
@@ -86,7 +84,7 @@ app.get('/list/:listid', function (req, res) {
 	}
 	var listid = req.params.listid;
 	req.session.listid = listid;
-	
+
 	lists.findByAccountId(req.session.account.id, function (resList, err) {
 		if (err) {
 			console.log(err);
@@ -261,11 +259,18 @@ app.post('/chat', function (req, res) {
 						sender: account.name,
 						id: result.insertId
 					});
-					for (var socketid in io.sockets.sockets) {
-						io.sockets.connected[socketid].emit('popupMsg', {
-							text: 'id is ' + socketid
-						});
-					}
+					accounts.findByListId(req.session.listid, function(accsInList, err){
+						if (err) {
+							console.log(err);
+							res.send(err);
+						} else {
+							accsInList.forEach(element => {
+								nspUsers.to('U'+element.id).emit('listNotif',{
+									listid: req.session.listid
+								});
+							});
+						}
+					});
 				}
 			});
 		}
@@ -353,7 +358,7 @@ app.post('/createAccount', function (req, res) { //TODO: Same username check
 				} else {
 					console.log("valid");
 					req.session.account = account;
-					
+
 					res.redirect("/list/" + account.myListId);
 				}
 			});
@@ -363,13 +368,20 @@ app.post('/createAccount', function (req, res) { //TODO: Same username check
 
 
 const nspLists = io.of('/listNsp');
+const nspUsers = io.of('/userNsp');
 io.on('connection', function (socket) {
 	//console.log('a user connected to the global socket');
-	socket.on('connectUser', function(){
-		console.log('connectuser message recieved');
-	});
 	socket.on('disconnect', function () {
 		//console.log('user has disconnected from the global socket');
+	});
+});
+nspUsers.on('connection', function (socket) {
+	socket.on('connectUser', function (msg) {
+		socket.join(msg.rid);
+		console.log('uUser joined Room: ' + msg.rid);
+	});
+	socket.on('disconnect', function () {
+		console.log('disconnectU');
 	});
 });
 nspLists.on('connection', function (socket) {
@@ -377,9 +389,7 @@ nspLists.on('connection', function (socket) {
 	socket.on('disconnect', function () {});
 	/* socket msgs here*/
 	socket.on('joinRoom', function (msg) {
-		socket.join(msg.rid,function() {
-			console.log(socket.rooms);
-		});
+		socket.join(msg.rid);
 		console.log('User joined Room: ' + msg.rid);
 	});
 	socket.on('checkEntryChange', function (msg) {

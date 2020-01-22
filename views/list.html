@@ -37,7 +37,9 @@
                 }
             });
             $('#chatform').submit(function (e) {
-                 $('.chatitems').animate({ scrollTop: $('.chatitems').prop('scrollHeight')}, 1000);
+                $('.chatitems').animate({
+                    scrollTop: $('.chatitems').prop('scrollHeight')
+                }, 1000);
             });
 
         });
@@ -69,7 +71,7 @@
                 <ul id="lists">
                     <% resList.forEach(function(list){ %>
                     <li id="listsItem">
-                        <a href="/list/<%= list.id %>"><%= list.name %></a>
+                        <a id="listItemElement<%= list.id %>" href="/list/<%= list.id %>"><%= list.name %></a>
                         <form method="POST" action="/deleteList">
                             <input type="hidden" name="deleteListId" value="<%=list.id%>" />
                             <input type="submit" value="X"></input>
@@ -112,34 +114,35 @@
         </div>
     </div>
     <div class="chatwrapper">
-        <a id="toggleChat" class="toggleChatButton" href=""><img style="width: inherit; height: inherit;"src="/chatTMP.png" alt=""></a>
-    <div class="chatarea">
-        <div class="chatitems">
-            <% resChat.forEach(function(Chat){ %>
-            <div class="chatitem">
-                <%=Chat.senderName%> &#58; <%=Chat.message%>
-                <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">
-                    <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />
-                    <input type="submit" value="X"></input>
-                </form>
+        <a id="toggleChat" class="toggleChatButton" href=""><img style="width: inherit; height: inherit;"
+                src="/chatTMP.png" alt=""></a>
+        <div class="chatarea">
+            <div class="chatitems">
+                <% resChat.forEach(function(Chat){ %>
+                <div class="chatitem">
+                    <%=Chat.senderName%> &#58; <%=Chat.message%>
+                    <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">
+                        <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />
+                        <input type="submit" value="X"></input>
+                    </form>
+                </div>
+                <% }) %>
             </div>
-            <% }) %>
+            <form id="chatform" class="chatform ajaxForm" action="/chat">
+                <button class="chatbutton">Send</button>
+                <div class="chatinputbox">
+                    <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit"
+                        placeholder="Message List Members..." autocomplete="off" />
+                    <input type="hidden" id="accountid" value="<%=account.id%>" />
+                </div>
+            </form>
         </div>
-        <form id="chatform" class="chatform ajaxForm" action="/chat">
-            <button class="chatbutton">Send</button>
-            <div class="chatinputbox">
-                <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit" placeholder="Message List Members..." autocomplete="off" />
-                <input type="hidden" id="accountid" value="<%=account.id%>" />
-            </div>
-        </form>
     </div>
-</div>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <%- include ejs/userSocketControl.ejs %>
     <script>
         $(document).ready(function () {
             const listNsp = io('/listNsp');
-            //const userNsp = io('/userNsp');
             const globalSkt = io();
             listNsp.emit('joinRoom', {
                 rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
@@ -177,7 +180,7 @@
                 delChat.remove();
             });
             globalSkt.on('newsMsg', function (msg) {
-                //news go here
+                alert('NEWS');
             });
             globalSkt.on('popupMsg', function (msg) {
                 $('#testForPopup').append("<p>" + msg.text + "</p>")
