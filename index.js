@@ -259,14 +259,17 @@ app.post('/chat', function (req, res) {
 						sender: account.name,
 						id: result.insertId
 					});
-					accounts.findByListId(req.session.listid, function(accsInList, err){
+					accounts.findByListId(req.session.listid, function (accsInList, err) {
 						if (err) {
 							console.log(err);
 							res.send(err);
 						} else {
 							accsInList.forEach(element => {
-								nspUsers.to('U'+element.id).emit('listNotif',{
-									listid: req.session.listid
+								nspUsers.to('U' + element.id).emit('notifMsg', {
+									message: req.body.chatmessage,
+									sender: account.name,
+									mid: result.insertId,
+									listid: req.session.listid,
 								});
 							});
 						}
@@ -378,7 +381,7 @@ io.on('connection', function (socket) {
 nspUsers.on('connection', function (socket) {
 	socket.on('connectUser', function (msg) {
 		socket.join(msg.rid);
-		console.log('uUser joined Room: ' + msg.rid);
+		console.log('User joined Room: ' + msg.rid);
 	});
 	socket.on('disconnect', function () {
 		console.log('disconnectU');

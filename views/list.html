@@ -61,6 +61,9 @@
     </a>
 
     <div class="twrapper">
+        <div class="notifbox">
+            <!--stuff goes here-->
+        </div>
         <div class="tside">
             <div class="tsidebar">
                 <div class="tsidetop">
@@ -119,6 +122,7 @@
         <div class="chatarea">
             <div class="chatitems">
                 <% resChat.forEach(function(Chat){ %>
+                <!--use template HMMMMM-->
                 <div class="chatitem">
                     <%=Chat.senderName%> &#58; <%=Chat.message%>
                     <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">
@@ -138,7 +142,6 @@
             </form>
         </div>
     </div>
-
     <%- include ejs/userSocketControl.ejs %>
     <script>
         $(document).ready(function () {
@@ -166,13 +169,11 @@
                 $('#entryCheck' + msg.id).prop('checked', checked);
             });
             listNsp.on('chatMsg', function (msg) {
-                var $newli = '<div class="chatitem">' + msg.sender + ' : ' + msg.message +
-                    '<form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat"><input type="hidden" name="deleteChatId" value="' +
-                    msg.id + '"><input type="submit" value="X"></form></div>';
-                $('.chatitems').append($newli); //TODO fix this
+                var newChat = templateChat(msg);
+                $('.chatitems').append(newChat); //TODO fix this
                 $('.chatitems').animate({
                     scrollTop: $('.chatitems').prop('scrollHeight')
-                }, 1000);
+                }, 500);
             });
             listNsp.on('deleteChatMsg', function (msg) {
                 var delChat = $("input[name='deleteChatId'][value='" + msg.deleteChatId + "'").parents(
@@ -181,9 +182,6 @@
             });
             globalSkt.on('newsMsg', function (msg) {
                 alert('NEWS');
-            });
-            globalSkt.on('popupMsg', function (msg) {
-                $('#testForPopup').append("<p>" + msg.text + "</p>")
             });
         });
     </script>
