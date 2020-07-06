@@ -17,10 +17,14 @@ module.exports = {
     connection.query(queryFindbyListId, [listId], (err, results, fields) => {
       var result = [];
 
-      results.forEach(element => {
-        result.push(new Chat(element.PI, element.senderId, element.sender, element.message, element.timestamp));
-      });
-      callback(result, err);
+      if (err) {
+        callback([], err);
+      } else {
+        results.forEach(element => {
+          result.push(new Chat(element.PI, element.senderId, element.sender, element.message, element.timestamp));
+        });
+        callback(result, err);
+      }
     });
   },
   InsertChat: (newChatMsg, callback) => {

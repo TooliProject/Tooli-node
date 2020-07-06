@@ -1,7 +1,11 @@
 /* i hate css */
 body {
     height: 100vh;
-    background-color: burlywood;
+    background-color: rgb(250, 250, 250);
+}
+
+.container {
+    background-color: white;
 }
 
 .theader {
@@ -19,6 +23,12 @@ body {
     z-index: 1400;
     height: inherit;
     background-color: lightgray;
+}
+
+.tlogo {
+    max-height: inherit;
+    height: inherit;
+    min-height: inherit;
 }
 
 .twrapper {
@@ -173,7 +183,8 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: gray;
+    min-height: 100px;
+    background-color: lightgray;
     text-align: center;
 }
 
