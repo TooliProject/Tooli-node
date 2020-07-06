@@ -67,7 +67,7 @@ app.post('/login', function (req, res) {
 	accounts.findByName(req.body.username, function (account, err) {
 		if (err) {
 			console.log(err);
-			res.send(err);
+			res.send({err: err});
 		} else { //successful login
 			console.log("valid");
 			req.session.account = account;
