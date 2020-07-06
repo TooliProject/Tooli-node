@@ -12,8 +12,11 @@ module.exports = {
   findByName: (name, callback) => {
     connection.query(queryFindByName, [name], (err, results, fields) => {
       var result = null;
-
-      if (results.length <= 0) {
+      if (err) {
+        console.log(err);
+        callback(null, err);
+      }
+      else if (results.length <= 0) {
         callback(null, "No accounts found with name '" + name + "'");
       } else if (results.length > 1) {
         callback(null, "Multiple accounts with name '" + name + "' found");

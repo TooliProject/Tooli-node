@@ -29,22 +29,80 @@
 </head>
 
 <body>
-    <div class="theader">
-        <div class="tnavbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="testbild.png" width="30" height="30"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/login" id="loginform" method="post">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="username"
+                                       name="username"
+                                       placeholder="Username">
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="password">Password</label>-->
+<!--                                <input type="password"-->
+<!--                                       class="form-control"-->
+<!--                                       id="password"-->
+<!--                                       name="password"-->
+<!--                                       placeholder="Password"-->
+<!--                                       aria-describedby="password-warning">-->
+<!--                                <small id="password-warning"-->
+<!--                                       class="form-text text-muted">-->
+<!--                                    Tooli employees will never ask you for your password!-->
+<!--                                </small>-->
+<!--                            </div>-->
+                            <input type="submit" class="btn btn-primary" value="Login"/>
+                            <a href="/createAccount">Create New Account</a>
+                            <p id="loginFailedText"
+                               class="alert alert-danger"
+                               role="alert"
+                               style="display: none">
+                                Login failed!
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3"></div>
         </div>
     </div>
-    <a class="toolilogolink" href="/">
-        <img src="/_testbild.png" alt="Logo" class="toolilogo">
-    </a>
-    <div class="">
-        <form action="/" id="loginForm">
-            <span>Username:</span>
-            <input type="text" name="username" id="username" placeholder="Enter Username">
-            <input type="submit" value="Log In">
-        </form>
-        <p id="loginFailedText" style="color:red;display: none;">Login failed</p>
-        <a href="/createAccount">Create New Account</a>
-    </div>
+<!--    <div class="theader">-->
+<!--        <div class="tnavbar">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <a class="toolilogolink" href="/">-->
+<!--        <img src="/_testbild.png" alt="Logo" class="toolilogo">-->
+<!--    </a>-->
+<!--    <div class="">-->
+<!--        <form action="/" id="loginForm">-->
+<!--            <span>Username:</span>-->
+<!--            <input type="text" name="username" id="username" placeholder="Enter Username">-->
+<!--            <input type="submit" value="Log In">-->
+<!--        </form>-->
+<!--        <p id="loginFailedText" style="color:red;display: none;">Login failed</p>-->
+<!--        <a href="/createAccount">Create New Account</a>-->
+<!--    </div>-->
 
     <%- include ejs/footerPublic.ejs %>
 </body>

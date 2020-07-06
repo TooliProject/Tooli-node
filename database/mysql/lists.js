@@ -17,8 +17,10 @@ module.exports = {
   findByAccountId: (aid, callback) => {
     connection.query(queryFindByAccountId, [aid], (err, results, fields) => {
       var result = [];
-
-      if(results.length <= 0){
+      if (err) {
+        callback(null, err);
+      }
+      else if(results.length <= 0){
         callback(null, "No lists found for '" + aid + "'");
       } else {
         //result = new Account(results[0].pi, results[0].name, results[0].mylist_id);

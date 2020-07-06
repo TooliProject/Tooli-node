@@ -15,12 +15,15 @@ module.exports = {
     connection.query(queryFindByListId, [listId], (err, results, fields) => {
       var result = [];
 
-      //result = new Account(results[0].pi, results[0].name, results[0].mylist_id);
-      results.forEach(element => {
-        result.push(new Entry(element.PI, element.Name, element.Status));
-      });
-      callback(result, null);
-
+      if (err) {
+        callback([], err);
+      } else {
+        //result = new Account(results[0].pi, results[0].name, results[0].mylist_id);
+        results.forEach(element => {
+          result.push(new Entry(element.PI, element.Name, element.Status));
+        });
+        callback(result, null);
+      }
     });
   },
   updateEntryStatus: (entryId, newStatus, callback) => {
