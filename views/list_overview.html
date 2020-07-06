@@ -3,11 +3,11 @@
 
 <head>
     <title>Lists</title>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-
+    <%- include ejs/scriptsAndStyle.ejs %>
 </head>
 
 <body>
+    <%- include ejs/navbar.ejs %>
     <h1>Lists</h1>
     <a href="/new-list"> New List</a>
     <div id="lists">
@@ -17,6 +17,8 @@
         </div>
         <% }) %>
     </div>
+
+    <%- include ejs/footerPublic.ejs %>
 </body>
 
 </html>

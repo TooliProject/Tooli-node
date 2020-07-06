@@ -86,3 +86,4 @@ CREATE TRIGGER create_account_list BEFORE INSERT ON account
 
 # Insert Test Data
 INSERT INTO account (name) VALUES ('michael');
+INSERT INTO account (name) VALUES ('simon');

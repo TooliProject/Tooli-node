@@ -55,13 +55,9 @@ body {
 }
 
 .tsidebar {
-    position: fixed;
-    width: inherit;
-    height: 95vh;
+    margin: 0;
+    height: 100%;
     background-color: lightblue;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
 }
 
 .tsidetop {
@@ -76,11 +72,6 @@ body {
     margin: 0px;
 }
 
-#entries {
-    border-style: dotted;
-    border-width: 1px;
-    border-color: black;
-}
 
 .entryitem {
     border-style: solid;
@@ -183,7 +174,7 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    min-height: 100px;
+    min-height: 50px;
     background-color: lightgray;
     text-align: center;
 }

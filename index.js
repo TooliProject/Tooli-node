@@ -38,9 +38,7 @@ app.use(express.urlencoded({
  */
 var authenticate = function (req, res) {
 	if (!req.session.account) {
-		res.write('<h1>Please login first.</h1>');
-		res.write('<a href="/login">Login</a>');
-		res.end();
+		res.redirect("/login");
 		console.log('Authentication failed');
 		return false; //NOT OK
 	}
