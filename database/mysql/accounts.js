@@ -6,7 +6,7 @@ const Account = require('../../entity/Account');
 const queryFindByName = 'select pi, name, mylist_id from account where name like ?;';
 const queryFindById = 'SELECT pi, name, mylist_id FROM account WHERE pi = ?;';
 const queryFindByListId = 'select account.pi, name, mylist_id from account, list_account where list_account.account_id=account.pi and list_account.list_id=?';
-const queryInsertAccount = 'INSERT INTO account (Name) VALUES ( ? );'; //mylist is created by trigger
+const queryInsertAccount = 'INSERT INTO account (name, mylist_id) VALUES ( ?, 0 );'; //mylist is created by trigger
 
 module.exports = {
   findByName: (name, callback) => {
@@ -54,8 +54,12 @@ module.exports = {
     });
   },
   InsertAccount: (name, callback) => {
-    connection.query(queryInsertAccount, [name], (er, result, fields) => {
-      callback(result, null);
+    connection.query(queryInsertAccount, [name], (err, result, fields) => {
+      if (err) {
+        callback(null, err);
+      } else {
+        callback(result, null);
+      }
     });
   }
 };

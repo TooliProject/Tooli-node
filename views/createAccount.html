@@ -7,17 +7,31 @@
 </head>
 
 <body>
-    <div class="theader">
-        <div class="tnavbar">
+    <% include ejs/navbar.ejs %>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" action="/createAccount" class="form-group">
+                            <label for class="newUserName">
+                                Username
+                            </label>
+                            <input type="text"
+                                   name="newUserName"
+                                   value=""
+                                   placeholder="Username"
+                                    class="form-control"/>
+
+                            <input type="submit" value="Create Account" class="btn btn-primary mt-2"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3"></div>
         </div>
     </div>
-    <a class="toolilogolink" href="/">
-        <img src="/testbild.png" alt="Logo" class="toolilogo">
-    </a>
-    <form method="POST" action="/createAccount">
-        <input type="text" name="newUserName" value="" placeholder="Username" />
-        <input type="submit" value="Create Account"></input>
-    </form>
     <%- include ejs/footerPublic.ejs %>
 </body>
 
