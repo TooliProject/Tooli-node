@@ -4,10 +4,6 @@ body {
     background-color: rgb(250, 250, 250);
 }
 
-.container {
-    background-color: white;
-}
-
 .theader {
     top: 0px;
     left: 0px;
@@ -55,13 +51,9 @@ body {
 }
 
 .tsidebar {
-    position: fixed;
-    width: inherit;
-    height: 95vh;
+    margin: 0;
+    height: 100%;
     background-color: lightblue;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
 }
 
 .tsidetop {
@@ -76,11 +68,6 @@ body {
     margin: 0px;
 }
 
-#entries {
-    border-style: dotted;
-    border-width: 1px;
-    border-color: black;
-}
 
 .entryitem {
     border-style: solid;
@@ -104,75 +91,75 @@ body {
     position: relative;
 }
 
-.chatwrapper {
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    width: 330px;
-    height: 50%;
-    display: flex;
-    align-items: flex-end;
+/*.chatwrapper {*/
+/*    position: fixed;*/
+/*    bottom: 0px;*/
+/*    right: 0px;*/
+/*    width: 330px;*/
+/*    height: 50%;*/
+/*    display: flex;*/
+/*    align-items: flex-end;*/
 
-    transition: ease-in;
-    transition-duration: 300ms;
-}
+/*    transition: ease-in;*/
+/*    transition-duration: 300ms;*/
+/*}*/
 
-.toggleChatButton {
-    height: 30px;
-    width: 30px;
-}
+/*.toggleChatButton {*/
+/*    height: 30px;*/
+/*    width: 30px;*/
+/*}*/
 
-.chatarea {
-    width: 300px;
-    height: 100%;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    background-color: darkgreen;
+/*.chatarea {*/
+/*    width: 300px;*/
+/*    height: 100%;*/
+/*    border-color: black;*/
+/*    border-style: solid;*/
+/*    border-width: 1px;*/
+/*    background-color: darkgreen;*/
 
-    transition: ease-in;
-    transition-duration: 300ms;
-}
+/*    transition: ease-in;*/
+/*    transition-duration: 300ms;*/
+/*}*/
 
-.chatitems {
-    width: 100%;
-    /* Firefox */
-    height: -moz-calc(100% - 35px);
-    /* WebKit */
-    height: -webkit-calc(100% - 35px);
-    /* Opera */
-    height: -o-calc(100% - 35px);
-    /* Standard */
-    height: calc(100% - 35px);
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
+/*.chatitems {*/
+/*    width: 100%;*/
+/*    !* Firefox *!*/
+/*    height: -moz-calc(100% - 35px);*/
+/*    !* WebKit *!*/
+/*    height: -webkit-calc(100% - 35px);*/
+/*    !* Opera *!*/
+/*    height: -o-calc(100% - 35px);*/
+/*    !* Standard *!*/
+/*    height: calc(100% - 35px);*/
+/*    overflow-y: auto;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
 
-.chatitem {
-    background-color: khaki;
-    margin: 3px;
-}
+/*.chatitem {*/
+    /*background-color: khaki;*/
+    /*margin: 3px;*/
+/*}*/
 
-.chatform {
-    width: 100%;
-    height: 35px;
-}
+/*.chatform {*/
+/*    width: 100%;*/
+/*    height: 35px;*/
+/*}*/
 
-.chatbutton {
-    float: right;
-    height: 100%;
-}
+/*.chatbutton {*/
+/*    float: right;*/
+/*    height: 100%;*/
+/*}*/
 
-.chatinputbox {
-    overflow: hidden;
-    height: 100%;
-}
+/*.chatinputbox {*/
+/*    overflow: hidden;*/
+/*    height: 100%;*/
+/*}*/
 
-.chatinputtext {
-    width: 100%;
-    height: inherit;
-}
+/*.chatinputtext {*/
+/*    width: 100%;*/
+/*    height: inherit;*/
+/*}*/
 
 .tnavLinks {
     float: right;
@@ -183,7 +170,7 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    min-height: 100px;
+    min-height: 75px;
     background-color: lightgray;
     text-align: center;
 }

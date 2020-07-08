@@ -13,6 +13,7 @@
                 e.preventDefault();
                 $.post($(this).attr('action'), $(this).serialize());
                 $(this).find('.clearOnSubmit').val('');
+                window.location.reload();
             });
             $('#toggleSidebar').click(function (e) {
                 e.preventDefault();
@@ -47,145 +48,259 @@
 </head>
 
 <body>
-    <div class="theader">
-        <div class="tnavbar">
-            <a id="toggleSidebar" href="">toggleSide</a>
-            <nav class="tnavLinks">
-                <a href="/logout">Logout</a>
-                <a class="acc" href="/acc/<%=account.id%>"><%=account.name%></a>
-            </nav>
-        </div>
-    </div>
-    <a class="toolilogolink" href="/">
-        <img src="/_testbild.png" alt="Logo" class="toolilogo">
-    </a>
 
-    <div class="twrapper">
-        <div class="notifbox">
-            <!--stuff goes here-->
-        </div>
-        <div class="tside">
-            <div class="tsidebar">
-                <div class="tsidetop">
-                    <div class="tsidetopcontent">
-                        <a href="/new-list"> New List</a>
+<%- include ejs/navbar.ejs %>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-3">
+            <div class="row">
+                <div class="col-12">
+                    <a href="/new-list">
+                        <button class="btn btn-block btn-outline-primary">New List</button>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="lists" class="list-group">
+                        <% resList.forEach(function(list){ %>
+                        <a id="listsItem"
+                           href="/list/<%= list.id %>"
+                        <% if (currentList == list.id) { %>
+                        class="list-group-item list-group-item-action active"
+                        <% } else { %>
+                        class="list-group-item list-group-item-action"
+                        <% } %>
+                        ><%= list.name %>
+
+                        </a>
+                        <% }) %>
                     </div>
                 </div>
-                <ul id="lists">
-                    <% resList.forEach(function(list){ %>
-                    <li id="listsItem">
-                        <a id="listItemElement<%= list.id %>" href="/list/<%= list.id %>"><%= list.name %></a>
-                        <form method="POST" action="/deleteList">
-                            <input type="hidden" name="deleteListId" value="<%=list.id%>" />
-                            <input type="submit" value="X"></input>
-                        </form>
-                    </li>
-                    <% }) %>
-                </ul>
             </div>
         </div>
-        <div class="row d-flex justify-content-center tcontent">
-            <div class="col-md-6">
-                <h1>List</h1>
-                <div id="entries">
-                    <% resEntry.forEach(function(entry){ %>
-                    <div id="entryItem" class="entryitem">
-                        <input id="entryCheck<%=entry.id%>" class="entryCheck" value="<%=entry.id%>" type="checkbox"
-                            <% if (entry.status>0) { %> checked <% } %>></input>
-                        <span><%= entry.name %></span>
-                        <form method="POST" action="/deleteEntry">
-                            <input type="hidden" name="deleteEntryId" value="<%=entry.id%>" />
-                            <input type="submit" value="X"></input>
-                        </form>
-                    </div>
-                    <% }) %>
+
+        <!-- Content -->
+        <div class="col-9">
+            <div class="row">
+                <div class="col-10">
+                    <h1>
+                        <%= resList.filter(list => list.id == currentList)[0].name %>
+                    </h1>
                 </div>
-                <form action="" class="" method="post">
-                    <input type="text" name="newEntryName" id="newEntryName" class="" placeholder="Neuer Eintrag" />
-                    <input type="submit" id="newEntrySub" value="ok">
-                </form>
-                <form method="POST" action="/addUserToList">
-                    <input type="text" name="addUserName" value="" placeholder="Username" />
-                    <input type="submit" value="Add"></input>
-                </form>
-                <form method="POST" action="/removeUserFromList">
-                    <input type="hidden" name="accountId" value="<%=account.id%>" />
-                    <input type="submit" value="Leave"></input>
-                </form>
-                <div id="testForPopup"></div>
-            </div>
-        </div>
-    </div>
-    <div class="chatwrapper">
-        <a id="toggleChat" class="toggleChatButton" href=""><img style="width: inherit; height: inherit;"
-                src="/chatTMP.png" alt=""></a>
-        <div class="chatarea">
-            <div class="chatitems">
-                <% resChat.forEach(function(Chat){ %>
-                <!--use template HMMMMM-->
-                <div class="chatitem">
-                    <%=Chat.senderName%> &#58; <%=Chat.message%>
-                    <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">
-                        <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />
-                        <input type="submit" value="X"></input>
+                <div class="col-2">
+                    <form method="POST" action="/deleteList">
+                        <input type="hidden" name="deleteListId" value="<%=currentList%>"/>
+                        <input type="submit" class="btn btn-block btn-outline-danger" value="Delete List"/>
                     </form>
                 </div>
-                <% }) %>
             </div>
-            <form id="chatform" class="chatform ajaxForm" action="/chat">
-                <button class="chatbutton">Send</button>
-                <div class="chatinputbox">
-                    <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit"
-                        placeholder="Message List Members..." autocomplete="off" />
-                    <input type="hidden" id="accountid" value="<%=account.id%>" />
+
+            <div class="row">
+                <div class="col-12">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="newEntryName">
+                                        Add Entry
+                                    </label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text"
+                                           name="newEntryName"
+                                           id="newEntryName"
+                                           class="form-control"
+                                           placeholder="Do the dishes"/>
+                                </div>
+                                <div class="col-2">
+                                    <input type="submit" class="btn btn-block btn-outline-secondary" id="newEntrySub"
+                                           value="Confirm">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+
+            <hr>
+            <% resEntry.forEach(function(entry){ %>
+            <div class="row">
+                <div class="col-12">
+                    <div id="entryItem" class="form-group">
+                        <div class="row">
+                            <div class="col-1">
+                                <input
+                                        id="entryCheck<%=entry.id%>"
+                                        class="form-control entryCheck"
+                                        type="checkbox"
+                                        value="<%=entry.id%>"
+                                <% if (entry.status>0) { %> checked <% } %>
+                                />
+                            </div>
+                            <div class="col-9 mt-2">
+                                <%=entry.name%>
+                            </div>
+                            <div class="col-2">
+                                <form method="POST" action="/deleteEntry">
+                                    <input type="submit" class="btn btn-outline-secondary"
+                                           value="Remove"></input>
+                                    <input type="hidden" name="deleteEntryId" value="<%=entry.id%>"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <% }) %>
+            <div class="row">
+                <div class="col-12">
+                    <form method="POST" action="/addUserToList" class="form-inline">
+                        <div class="form-group">
+                            <label for="addUserName" class="mr-2">Add user to list</label>
+                            <input type="text"
+                                   name="addUserName"
+                                   id="addUserName"
+                                   value=""
+                                   placeholder="Username"
+                                   class="form-control"/>
+                        </div>
+                        <input type="submit" value="Add" class="btn btn-outline-secondary ml-2 mr-2"></input>
+
+                        <form method="POST" action="/removeUserFromList">
+                            <input type="hidden" name="accountId" value="<%=account.id%>"/>
+                            <input type="submit" value="Leave this list" class="btn btn-outline-secondary"></input>
+                        </form>
+                        <div id="testForPopup"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chat -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <hr>
+                    <h4>Messages</h4>
+                </div>
+            </div>
+            <% resChat.forEach(function(Chat, index){ %>
+                <div class="row mt-2">
+                    <div class="col-10">
+                        <div class="chatitem">
+                            <span style="color: blue"><%=Chat.senderName%> said: </span> <br> <%=Chat.message%>
+    <!--                        <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">-->
+    <!--                            <input type="hidden" name="deleteChatId" value="<%=Chat.id%>"/>-->
+    <!--                            <input type="submit" class="btn btn-outline-secondary" value="Remove"></input>-->
+    <!--                        </form>-->
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">
+                            <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />
+                            <input type="submit" value="Delete" class="btn btn-block btn-outline-danger"></input>
+                        </form>
+                    </div>
+                </div>
+            <hr>
+            <% }) %>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <form id="chatform" class="chatform ajaxForm" action="/chat">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="chatinputbox">
+                                    <label for="chatmessage">
+                                        Post message
+                                    </label>
+                                    <input id="chatmessage" name="chatmessage"
+                                           class="chatinputtext clearOnSubmit form-control"
+                                           placeholder="We should do more tasks" autocomplete="off" />
+                                    <input type="hidden" id="accountid" value="<%=account.id%>" />
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button class="chatbutton btn btn-block btn-outline-primary">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <%- include ejs/userSocketControl.ejs %>
-    <script>
-        $(document).ready(function () {
-            const listNsp = io('/listNsp');
-            const globalSkt = io();
-            listNsp.emit('joinRoom', {
-                rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
-            });
-            //Status Change
-            $('.entryCheck').change(function (e) {
-                //e.preventDefault(); // prevents page reloading
-                var status = 0;
-                if (this.checked)
-                    status = 1;
-                listNsp.emit('checkEntryChange', {
-                    id: e.target.getAttribute("value"),
-                    st: status
-                });
-                return false;
-            });
-            listNsp.on('checkEntryChange', function (msg) {
-                var checked = true;
-                if (msg.st == 0)
-                    checked = false;
-                $('#entryCheck' + msg.id).prop('checked', checked);
-            });
-            listNsp.on('chatMsg', function (msg) {
-                var newChat = templateChat(msg);
-                $('.chatitems').append(newChat); //TODO fix this
-                $('.chatitems').animate({
-                    scrollTop: $('.chatitems').prop('scrollHeight')
-                }, 500);
-            });
-            listNsp.on('deleteChatMsg', function (msg) {
-                var delChat = $("input[name='deleteChatId'][value='" + msg.deleteChatId + "'").parents(
-                    '.chatitem'); //parentus deletus
-                delChat.remove();
-            });
-            globalSkt.on('newsMsg', function (msg) {
-                alert('NEWS');
-            });
+</div>
+<!--    <div class="chatwrapper">-->
+<!--        <a id="toggleChat" class="toggleChatButton" href=""><img style="width: inherit; height: inherit;"-->
+<!--                src="/chatTMP.png" alt=""></a>-->
+<!--        <div class="chatarea">-->
+<!--            <div class="chatitems">-->
+<!--                <% resChat.forEach(function(Chat){ %>-->
+<!--                &lt;!&ndash;use template HMMMMM&ndash;&gt;-->
+<!--                <div class="chatitem">-->
+<!--                    <%=Chat.senderName%> &#58; <%=Chat.message%>-->
+<!--                    <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">-->
+<!--                        <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />-->
+<!--                        <input type="submit" value="X"></input>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--                <% }) %>-->
+<!--            </div>-->
+<!--            <form id="chatform" class="chatform ajaxForm" action="/chat">-->
+<!--                <button class="chatbutton">Send</button>-->
+<!--                <div class="chatinputbox">-->
+<!--                    <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit"-->
+<!--                        placeholder="Message List Members..." autocomplete="off" />-->
+<!--                    <input type="hidden" id="accountid" value="<%=account.id%>" />-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<%- include ejs/userSocketControl.ejs %>
+<script>
+    $(document).ready(function () {
+        const listNsp = io('/listNsp');
+        const globalSkt = io();
+        listNsp.emit('joinRoom', {
+            rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
         });
-    </script>
-
+        //Status Change
+        $('.entryCheck').change(function (e) {
+            //e.preventDefault(); // prevents page reloading
+            var status = 0;
+            if (this.checked)
+                status = 1;
+            listNsp.emit('checkEntryChange', {
+                id: e.target.getAttribute("value"),
+                st: status
+            });
+            return false;
+        });
+        listNsp.on('checkEntryChange', function (msg) {
+            var checked = true;
+            if (msg.st == 0)
+                checked = false;
+            $('#entryCheck' + msg.id).prop('checked', checked);
+        });
+        listNsp.on('chatMsg', function (msg) {
+            var newChat = templateChat(msg);
+            $('.chatitems').append(newChat); //TODO fix this
+            $('.chatitems').animate({
+                scrollTop: $('.chatitems').prop('scrollHeight')
+            }, 500);
+        });
+        listNsp.on('deleteChatMsg', function (msg) {
+            var delChat = $("input[name='deleteChatId'][value='" + msg.deleteChatId + "'").parents(
+                '.chatitem'); //parentus deletus
+            delChat.remove();
+        });
+        globalSkt.on('newsMsg', function (msg) {
+            alert('NEWS');
+        });
+    });
+</script>
+<% include ejs/footerPublic.ejs %>
 </body>
 
 </html>

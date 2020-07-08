@@ -38,9 +38,7 @@ app.use(express.urlencoded({
  */
 var authenticate = function (req, res) {
 	if (!req.session.account) {
-		res.write('<h1>Please login first.</h1>');
-		res.write('<a href="/login">Login</a>');
-		res.end();
+		res.redirect("/login");
 		console.log('Authentication failed');
 		return false; //NOT OK
 	}
@@ -104,7 +102,8 @@ app.get('/list/:listid', function (req, res) {
 								resList: resList,
 								resEntry: resEntry,
 								resChat: resChat,
-								account: req.session.account
+								account: req.session.account,
+								currentList: req.session.listid
 							});
 						}
 					});
@@ -150,9 +149,9 @@ app.post('/deleteEntry', function (req, res) { // list owner?
 			res.send(err);
 		} else {
 			console.log('1 entry deleted');
+			res.redirect("/list/" + req.session.listid);
 		}
 	});
-	res.redirect("/list/" + req.session.listid);
 });
 
 //Create List
@@ -166,12 +165,13 @@ app.post('/new-list', function (req, res) {
 			console.log(err);
 			res.send(err);
 		} else {
+			const newListId = result.insertId;
 			lists.InsertListAccRel(result.insertId, req.session.account.id, function (result, err) {
 				if (err) {
 					console.log(err);
 					res.send(err);
 				} else {
-					res.redirect('/list/' + result.insertId);
+					res.redirect('/list/' + newListId);
 				}
 			});
 		}
@@ -190,20 +190,19 @@ app.post('/deleteList', function (req, res) { //can only be done by list owner
 	if (req.body.deleteListId == req.session.account.myListId) { //can't delete personal list
 		console.log('cant');
 	} else {
-
-		lists.DeleteList(req.body.deleteListId, function (result, err) {
+		lists.DeleteList(parseInt(req.body.deleteListId), function (result, err) {
 			if (err) {
 				console.log(err);
 				res.send(err);
 			} else {
 				console.log('list deleted, wow');
+				if (req.body.deleteListId == req.session.listid) {
+					res.redirect("/list/" + req.session.account.myListId);
+				} else {
+					res.redirect('/list/' + req.session.listid);
+				}
 			}
 		});
-	}
-	if (req.body.deleteListId == req.session.listid) {
-		res.redirect("/list/" + req.session.account.myListId);
-	} else {
-		res.redirect('/list/' + req.session.listid);
 	}
 });
 
@@ -212,7 +211,7 @@ app.get('/new-list', function (req, res) {
 	if (!authenticate(req, res)) {
 		return;
 	}
-	res.render('new_List.html');
+	res.render('new_list.html');
 });
 
 //GET logout

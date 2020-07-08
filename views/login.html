@@ -4,96 +4,60 @@
 <head>
     <title>Login</title>
     <%- include ejs/scriptsAndStyle.ejs %>
-    <script>
-        function loginUser() {
-            let username = $("#username").val();
-            $.post("/login", {
-                    username: username
-                },
-                function (data, status) {
-                    if (data && !data.err) {
-                        $("#loginFailedText").hide();
-                        window.location.href = "/";
-                    } else {
-                        $("#loginFailedText").show();
-
-                        if(data.err) {
-                            $("#loginFailedText").html('Login failed:<br>' + data.err);
-                        }
-                    }
-                }
-            );
-        }
-        $(document).ready(function () {
-        });
-    </script>
+    <script src="/js/login.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="testbild.png" width="30" height="30"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<%- include ejs/navbar.ejs %>
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="loginform">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="username"
+                                   name="username"
+                                   placeholder="Username">
+                        </div>
+                        <!--                            <div class="form-group">-->
+                        <!--                                <label for="password">Password</label>-->
+                        <!--                                <input type="password"-->
+                        <!--                                       class="form-control"-->
+                        <!--                                       id="password"-->
+                        <!--                                       name="password"-->
+                        <!--                                       placeholder="Password"-->
+                        <!--                                       aria-describedby="password-warning">-->
+                        <!--                                <small id="password-warning"-->
+                        <!--                                       class="form-text text-muted">-->
+                        <!--                                    Tooli employees will never ask you for your password!-->
+                        <!--                                </small>-->
+                        <!--                            </div>-->
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-<!--                <li class="nav-item active">-->
-<!--                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
-<!--                </li>-->
-            </ul>
-        </div>
-    </nav>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-3"></div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form id="loginform">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="username"
-                                       name="username"
-                                       placeholder="Username">
-                            </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="password">Password</label>-->
-<!--                                <input type="password"-->
-<!--                                       class="form-control"-->
-<!--                                       id="password"-->
-<!--                                       name="password"-->
-<!--                                       placeholder="Password"-->
-<!--                                       aria-describedby="password-warning">-->
-<!--                                <small id="password-warning"-->
-<!--                                       class="form-text text-muted">-->
-<!--                                    Tooli employees will never ask you for your password!-->
-<!--                                </small>-->
-<!--                            </div>-->
+                    </form>
 
-                        </form>
-
-                        <button class="btn btn-primary" onclick="loginUser()">
-                            Login
-                        </button>
-                        <a href="/createAccount">Create New Account</a>
-                        <p id="loginFailedText"
-                           class="alert alert-danger mt-3"
-                           role="alert"
-                           style="display: none">
-                            Login failed!
-                        </p>
-                    </div>
+                    <button class="btn btn-primary" onclick="loginUser()">
+                        Login
+                    </button>
+                    <a href="/createAccount">Create New Account</a>
+                    <p id="loginFailedText"
+                       class="alert alert-danger mt-3"
+                       role="alert"
+                       style="display: none">
+                        Login failed!
+                    </p>
                 </div>
             </div>
-            <div class="col-3"></div>
         </div>
+        <div class="col-3"></div>
     </div>
+</div>
 
-    <%- include ejs/footerPublic.ejs %>
+<%- include ejs/footerPublic.ejs %>
 </body>
 
 </html>
