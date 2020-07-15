@@ -20,7 +20,7 @@ module.exports = {
       } else {
         //result = new Account(results[0].pi, results[0].name, results[0].mylist_id);
         results.forEach(element => {
-          result.push(new Entry(element.pi, element.name, element.status));
+          result.push(new Entry(element.PI, element.Name, element.Status));
         });
         callback(result, null);
       }
