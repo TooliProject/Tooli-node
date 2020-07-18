@@ -6,6 +6,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var mysql = require('mysql');
 var path = require('path');
+require('console-stamp')(console, 'dd.mm.yyyy HH:MM:ss');
 
 process.env.PWD = process.cwd();
 app.use(express.static(process.env.PWD + '/public'));
@@ -55,8 +56,8 @@ app.get('/', function (req, res) {
 app.get('/login', function (req, res) {
 	res.render('login.html');
 });
-app.get('/createAccount', function (req, res) {
-	res.render('createAccount.html');
+app.get('/register', function (req, res) {
+	res.render('register.html');
 });
 
 //login
@@ -65,7 +66,9 @@ app.post('/login', function (req, res) {
 	accounts.findByName(req.body.username, function (account, err) {
 		if (err) {
 			console.log(err);
-			res.send({err: err});
+			res.send({
+				err: err
+			});
 		} else { //successful login
 			console.log("valid");
 			req.session.account = account;
@@ -138,6 +141,26 @@ app.post('/list/:listid', function (req, res) {
 	res.redirect('/list/' + listid);
 });
 
+//Edit Entry
+app.post('/entry/:entryid', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
+	var entryid = req.params.entryid;
+
+	entries.updateEntryName(entryid, req.body.entryContent, function(result, err){
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			console.log('1 entry updated');
+			console.log(result);
+		}
+	});
+	
+	//TODO emit to list
+});
+
 //Delete Entry
 app.post('/deleteEntry', function (req, res) { // list owner?
 	if (!authenticate(req, res)) {
@@ -156,6 +179,7 @@ app.post('/deleteEntry', function (req, res) { // list owner?
 
 //Create List
 app.post('/new-list', function (req, res) {
+	console.log("in new list");
 	if (!authenticate(req, res)) {
 		return;
 	}
@@ -229,6 +253,7 @@ app.get('/logout', function (req, res) {
 
 //Create Chat
 app.post('/chat', function (req, res) {
+	console.log(req.body);
 	if (!authenticate(req, res)) {
 		return;
 	}
@@ -346,7 +371,9 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 });
 
 //create Account
-app.post('/createAccount', function (req, res) { //TODO: Same username check
+app.post('/register', function (req, res) { //TODO: Same username check
+	console.log(req);
+	console.log("new registration with uname " + req.body.newUserName);
 	accounts.InsertAccount(req.body.newUserName, function (result, err) {
 		if (err) {
 			console.log(err);
@@ -377,6 +404,7 @@ io.on('connection', function (socket) {
 		//console.log('user has disconnected from the global socket');
 	});
 });
+//Controls userspecific rooms U<userid>
 nspUsers.on('connection', function (socket) {
 	socket.on('connectUser', function (msg) {
 		socket.join(msg.rid);
@@ -386,6 +414,7 @@ nspUsers.on('connection', function (socket) {
 		console.log('disconnectU');
 	});
 });
+//Controls listspecific rooms L<listid>
 nspLists.on('connection', function (socket) {
 	//console.log('a user connected to the nsp socket');
 	socket.on('disconnect', function () {});
@@ -408,6 +437,7 @@ nspLists.on('connection', function (socket) {
 	socket.on('chatMsg', function (msg) {
 		console.log('chat message received');
 		console.log(msg);
+		console.log('is this used?');
 		nspLists.emit('chatMsg', msg);
 	});
 });

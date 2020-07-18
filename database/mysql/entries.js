@@ -22,33 +22,33 @@ module.exports = {
         results.forEach(element => {
           result.push(new Entry(element.PI, element.Name, element.Status));
         });
-        callback(result, null);
+        callback(result, err);
       }
     });
   },
   updateEntryStatus: (entryId, newStatus, callback) => {
     connection.query(queryUpdateEntryStatus, [newStatus, entryId], (err, result) => {
-      callback(result, null);  //TODO: Gerrors
+      callback(result, err);  //TODO: Gerrors
     });
   },
   InsertEntry: (newEntry, callback) => {
     connection.query(queryInsertEntry, [newEntry.listId, newEntry.name], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   DeleteById: (entryId, callback) => {
     connection.query(queryDeleteById, [entryId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   DeleteByListId: (listId, callback) => {
     connection.query(queryDeleteByListId, [listId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   updateEntryName: (entryId, newName, callback) => {
-    connection.query(queryUpdateEntryName, [entryId, newName], (err, result) => {
-      callback(result, null);
+    connection.query(queryUpdateEntryName, [newName, entryId], (err, result) => {
+      callback(result, err);
     });
   }
 };

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Account</title>
+    <%- include ejs/scriptsAndStyle.ejs %>
+</head>
+
+<body>
+    <% include ejs/navbar.ejs %>
+    <div id="content-container">
+        <div class="centerspace">
+            <div class="centerbox">
+                Register
+                <form method="POST" action="/register" class="form-group">
+                    <div id="loginbox">
+                        <input id="user-name" type="text" name="newUserName" placeholder="Username">
+                        <input id="user-mail" type="text" placeholder="Email">
+                        <div id="login-controls">
+                            <input type="submit" value="Register">
+                            <a href="/login">Login</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="notif-container">
+    </div>
+    <%- include ejs/footerPublic.ejs %>
+</body>
+
+</html>

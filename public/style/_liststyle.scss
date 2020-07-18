@@ -1,0 +1,307 @@
+#lists-container,
+#chat-items {
+    overflow-y: auto;
+}
+
+#lists-container {
+    display: none;
+    position: fixed;
+    float: left;
+    width: $sidebardefaultwidth;
+    height: calc(100vh - #{2 * $navbardefaultheight});
+    background-color: $cneutral;
+    padding: 5px 3px;
+
+    a {
+        display: block;
+        @include lightborder;
+        min-height: 6vh;
+        margin: 3px;
+        padding: 0px 10px;
+        line-height: 6vh;
+
+        &:hover {
+            background-color: lightpink;
+        }
+    }
+
+    z-index: 800;
+    box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, .2);
+}
+
+#lists-topbar {
+    @include lightborder;
+    margin: 0 2.5%;
+
+    * {
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+        width: 100%;
+    }
+}
+
+.list-current {
+    font-weight: bold;
+    box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, .2);
+}
+
+#entries-container {
+    display: flex;
+    width: auto;
+
+    justify-content: center;
+    padding: 2vh 0;
+
+    flex: {
+        wrap: wrap;
+    }
+}
+
+#entries-topbar {
+    background-color: $csecondary;
+    @include lightborder;
+    width: 100%;
+    margin: 0 2.5%;
+}
+
+.entry-item {
+    display: flex;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    min-height: 100px;
+    min-width: 200px;
+    width: $entriesdefaultwidth;
+    height: $entriesdefaultwidth/$entrieshwratio;
+    margin: .5vw;
+    @include lightborder;
+    font-size: .9rem;
+    position: relative;
+
+    flex: {
+        grow: 0;
+
+        wrap: wrap;
+    }
+}
+
+.editmodeOnly {
+    display: none;
+}
+
+.entry-content {
+    background-color: rgb(221, 221, 221);
+    height: 100%-100%/$entryverticalratio;
+    width: 100%;
+}
+
+.entry-options {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    align-content: space-around;
+    top: 0;
+    right: 0;
+    width: 10%;
+
+    * {
+        color: rgb(122, 122, 122);
+
+        &:hover {
+            color: rgb(122, 122, 122);
+        }
+    }
+
+}
+
+.entry-information {
+    background-color: rgb(185, 184, 184);
+    height: 100%/$entryverticalratio;
+    width: 100%-100%/$entryinfocontrolratio;
+    font-size: .7rem;
+}
+
+.entry-control {
+    background-color: rgb(145, 145, 145);
+    height: 100%/$entryverticalratio;
+    width: 100%/$entryinfocontrolratio;
+}
+.entry-edittext{
+    border: 0;
+    background-color: rgba(0, 0, 0, .1);
+    display: none;
+}
+
+.entry-options-active {
+    .entry-content {
+        width: 90%;
+    }
+
+    .entry-options {
+        background-color: rgb(68, 68, 68);
+        box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 1);
+        position: unset;
+        height: 100%-100%/$entryverticalratio;
+
+        *:hover {
+            color: rgb(211, 211, 211);
+        }
+    }
+}
+
+.entry-editmode {
+    border-width: 2px;
+    border-color: black;
+
+    .editmodeOnly {
+        display: unset;
+    }
+    .viewdata {
+        display: none;
+    }
+}
+
+.entry-option-confirmdelete {
+    display: none;
+}
+
+#chat-container {
+    background-color: $csecondary;
+    display: flex;
+
+    flex-flow: column;
+
+    position: fixed;
+    width: 100vw;
+    height: 40vh;
+    bottom: 0;
+    margin-bottom: $navbardefaultheight;
+    z-index: 700;
+    padding: 5px 3px;
+    box-shadow: -1px -1px 2px 0 rgba(0, 0, 0, .2);
+}
+
+#chat-container>* {
+    width: 100%;
+}
+
+#chat-items {
+    height: 100%;
+}
+
+.chat-item {
+    padding: 3px;
+    @include lightborder;
+    overflow: visible;
+    font-size: .8rem;
+    width: max-content;
+    margin:4px;
+    margin-left: auto;
+}
+.chat-self{
+    margin-left: 4px;
+    margin-right: auto;
+}
+
+#chatbottombox {
+    padding: 4px;
+}
+
+#chatbottombox * {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.chatfixed {
+    position: sticky !important;
+    float: right;
+    box-shadow: -1px 0px 2px 0 rgba(0, 0, 0, .2);
+}
+
+
+@include small-bp() {
+
+    #chat-container,
+    #lists-container {
+        margin-bottom: $navbardefaultheight/($navbarfactor+0);
+    }
+
+    #lists-container {
+        height: calc(100vh - #{2 * $navbardefaultheight/($navbarfactor+0)});
+    }
+}
+
+@include medium-bp() {
+    .entry-item {
+        max-width: $entriesdefaultwidth/($entrieswidthfactor + 0);
+        max-height: ($entriesdefaultwidth/($entrieswidthfactor + 0))/$entrieshwratio;
+        margin: .3vw;
+    }
+
+    #lists-container {
+        width: 40%;
+        height: calc(100vh - #{2 * $navbardefaultheight/($navbarfactor+1)});
+    }
+
+    #chat-container,
+    #lists-container {
+        margin-bottom: $navbardefaultheight/($navbarfactor+1);
+    }
+}
+
+/*it gets bigger when i pull on it*/
+@include large-bp() {
+
+    .entry-item {
+        max-width: $entriesdefaultwidth/($entrieswidthfactor + 1);
+        max-height: ($entriesdefaultwidth/($entrieswidthfactor + 1))/$entrieshwratio;
+        margin: .2vw;
+    }
+
+    #lists-container {
+        width: 20%;
+        margin-bottom: 0;
+    }
+
+    #chat-container {
+        position: fixed;
+        width: 20vw;
+        height: 40vh;
+        right: 0;
+        margin-bottom: $navbardefaultheight/($navbarfactor+2);
+    }
+
+    #lists-container,
+    .chatfixed {
+        position: sticky;
+        top: $navbardefaultheight/($navbarfactor+2);
+        height: calc(100vh - #{2 * $navbardefaultheight/($navbarfactor+2)}) !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+@include xlarge-bp() {
+    .entry-item {
+        max-width: 400px;
+        max-height: 200px;
+    }
+
+    #lists-container {
+        width: 300px;
+    }
+
+    #chat-container {
+        margin-bottom: 45px;
+        ;
+    }
+
+    #lists-container,
+    .chatfixed {
+        top: 45px;
+        height: calc(100vh - 45px * 2) !important;
+        margin-bottom: 0 !important;
+    }
+
+}

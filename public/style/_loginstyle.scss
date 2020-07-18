@@ -1,0 +1,12 @@
+.centerbox {
+    @include lightborder();
+    padding: 5vh 10vw;
+}
+
+#loginbox {
+    display: flex;
+
+    flex: {
+        flow: column wrap;
+    }
+}

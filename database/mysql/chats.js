@@ -29,22 +29,22 @@ module.exports = {
   },
   InsertChat: (newChatMsg, callback) => {
     connection.query(queryInsertChat, [newChatMsg.listId, newChatMsg.accId, newChatMsg.message], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   UpdateChatMsg: (newMsg, chatId, callback) => {
     connection.query(queryUpdateChatMsg, [newMsg,chatId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   DeleteChatById: (chatId, callback) => {
     connection.query(queryDeleteChatById, [chatId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   DeleteChatByListId: (listId, callback) => {
     connection.query(queryDeleteChatByListId, [listId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   }
 };

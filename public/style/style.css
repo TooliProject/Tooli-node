@@ -1,0 +1,519 @@
+/*it gets bigger when i pull on it*/
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 400;
+  font-size: 5vw;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+}
+
+html * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.navbartop, .footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 0;
+  height: 18vw;
+  width: 100%;
+  position: fixed;
+  background-color: #bdbdbd;
+  z-index: 900;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navbar-right {
+  margin-left: auto;
+}
+
+#content-container {
+  width: auto;
+  margin-top: 18vw;
+  margin-bottom: 18vw;
+}
+
+.centerspace {
+  padding: 10px;
+}
+
+#notif-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-flow: column-reverse nowrap;
+          flex-flow: column-reverse nowrap;
+  z-index: 1000;
+  background-color: #b49685;
+}
+
+.notifbox {
+  width: 80vw;
+  height: 10vh;
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.footer {
+  top: unset;
+  bottom: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 900;
+  -webkit-box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (min-width: 576px) and (orientation: landscape) {
+  html {
+    font-size: 4vw;
+  }
+  .navbartop, .footer,
+  .footer {
+    height: 9vw;
+  }
+  #content-container {
+    margin-top: 9vw;
+    margin-bottom: 9vw;
+  }
+}
+
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+  html {
+    font-size: 3vw;
+  }
+  .navbartop, .footer,
+  .footer {
+    height: 6vw;
+  }
+  #content-container {
+    margin-top: 6vw;
+    margin-bottom: 6vw;
+  }
+  .centerspace {
+    margin: 0 20%;
+  }
+  .notifbox {
+    width: 40vw;
+    height: 5vh;
+    min-height: 10vw;
+  }
+}
+
+/*it gets bigger when i pull on it*/
+@media only screen and (min-width: 992px) and (orientation: landscape) {
+  html {
+    font-size: 2vw;
+  }
+  .navbartop, .footer,
+  .footer {
+    height: 4.5vw;
+  }
+  #content-container {
+    margin-top: 4.5vw;
+    margin-bottom: 4.5vw;
+  }
+  .notifbox {
+    width: 200px;
+    height: 50px;
+    min-height: unset;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (orientation: landscape) {
+  html {
+    font-size: 18px;
+  }
+  .navbartop, .footer,
+  .footer {
+    height: 45px;
+  }
+  #content-container {
+    margin-top: 45px;
+    margin-bottom: 45px;
+  }
+}
+
+.visible {
+  display: block !important;
+}
+
+.invisible {
+  display: none !important;
+}
+
+#lists-container,
+#chat-items {
+  overflow-y: auto;
+}
+
+#lists-container {
+  display: none;
+  position: fixed;
+  float: left;
+  width: 80vw;
+  height: calc(100vh - 36vw);
+  background-color: #c79683;
+  padding: 5px 3px;
+  z-index: 800;
+  -webkit-box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+#lists-container a {
+  display: block;
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+  min-height: 6vh;
+  margin: 3px;
+  padding: 0px 10px;
+  line-height: 6vh;
+}
+
+#lists-container a:hover {
+  background-color: lightpink;
+}
+
+#lists-topbar {
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0 2.5%;
+}
+
+#lists-topbar * {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.list-current {
+  font-weight: bold;
+  -webkit-box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+#entries-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 2vh 0;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#entries-topbar {
+  background-color: #b49685;
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 2.5%;
+}
+
+.entry-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  min-height: 100px;
+  min-width: 200px;
+  width: 90vw;
+  height: 45vw;
+  margin: .5vw;
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+  font-size: .9rem;
+  position: relative;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.editmodeOnly {
+  display: none;
+}
+
+.entry-content {
+  background-color: #dddddd;
+  height: 66.66667%;
+  width: 100%;
+}
+
+.entry-options {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: distribute;
+      align-content: space-around;
+  top: 0;
+  right: 0;
+  width: 10%;
+}
+
+.entry-options * {
+  color: #7a7a7a;
+}
+
+.entry-options *:hover {
+  color: #7a7a7a;
+}
+
+.entry-information {
+  background-color: #b9b8b8;
+  height: 33.33333%;
+  width: 75%;
+  font-size: .7rem;
+}
+
+.entry-control {
+  background-color: #919191;
+  height: 33.33333%;
+  width: 25%;
+}
+
+.entry-edittext {
+  border: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.entry-options-active .entry-content {
+  width: 90%;
+}
+
+.entry-options-active .entry-options {
+  background-color: #444444;
+  -webkit-box-shadow: inset 0 0 20px 0 black;
+          box-shadow: inset 0 0 20px 0 black;
+  position: unset;
+  height: 66.66667%;
+}
+
+.entry-options-active .entry-options *:hover {
+  color: lightgray;
+}
+
+.entry-editmode {
+  border-width: 2px;
+  border-color: black;
+}
+
+.entry-editmode .editmodeOnly {
+  display: unset;
+}
+
+.entry-editmode .viewdata {
+  display: none;
+}
+
+.entry-option-confirmdelete {
+  display: none;
+}
+
+#chat-container {
+  background-color: #b49685;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  position: fixed;
+  width: 100vw;
+  height: 40vh;
+  bottom: 0;
+  margin-bottom: 18vw;
+  z-index: 700;
+  padding: 5px 3px;
+  -webkit-box-shadow: -1px -1px 2px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: -1px -1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+#chat-container > * {
+  width: 100%;
+}
+
+#chat-items {
+  height: 100%;
+}
+
+.chat-item {
+  padding: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+  overflow: visible;
+  font-size: .8rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 4px;
+  margin-left: auto;
+}
+
+.chat-self {
+  margin-left: 4px;
+  margin-right: auto;
+}
+
+#chatbottombox {
+  padding: 4px;
+}
+
+#chatbottombox * {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.chatfixed {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  float: right;
+  -webkit-box-shadow: -1px 0px 2px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: -1px 0px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (min-width: 576px) and (orientation: landscape) {
+  #chat-container,
+  #lists-container {
+    margin-bottom: 9vw;
+  }
+  #lists-container {
+    height: calc(100vh - 18vw);
+  }
+}
+
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+  .entry-item {
+    max-width: 45vw;
+    max-height: 22.5vw;
+    margin: .3vw;
+  }
+  #lists-container {
+    width: 40%;
+    height: calc(100vh - 12vw);
+  }
+  #chat-container,
+  #lists-container {
+    margin-bottom: 6vw;
+  }
+}
+
+/*it gets bigger when i pull on it*/
+@media only screen and (min-width: 992px) and (orientation: landscape) {
+  .entry-item {
+    max-width: 30vw;
+    max-height: 15vw;
+    margin: .2vw;
+  }
+  #lists-container {
+    width: 20%;
+    margin-bottom: 0;
+  }
+  #chat-container {
+    position: fixed;
+    width: 20vw;
+    height: 40vh;
+    right: 0;
+    margin-bottom: 4.5vw;
+  }
+  #lists-container,
+  .chatfixed {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4.5vw;
+    height: calc(100vh - 9vw) !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (orientation: landscape) {
+  .entry-item {
+    max-width: 400px;
+    max-height: 200px;
+  }
+  #lists-container {
+    width: 300px;
+  }
+  #chat-container {
+    margin-bottom: 45px;
+  }
+  #lists-container,
+  .chatfixed {
+    top: 45px;
+    height: calc(100vh - 45px * 2) !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+.centerbox {
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5vh 10vw;
+}
+
+#loginbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,5 +1,5 @@
 function loginUser() {
-    let username = $("#username").val();
+    let username = $("#user-name").val();
     $.post("/login", {
             username: username
         },

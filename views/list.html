@@ -7,300 +7,269 @@
 
     <script>
         $(document).ready(function () {
-            var newEntryName, deleteEntryID;
-
+            $('#chat-items').animate({
+                scrollTop: $('#chat-items').prop('scrollHeight')
+            }, 500);
             $('.ajaxForm').submit(function (e) {
                 e.preventDefault();
                 $.post($(this).attr('action'), $(this).serialize());
                 $(this).find('.clearOnSubmit').val('');
-                window.location.reload();
             });
-            $('#toggleSidebar').click(function (e) {
+            if (window.matchMedia("screen and (min-width: 992px) and (orientation: landscape)")
+                .matches) { //shows sidebar on big boy screens
+                document.getElementById("lists-container").classList.add('visible');
+                document.getElementById("lists-container").classList.remove('invisible');
+            } else {
+                $("#chat-container").removeClass('visible').addClass('invisible');
+            }
+            window.onresize = function () {
+                if (!window.matchMedia("screen and (min-width: 992px) and (orientation: landscape)")
+                    .matches) { //removes fixed class from chat if window is too smol
+                    document.getElementById("chat-container").classList.remove('chatfixed');
+                }
+            }
+            $('.toggleEntryOptions').click(function (e) {
                 e.preventDefault();
-                var side = $('.tside');
-                if (side.css('width') == '0px') {
-                    if ($(window).innerWidth() < 768) {
-                        side.css('width', '75%');
-                    } else {
-                        side.css('width', '');
+                var entryItem = $(event.target).parents('.entry-item');
+                if (entryItem.hasClass('entry-options-active')) {
+                    if (entryItem.hasClass('entry-editmode')) {
+                        entryItem.removeClass('entry-editmode');
                     }
+                    entryItem.removeClass('entry-options-active');
+                    entryItem.find("[class^='entry-option-'],[class*=' entry-option-']").addClass(
+                        'invisible').removeClass('visible');
                 } else {
-                    side.css('width', '0%');
+                    entryItem.addClass('entry-options-active');
+                    entryItem.find("[class^='entry-option-'],[class*=' entry-option-']").removeClass(
+                        'invisible');
+                }
+            });
+            $('.entry-option-confirm').click(function (e) {
+                e.preventDefault();
+                var entryItem = $(event.target).parents('.entry-item');
+                if (entryItem.hasClass('entry-editmode')) { //Confirm Edit
+                    //submit or post
+                    console.log(entryItem.find('.entry-id').val());
+                    console.log(entryItem.find('.entry-content-edit').val());
+                    $.post('/entry/'+entryItem.find('.entry-id').val(), {entryContent: entryItem.find('.entry-content-edit').val()});
+                    //exit editmode
+                    entryItem.removeClass('entry-editmode');
+                    //reset edit btn to edit
+                    entryItem.find('.entry-option-edit').html('E');
+                } else {
+                    //trying to confirm without editmode
+                    createNewNotif({
+                        notiftext: 'no no'
+                    });
+                }
+            });
+            $('.entry-option-edit').click(function (e) {
+                e.preventDefault();
+                var entryItem = $(event.target).parents('.entry-item');
+                if (entryItem.hasClass('entry-editmode')) {
+                    //exit editmode
+                    entryItem.removeClass('entry-editmode');
+                    //reset edit btn to edit
+                    entryItem.find('.entry-option-edit').html('E');
+                } else {
+                    //enter edit mode
+                    entryItem.addClass('entry-editmode');
+                    //change edit btn to cancel edit
+                    entryItem.find('.entry-option-edit').html('CE');
+                    //copy view value to edit field
+                    entryItem.find('.entry-content-edit').val(entryItem.find('.entry-content-vd')
+                        .html());
+                }
+            });
+            $('.entry-option-confirmdelete').click(function (e) {
+                e.preventDefault();
+                var entryItem = $(event.target).parents('.entry-item');
+                if (entryItem.find('.entry-option-confirmdelete').hasClass('visible')) {
+                    //delete entry
+                    $.post('/deleteEntry', {deleteEntryId: entryItem.find('.entry-id').val()});
+                } else {
+                    //trying to delete on invisible btn
+                    createNewNotif({
+                        notiftext: 'how pls'
+                    });
+                }
+            });
+            $('.entry-option-delete').click(function (e) {
+                e.preventDefault();
+                var entryItem = $(event.target).parents('.entry-item');
+                if (entryItem.find('.entry-option-confirmdelete').hasClass('visible')) {
+                    //reset delte btn to delete
+                    entryItem.find('.entry-option-delete').html('D');
+                    //hide confirmdelete btn
+                    entryItem.find('.entry-option-confirmdelete').removeClass('visible');
+                } else {
+                    //change delete btn to cancel delete
+                    entryItem.find('.entry-option-delete').html('CD');
+                    //show confirmdelete btn
+                    entryItem.find('.entry-option-confirmdelete').addClass('visible');
                 }
             });
             $('#toggleChat').click(function (e) {
                 e.preventDefault();
-                var chatwrapper = $('.chatwrapper');
-                if (chatwrapper.css('right') == '0px') {
-                    chatwrapper.css('right', '-300px');
-                } else {
-                    chatwrapper.css('right', '0px');
+                if ($("#chat-container").css('display') != 'none') { //hide
+                    document.getElementById("chat-container").classList.add('invisible');
+                } else { //show
+                    document.getElementById("chat-container").classList.remove('invisible');
                 }
             });
-            $('#chatform').submit(function (e) {
-                $('.chatitems').animate({
-                    scrollTop: $('.chatitems').prop('scrollHeight')
-                }, 1000);
+            $('#fixChat').click(function (e) {
+                e.preventDefault();
+                if (document.getElementById("chat-container").classList.contains('chatfixed')) {
+                    document.getElementById("chat-container").classList.remove('chatfixed');
+                } else {
+                    document.getElementById("chat-container").classList.add('chatfixed');
+                }
             });
-
+            $('#toggleLists').click(function (e) {
+                e.preventDefault();
+                if ($("#lists-container").css('display') != 'none') { //hide
+                    document.getElementById("lists-container").classList.remove('visible');
+                    document.getElementById("lists-container").classList.add('invisible');
+                } else { //show
+                    document.getElementById("lists-container").classList.add('visible');
+                    document.getElementById("lists-container").classList.remove('invisible');
+                }
+            });
         });
+
+        function createObjFromTemplate(templatename, data) {
+            var rawhtml = $('#' + templatename).html();
+            for (const [key, value] of Object.entries(data)) {
+                rawhtml = rawhtml.replace('{{' + key + '}}', value);
+            }
+            return $.parseHTML(rawhtml)[1];
+        }
+
+        function createNewNotif(data) {
+            var template = createObjFromTemplate('notif-template', data);
+            setTimeout(function () {
+                template.remove();
+            }, 2000);
+            $('#notif-container').append(template);
+        }
+    </script>
+    <script id="notif-template" type="text/template">
+        <div class="notifbox">
+            {{notiftext}}
+        </div>
+    </script>
+    <script id="chat-template" type="text/template">
+        <div class="chat-item">
+            {{sender}} said: </span> <br> {{message}}
+        </div>
     </script>
 </head>
 
 <body>
-
-<%- include ejs/navbar.ejs %>
-
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-3">
-            <div class="row">
-                <div class="col-12">
-                    <a href="/new-list">
-                        <button class="btn btn-block btn-outline-primary">New List</button>
-                    </a>
-                </div>
+    <%- include ejs/navbar.ejs %>
+    <div id="content-container">
+        <div id="lists-container">
+            <div id="lists-topbar">
+                <form action="/new-list" method="post">
+                    <input type="text" name="newListName" placeholder="New List">
+                </form>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div id="lists" class="list-group">
-                        <% resList.forEach(function(list){ %>
-                        <a id="listsItem"
-                           href="/list/<%= list.id %>"
-                        <% if (currentList == list.id) { %>
-                        class="list-group-item list-group-item-action active"
-                        <% } else { %>
-                        class="list-group-item list-group-item-action"
-                        <% } %>
-                        ><%= list.name %>
+            <% resList.forEach(function(list){ %>
+            <a href="/list/<%= list.id %>" <% if (currentList == list.id) { %> class="list-item list-current"
+                <% } else { %> class="list-item" <% } %>><%= list.name %>
 
-                        </a>
-                        <% }) %>
-                    </div>
+            </a>
+            <% }) %>
+        </div>
+        <div id="chat-container">
+            <div id="chat-items">
+                <% resChat.forEach(function(Chat){ %>
+                <div <% if (account.id == Chat.senderId) { %> class="chat-item chat-self" 
+                    <% } else { %> class="chat-item"  <% } %> >
+                    <%=Chat.senderName%> said: </span> <br> <%=Chat.message%>
+                    <input type="hidden" class=".chat-id" value="<%=Chat.id%>">
+                    <input type="hidden" class=".sender-id" value="<%=Chat.senderId%>">
                 </div>
+                <% }) %>
+            </div>
+            <div id="chatbottombox">
+                <form method="POST" class="ajaxForm" action="/chat">
+                    <input name="chatmessage" class="clearOnSubmit" placeholder="We should do more tasks"
+                        autocomplete="off" />
+                </form>
             </div>
         </div>
-
-        <!-- Content -->
-        <div class="col-9">
-            <div class="row">
-                <div class="col-10">
-                    <h1>
-                        <%= resList.filter(list => list.id == currentList)[0].name %>
-                    </h1>
-                </div>
-                <div class="col-2">
-                    <form method="POST" action="/deleteList">
-                        <input type="hidden" name="deleteListId" value="<%=currentList%>"/>
-                        <input type="submit" class="btn btn-block btn-outline-danger" value="Delete List"/>
-                    </form>
-                </div>
+        <div id="entries-container">
+            <div id="entries-topbar">
+                <div><%= resList.filter(list => list.id == currentList)[0].name %></div>
+                <form action="" method="post">
+                    <input type="text" name="newEntryName" placeholder="Do the dishes">
+                    <input type="submit" value="Confirm">
             </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <form action="" method="post">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-12">
-                                    <label for="newEntryName">
-                                        Add Entry
-                                    </label>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text"
-                                           name="newEntryName"
-                                           id="newEntryName"
-                                           class="form-control"
-                                           placeholder="Do the dishes"/>
-                                </div>
-                                <div class="col-2">
-                                    <input type="submit" class="btn btn-block btn-outline-secondary" id="newEntrySub"
-                                           value="Confirm">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <hr>
+            </form>
             <% resEntry.forEach(function(entry){ %>
-            <div class="row">
-                <div class="col-12">
-                    <div id="entryItem" class="form-group">
-                        <div class="row">
-                            <div class="col-1">
-                                <input
-                                        id="entryCheck<%=entry.id%>"
-                                        class="form-control entryCheck"
-                                        type="checkbox"
-                                        value="<%=entry.id%>"
-                                <% if (entry.status>0) { %> checked <% } %>
-                                />
-                            </div>
-                            <div class="col-9 mt-2">
-                                <%=entry.name%>
-                            </div>
-                            <div class="col-2">
-                                <form method="POST" action="/deleteEntry">
-                                    <input type="submit" class="btn btn-outline-secondary"
-                                           value="Remove"></input>
-                                    <input type="hidden" name="deleteEntryId" value="<%=entry.id%>"/>
-                                </form>
-                            </div>
-                        </div>
+            <div class="entry-item">
+                <div class="entry-content">
+                    <div class="viewdata entry-content-vd"><%=entry.name%></div>
+                    <div><input type="text" name="entryContent" class="entry-edittext editmodeOnly entry-content-edit">
                     </div>
-                    <hr>
                 </div>
+                <div class="entry-options">
+                    <a href="" class="toggleEntryOptions">O</a>
+                    <a href="" class="entry-option-confirm editmodeOnly invisible">OKE</a>
+                    <a href="" class="entry-option-edit invisible">E</a>
+                    <a href="" class="entry-option-confirmdelete invisible">OKD</a>
+                    <a href="" class="entry-option-delete invisible">D</a>
+                </div>
+                <div class="entry-information">information space for future use</div>
+                <div class="entry-control"><input id="entryCheck<%=entry.id%>" class="entryCheck" type="checkbox"
+                        value="<%=entry.id%>" <% if (entry.status>0) { %> checked <% } %> /></div>
+                <input type="hidden" class="entry-id" value="<%=entry.id%>">
             </div>
             <% }) %>
-            <div class="row">
-                <div class="col-12">
-                    <form method="POST" action="/addUserToList" class="form-inline">
-                        <div class="form-group">
-                            <label for="addUserName" class="mr-2">Add user to list</label>
-                            <input type="text"
-                                   name="addUserName"
-                                   id="addUserName"
-                                   value=""
-                                   placeholder="Username"
-                                   class="form-control"/>
-                        </div>
-                        <input type="submit" value="Add" class="btn btn-outline-secondary ml-2 mr-2"></input>
-
-                        <form method="POST" action="/removeUserFromList">
-                            <input type="hidden" name="accountId" value="<%=account.id%>"/>
-                            <input type="submit" value="Leave this list" class="btn btn-outline-secondary"></input>
-                        </form>
-                        <div id="testForPopup"></div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Chat -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <hr>
-                    <h4>Messages</h4>
-                </div>
-            </div>
-            <% resChat.forEach(function(Chat, index){ %>
-                <div class="row mt-2">
-                    <div class="col-10">
-                        <div class="chatitem">
-                            <span style="color: blue"><%=Chat.senderName%> said: </span> <br> <%=Chat.message%>
-    <!--                        <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">-->
-    <!--                            <input type="hidden" name="deleteChatId" value="<%=Chat.id%>"/>-->
-    <!--                            <input type="submit" class="btn btn-outline-secondary" value="Remove"></input>-->
-    <!--                        </form>-->
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">
-                            <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />
-                            <input type="submit" value="Delete" class="btn btn-block btn-outline-danger"></input>
-                        </form>
-                    </div>
-                </div>
-            <hr>
-            <% }) %>
-            <div class="row mt-2">
-                <div class="col-12">
-                    <form id="chatform" class="chatform ajaxForm" action="/chat">
-                        <div class="row">
-                            <div class="col-10">
-                                <div class="chatinputbox">
-                                    <label for="chatmessage">
-                                        Post message
-                                    </label>
-                                    <input id="chatmessage" name="chatmessage"
-                                           class="chatinputtext clearOnSubmit form-control"
-                                           placeholder="We should do more tasks" autocomplete="off" />
-                                    <input type="hidden" id="accountid" value="<%=account.id%>" />
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <button class="chatbutton btn btn-block btn-outline-primary">Send</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
-</div>
-<!--    <div class="chatwrapper">-->
-<!--        <a id="toggleChat" class="toggleChatButton" href=""><img style="width: inherit; height: inherit;"-->
-<!--                src="/chatTMP.png" alt=""></a>-->
-<!--        <div class="chatarea">-->
-<!--            <div class="chatitems">-->
-<!--                <% resChat.forEach(function(Chat){ %>-->
-<!--                &lt;!&ndash;use template HMMMMM&ndash;&gt;-->
-<!--                <div class="chatitem">-->
-<!--                    <%=Chat.senderName%> &#58; <%=Chat.message%>-->
-<!--                    <form method="POST" class="deleteChatForm ajaxForm" action="/deleteChat">-->
-<!--                        <input type="hidden" name="deleteChatId" value="<%=Chat.id%>" />-->
-<!--                        <input type="submit" value="X"></input>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <% }) %>-->
-<!--            </div>-->
-<!--            <form id="chatform" class="chatform ajaxForm" action="/chat">-->
-<!--                <button class="chatbutton">Send</button>-->
-<!--                <div class="chatinputbox">-->
-<!--                    <input id="chatmessage" name="chatmessage" class="chatinputtext clearOnSubmit"-->
-<!--                        placeholder="Message List Members..." autocomplete="off" />-->
-<!--                    <input type="hidden" id="accountid" value="<%=account.id%>" />-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<%- include ejs/userSocketControl.ejs %>
-<script>
-    $(document).ready(function () {
-        const listNsp = io('/listNsp');
-        const globalSkt = io();
-        listNsp.emit('joinRoom', {
-            rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
-        });
-        //Status Change
-        $('.entryCheck').change(function (e) {
-            //e.preventDefault(); // prevents page reloading
-            var status = 0;
-            if (this.checked)
-                status = 1;
-            listNsp.emit('checkEntryChange', {
-                id: e.target.getAttribute("value"),
-                st: status
+    <div id="notif-container">
+    </div>
+    <% include ejs/footerPublic.ejs %>
+    <%- include ejs/userSocketControl.ejs %>
+    <script>
+        $(document).ready(function () {
+            const listNsp = io('/listNsp');
+            const globalSkt = io();
+            listNsp.emit('joinRoom', {
+                rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
             });
-            return false;
+            //Status Change
+            $('.entryCheck').change(function (e) {
+                //e.preventDefault(); // prevents page reloading
+                var status = 0;
+                if (this.checked)
+                    status = 1;
+                listNsp.emit('checkEntryChange', {
+                    id: e.target.getAttribute("value"),
+                    st: status
+                });
+                return false;
+            });
+            listNsp.on('checkEntryChange', function (msg) {
+                var checked = true;
+                if (msg.st == 0)
+                    checked = false;
+                $('#entryCheck' + msg.id).prop('checked', checked);
+            });
+            listNsp.on('chatMsg', function (msg) {
+                var newChat = createObjFromTemplate('chat-template', msg);
+                $('#chat-items').append(newChat); //TODO fix this
+                $('#chat-items').animate({
+                    scrollTop: $('#chat-items').prop('scrollHeight')
+                }, 500);
+            });
+            listNsp.on('deleteChatMsg', function (msg) {
+                //TODO deleteChat
+            });
         });
-        listNsp.on('checkEntryChange', function (msg) {
-            var checked = true;
-            if (msg.st == 0)
-                checked = false;
-            $('#entryCheck' + msg.id).prop('checked', checked);
-        });
-        listNsp.on('chatMsg', function (msg) {
-            var newChat = templateChat(msg);
-            $('.chatitems').append(newChat); //TODO fix this
-            $('.chatitems').animate({
-                scrollTop: $('.chatitems').prop('scrollHeight')
-            }, 500);
-        });
-        listNsp.on('deleteChatMsg', function (msg) {
-            var delChat = $("input[name='deleteChatId'][value='" + msg.deleteChatId + "'").parents(
-                '.chatitem'); //parentus deletus
-            delChat.remove();
-        });
-        globalSkt.on('newsMsg', function (msg) {
-            alert('NEWS');
-        });
-    });
-</script>
-<% include ejs/footerPublic.ejs %>
+    </script>
 </body>
 
 </html>
