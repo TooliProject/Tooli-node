@@ -5,221 +5,7 @@
     <title>List</title>
     <%- include ejs/scriptsAndStyle.ejs %>
 
-    <script>
-        function deleteChat(e) {
-            e.preventDefault();
-            var chatItem = $(event.target).parents('.chat-item');
-            //Send delete POST
-            $.post('/deleteChat', {
-                deleteChatId: chatItem.find('.chat-id').val()
-            });
-        }
-        $(document).ready(function () {
-            //store accountId in sessionstorage
-            window.sessionStorage.setItem('accountId', '<%=account.id%>');
-            //scroll chat down
-            $('#chat-items').prop({
-                scrollTop: $('#chat-items').prop('scrollHeight')
-            });
-
-            function getLogTime() {
-                var d = new Date();
-                return d.getMinutes() + ':' + d.getSeconds();
-            }
-            $('.ajaxForm').submit(function (e) {
-                e.preventDefault();
-                var req = $.post($(this).attr('action'), $(this).serialize(), function (res) {
-                    //cool it worked
-                    console.log('worked');
-                }).fail(function (res) {
-                    console.log(res);
-                });
-                $(this).find('.clearOnSubmit').val('');
-            });
-            if (window.matchMedia("screen and (min-width: 992px) and (orientation: landscape)")
-                .matches) { //shows sidebar on big boy screens
-                document.getElementById("lists-container").classList.add('visible');
-                document.getElementById("lists-container").classList.remove('invisible');
-            } else {
-                $("#chat-container").removeClass('visible').addClass('invisible');
-            }
-            window.onresize = function () {
-                if (!window.matchMedia("screen and (min-width: 992px) and (orientation: landscape)")
-                    .matches) { //removes fixed class from chat if window is too smol
-                    document.getElementById("chat-container").classList.remove('chatfixed');
-                }
-            }
-            $('.toggleEntryOptions').click(function (e) {
-                e.preventDefault();
-                var entryItem = $(event.target).parents('.entry-item');
-                if (entryItem.hasClass('entry-options-active')) {
-                    //leave editmode
-                    if (entryItem.hasClass('editmode')) {
-                        entryItem.removeClass('editmode');
-                    }
-                    //hide options
-                    entryItem.removeClass('entry-options-active');
-                    entryItem.find("[class^='entry-option-'],[class*=' entry-option-']").addClass(
-                        'invisible').removeClass('visible');
-                } else {
-                    //show options
-                    entryItem.addClass('entry-options-active');
-                    entryItem.find('.entry-option-edit').html('E');
-                    entryItem.find('.entry-option-delete').html('D');
-                    entryItem.find("[class^='entry-option-'],[class*=' entry-option-']").removeClass(
-                        'invisible');
-                }
-            });
-            $('.entry-option-confirmedit').click(function (e) {
-                e.preventDefault();
-                var entryItem = $(event.target).parents('.entry-item');
-                if (entryItem.hasClass('editmode')) { //Confirm Edit
-                    //submit or post
-                    $.post('/entry/' + entryItem.find('.entry-id').val(), {
-                        entryContent: entryItem.find('.entry-content-edit').val()
-                    });
-                    //exit editmode
-                    entryItem.removeClass('editmode');
-                    //reset edit btn to edit
-                    entryItem.find('.entry-option-edit').html('E');
-                } else {
-                    //trying to confirm without editmode
-                    createNewNotif({
-                        notiftext: 'no no'
-                    });
-                }
-            });
-            $('.entry-option-edit').click(function (e) {
-                e.preventDefault();
-                var entryItem = $(event.target).parents('.entry-item');
-                if (entryItem.hasClass('editmode')) {
-                    //exit editmode
-                    entryItem.removeClass('editmode');
-                    //reset edit btn to edit
-                    entryItem.find('.entry-option-edit').html('E');
-                } else {
-                    //enter edit mode
-                    entryItem.addClass('editmode');
-                    //change edit btn to cancel edit
-                    entryItem.find('.entry-option-edit').html('CE');
-                    //copy view value to edit field
-                    entryItem.find('.entry-content-edit').val(entryItem.find('.entry-content-vd')
-                        .html());
-                }
-            });
-            $('.entry-option-confirmdelete').click(function (e) {
-                e.preventDefault();
-                var entryItem = $(event.target).parents('.entry-item');
-                if (entryItem.find('.entry-option-confirmdelete').hasClass('visible')) {
-                    //delete entry
-                    $.post('/deleteEntry', {
-                        deleteEntryId: entryItem.find('.entry-id').val()
-                    });
-                } else {
-                    //trying to delete on invisible btn
-                    createNewNotif({
-                        notiftext: 'how pls'
-                    });
-                }
-            });
-            $('.entry-option-delete').click(function (e) {
-                e.preventDefault();
-                var entryItem = $(event.target).parents('.entry-item');
-                if (entryItem.find('.entry-option-confirmdelete').hasClass('visible')) {
-                    //reset delte btn to delete
-                    entryItem.find('.entry-option-delete').html('D');
-                    //hide confirmdelete btn
-                    entryItem.find('.entry-option-confirmdelete').removeClass('visible');
-                } else {
-                    //change delete btn to cancel delete
-                    entryItem.find('.entry-option-delete').html('CD');
-                    //show confirmdelete btn
-                    entryItem.find('.entry-option-confirmdelete').addClass('visible');
-                }
-            });
-            $('.chat-option-confirmedit').click(function (e) {
-                e.preventDefault();
-                var chatItem = $(event.target).parents('.chat-item');
-                if (chatItem.hasClass('editmode')) { //Confirm Edit
-                    //post edit
-                    $.post('/chat/' + chatItem.find('.chat-id').val(), {
-                        chatContent: chatItem.find('.chat-content-edit').val()
-                    });
-                    //exit editmode
-                    chatItem.removeClass('editmode');
-                    //reset edit btn to edit
-                    chatItem.find('.chat-option-edit').html('E');
-                } else {
-                    //trying to confirm without editmode
-                    createNewNotif({
-                        notiftext: 'no no'
-                    });
-                }
-            });
-            $('.chat-option-edit').click(function (e) { //toggle editmode
-                e.preventDefault();
-                var chatItem = $(event.target).parents('.chat-item');
-                if (chatItem.hasClass('editmode')) {
-                    //exit editmode
-                    chatItem.removeClass('editmode');
-                    //reset edit btn to edit
-                    chatItem.find('.chat-option-edit').html('E');
-                } else {
-                    //enter edit mode
-                    chatItem.addClass('editmode');
-                    //change edit btn to cancel edit
-                    chatItem.find('.chat-option-edit').html('CE');
-                    //copy view value to edit field
-                    chatItem.find('.chat-content-edit').val(chatItem.find('.chat-content-vd')
-                        .html());
-                }
-            });
-            $('.chat-option-delete').click(deleteChat);
-            $('#toggleChat').click(function (e) {
-                e.preventDefault();
-                if ($("#chat-container").css('display') != 'none') { //hide
-                    document.getElementById("chat-container").classList.add('invisible');
-                } else { //show
-                    document.getElementById("chat-container").classList.remove('invisible');
-                }
-            });
-            $('#fixChat').click(function (e) {
-                e.preventDefault();
-                if (document.getElementById("chat-container").classList.contains('chatfixed')) {
-                    document.getElementById("chat-container").classList.remove('chatfixed');
-                } else {
-                    document.getElementById("chat-container").classList.add('chatfixed');
-                }
-            });
-            $('#toggleLists').click(function (e) {
-                e.preventDefault();
-                if ($("#lists-container").css('display') != 'none') { //hide
-                    document.getElementById("lists-container").classList.remove('visible');
-                    document.getElementById("lists-container").classList.add('invisible');
-                } else { //show
-                    document.getElementById("lists-container").classList.add('visible');
-                    document.getElementById("lists-container").classList.remove('invisible');
-                }
-            });
-        });
-
-        function createObjFromTemplate(templatename, data) {
-            var rawhtml = $('#' + templatename).html();
-            for (const [key, value] of Object.entries(data)) {
-                rawhtml = rawhtml.replace('{{' + key + '}}', value);
-            }
-            rawhtml = jQuery.trim(rawhtml);
-            return $($.parseHTML(rawhtml)[0]);
-        }
-
-        function createNewNotif(data) {
-            var template = createObjFromTemplate('notif-template', data);
-            setTimeout(function () {
-                template.remove();
-            }, 2000);
-            $('#notif-container').append(template);
-        }
-    </script>
+    <script src="/js/list.js"></script>
     <!--UPDATE TEMPLATES!!!!-->
     <script id="notif-template" type="text/template">
         <div class="notifbox">
@@ -241,6 +27,27 @@
             <div class="chat-timestamp">{{timestamp}}</div>
             <input type="hidden" class="chat-id" value="{{chatId}}">
             <input type="hidden" class="sender-id" value="{{senderId}}">
+        </div>
+    </script>
+    <script id="entry-template" type="text/template">
+        <div class="entry-item">
+            <div class="entry-content">
+                <div class="entry-content-vd viewdata">{{name}}</div>
+                <input type="text" name="entryContent" class="entry-content-edit editmodeOnly entry-edittext">
+            </div>
+            <div class="entry-options">
+                <a href="" class="toggleEntryOptions">O</a>
+                <a href="" class="entry-option-confirmedit editmodeOnly invisible">OKE</a>
+                <a href="" class="entry-option-edit invisible">E</a>
+                <a href="" class="entry-option-confirmdelete invisible">OKD</a>
+                <a href="" class="entry-option-delete invisible">D</a>
+            </div>
+            <div class="entry-information">information space for future use</div>
+            <div class="entry-control">
+                <input id="entryCheck{{entryId}}" class="entryCheck" type="checkbox"
+                    value="{{entryId}}" {{checkedString}} />
+            </div>
+            <input type="hidden" class="entry-id" value="{{entryId}}">
         </div>
     </script>
 </head>
@@ -321,65 +128,6 @@
     <div id="notif-container">
     </div>
     <% include ejs/footerPublic.ejs %>
-    <%- include ejs/userSocketControl.ejs %>
-    <script>
-        $(document).ready(function () {
-            const listNsp = io('/listNsp');
-            const globalSkt = io();
-            listNsp.emit('joinRoom', {
-                rid: 'L' + window.location.href.substr(window.location.href.lastIndexOf('/') + 1)
-            });
-            //Status Change
-            $('.entryCheck').change(function (e) {
-                var status = 0;
-                if (this.checked)
-                    status = 1;
-                listNsp.emit('checkEntryChange', {
-                    id: e.target.getAttribute("value"),
-                    st: status
-                });
-                return false;
-            });
-            listNsp.on('checkEntryChange', function (msg) {
-                var checked = true;
-                if (msg.st == 0)
-                    checked = false;
-                $('#entryCheck' + msg.id).prop('checked', checked);
-            });
-            listNsp.on('chatMsg', function (msg) {
-                var newChat = createObjFromTemplate('chat-template', msg);
-                //mark as chat-self if message is from myself
-                if (window.sessionStorage.getItem('accountId') == msg.senderId) {
-                    newChat.addClass('chat-self');
-                }
-                newChat.find('.chat-option-delete').on('click', deleteChat);
-                $('#chat-items').append(newChat);
-                $('#chat-items').animate({
-                    scrollTop: $('#chat-items').prop('scrollHeight')
-                }, 500);
-            });
-            listNsp.on('deleteChatMsg', function (msg) {
-                //remove chat-item div with chat-id hidden input of deleteChatId in msg
-                $('#chat-items').find('[value=' + msg.deleteChatId + ']').parents('.chat-item')
-                    .remove();
-            });
-            listNsp.on('editChatMsg', function (msg) {
-                //edit Chat
-                $('#chat-items').find('[value=' + msg.updatedChatId + ']').parents('.chat-item').find(
-                    '.chat-content-vd').html(msg.updatedChatMessage);
-            });
-            listNsp.on('deleteEntryMsg', function (msg) {
-                //delete Entry
-                $('#entries-container').find('[value=' + msg.deleteEntryId + ']').parents('.entry-item')
-                    .remove();
-            });
-            listNsp.on('editEntryMsg', function (msg) {
-                //updated Entry Name in entryitem with id from msg
-                $('#entries-container').find('[value=' + msg.updatedEntryId + ']').parents(
-                    '.entry-item').find('.entry-content-vd').html(msg.updatedEntryName);
-            });
-        });
-    </script>
 </body>
 
 </html>

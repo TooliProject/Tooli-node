@@ -9,5 +9,8 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     $(document).ready(function () {
+    //store accountId in sessionstorage
+    window.sessionStorage.setItem('accountId', '<%=(typeof account === "undefined") ? null : account.id%>');
+    window.sessionStorage.setItem('accountName', '<%=(typeof account === "undefined") ? null : account.name%>');
     });
 </script>

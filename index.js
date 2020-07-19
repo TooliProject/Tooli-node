@@ -136,6 +136,11 @@ app.post('/list/:listid', function (req, res) {
 			res.send(err);
 		} else {
 			console.log('1 entry inserted');
+			nspLists.to('L' + req.session.listid).emit('newEntryMsg', {
+				entryId: result.insertId,
+				name: req.body.newEntryName,
+				status: 0
+			});
 		}
 
 	});
@@ -298,7 +303,7 @@ app.post('/chat', function (req, res) {
 							res.send(err);
 						} else {
 							console.log(insertedChat.timestamp);
-							nspLists.to('L' + req.session.listid).emit('chatMsg', {
+							nspLists.to('L' + req.session.listid).emit('newChatMsg', {
 								message: req.body.chatmessage,
 								senderName: account.name,
 								chatId: result.insertId,
@@ -491,12 +496,6 @@ nspLists.on('connection', function (socket) {
 			}
 		});
 		nspLists.emit('checkEntryChange', msg);
-	});
-	socket.on('chatMsg', function (msg) {
-		console.log('chat message received');
-		console.log(msg);
-		console.log('is this used?');
-		nspLists.emit('chatMsg', msg);
 	});
 });
 
