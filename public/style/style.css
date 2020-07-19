@@ -180,23 +180,6 @@ html * {
           box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
-#lists-container a {
-  display: block;
-  border-width: 1px;
-  border-style: solid;
-  border-color: gray;
-  border-radius: 5px;
-  overflow: hidden;
-  min-height: 6vh;
-  margin: 3px;
-  padding: 0px 10px;
-  line-height: 6vh;
-}
-
-#lists-container a:hover {
-  background-color: lightpink;
-}
-
 #lists-topbar {
   border-width: 1px;
   border-style: solid;
@@ -211,6 +194,23 @@ html * {
   border: 0px;
   padding: 0px;
   width: 100%;
+}
+
+.list-item {
+  display: block;
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 5px;
+  overflow: hidden;
+  min-height: 6vh;
+  margin: 3px;
+  padding: 0px 10px;
+  line-height: 6vh;
+}
+
+.list-item:hover {
+  background-color: lightpink;
 }
 
 .list-current {

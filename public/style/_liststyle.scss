@@ -11,24 +11,9 @@
     height: calc(100vh - #{2 * $navbardefaultheight});
     background-color: $cneutral;
     padding: 5px 3px;
-
-    a {
-        display: block;
-        @include lightborder;
-        min-height: 6vh;
-        margin: 3px;
-        padding: 0px 10px;
-        line-height: 6vh;
-
-        &:hover {
-            background-color: lightpink;
-        }
-    }
-
     z-index: 800;
     box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, .2);
 }
-
 #lists-topbar {
     @include lightborder;
     margin: 0 2.5%;
@@ -38,6 +23,18 @@
         border: 0px;
         padding: 0px;
         width: 100%;
+    }
+}
+.list-item{
+    display: block;
+    @include lightborder;
+    min-height: 6vh;
+    margin: 3px;
+    padding: 0px 10px;
+    line-height: 6vh;
+
+    &:hover {
+        background-color: lightpink;
     }
 }
 

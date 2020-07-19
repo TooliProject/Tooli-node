@@ -219,7 +219,6 @@ app.post('/new-list', function (req, res) {
 			});
 		}
 	});
-	res.end();
 });
 
 //Delete List

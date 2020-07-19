@@ -62,10 +62,11 @@
                 </form>
             </div>
             <% resList.forEach(function(list){ %>
-            <a href="/list/<%= list.id %>" <% if (currentList == list.id) { %> class="list-item list-current"
-                <% } else { %> class="list-item" <% } %>><%= list.name %>
-
-            </a>
+            <div <% if (currentList == list.id) { %> class="list-item list-current" <% } else { %> class="list-item"
+                <% } %>>
+                <a href="/list/<%= list.id %>"><%= list.name %></a>
+                <a href="" class="list-delete">D</a>
+            </div>
             <% }) %>
         </div>
         <div id="chat-container">
