@@ -47,7 +47,7 @@ module.exports = {
       callback(result, err);
     });
   },
-  UpdateChatMsg: (newMsg, chatId, callback) => {
+  UpdateChatMsg: (chatId, newMsg, callback) => {
     connection.query(queryUpdateChatMsg, [newMsg,chatId], (err, result) => {
       callback(result, err);
     });

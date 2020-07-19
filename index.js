@@ -163,8 +163,6 @@ app.post('/entry/:entryid', function (req, res) {
 			});
 		}
 	});
-
-	//TODO emit to list
 });
 
 //Delete Entry
@@ -313,6 +311,34 @@ app.post('/chat', function (req, res) {
 								}
 							});
 						}
+					});
+				}
+			});
+		}
+	});
+});
+
+//Edit Chat
+app.post('/chat/:chatid', function (req, res) {
+	if (!authenticate(req, res)) {
+		return;
+	}
+	var chatid = req.params.chatid;
+
+	chats.UpdateChatMsg(chatid, req.body.chatContent, function (result, err) {
+		if (err) {
+			console.log(err);
+			res.send(err);
+		} else {
+			console.log('1 chat updated');
+			chats.findById(chatid, function(updatedChat, err){
+				if (err) {
+					console.log(err);
+					res.send(err);
+				} else {
+					nspLists.to('L' + req.session.listid).emit('editChatMsg', {
+						updatedChatId: updatedChat.id,
+						updatedChatMessage: updatedChat.message
 					});
 				}
 			});

@@ -1,3 +1,5 @@
+
+
 #lists-container,
 #chat-items {
     overflow-y: auto;
@@ -84,10 +86,6 @@
     }
 }
 
-.editmodeOnly {
-    display: none;
-}
-
 .entry-content {
     background-color: rgb(221, 221, 221);
     height: 100%-100%/$entryverticalratio;
@@ -127,7 +125,7 @@
     width: 100%/$entryinfocontrolratio;
 }
 
-.entry-edittext {
+.entry-edittext, .chat-edittext {
     border: 0;
     background-color: rgba(0, 0, 0, .1);
 }
@@ -149,18 +147,6 @@
     }
 }
 
-.editmode {
-    border-width: 2px;
-    border-color: black;
-
-    .editmodeOnly {
-        display: unset;
-    }
-
-    .viewdata {
-        display: none;
-    }
-}
 
 .entry-option-confirmdelete {
     display: none;
@@ -317,4 +303,20 @@
         margin-bottom: 0 !important;
     }
 
+}
+
+.editmodeOnly {
+    display: none;
+}
+.editmode {
+    border-width: 2px;
+    border-color: black;
+
+    .editmodeOnly {
+        display: unset;
+    }
+
+    .viewdata {
+        display: none;
+    }
 }

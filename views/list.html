@@ -119,14 +119,42 @@
                     entryItem.find('.entry-option-confirmdelete').addClass('visible');
                 }
             });
-            //TODO editmode for chat
-            $('.chat-option-edit').click(function (e) {
+            $('.chat-option-confirmedit').click(function (e) {
                 e.preventDefault();
                 var chatItem = $(event.target).parents('.chat-item');
-                //Send Edit POST
-                $.post('/chat/' + chatItem.find('.chat-id').val(), {
-                    newChatMessage: chatItem.find('.chat-content-edit').val()
-                });
+                if (chatItem.hasClass('editmode')) { //Confirm Edit
+                    //post edit
+                    $.post('/chat/' + chatItem.find('.chat-id').val(), {
+                        chatContent: chatItem.find('.chat-content-edit').val()
+                    });
+                    //exit editmode
+                    chatItem.removeClass('editmode');
+                    //reset edit btn to edit
+                    chatItem.find('.chat-option-edit').html('E');
+                } else {
+                    //trying to confirm without editmode
+                    createNewNotif({
+                        notiftext: 'no no'
+                    });
+                }
+            });
+            $('.chat-option-edit').click(function (e) { //toggle editmode
+                e.preventDefault();
+                var chatItem = $(event.target).parents('.chat-item');
+                if (chatItem.hasClass('editmode')) {
+                    //exit editmode
+                    chatItem.removeClass('editmode');
+                    //reset edit btn to edit
+                    chatItem.find('.chat-option-edit').html('E');
+                } else {
+                    //enter edit mode
+                    chatItem.addClass('editmode');
+                    //change edit btn to cancel edit
+                    chatItem.find('.chat-option-edit').html('CE');
+                    //copy view value to edit field
+                    chatItem.find('.chat-content-edit').val(chatItem.find('.chat-content-vd')
+                        .html());
+                }
             });
             $('.chat-option-delete').click(function (e) {
                 e.preventDefault();
@@ -224,13 +252,14 @@
                 <div <% if (account.id == Chat.senderId) { %> class="chat-item chat-self" <% } else { %>
                     class="chat-item" <% } %>>
                     <div class="chat-options">
+                        <a href="" class="chat-option-confirmedit editmodeOnly">OKE</a>
                         <a href="" class="chat-option-edit">E</a>
                         <a href="" class="chat-option-delete">D</a>
                     </div>
                     <div class="chat-sender"><%=Chat.senderName%></div>
                     <div class="chat-content">
                         <div class="chat-content-vd viewdata"><%=Chat.message%></div>
-                        <input type="text" name="chatContent" class="chat-content-edit editmodeOnly">
+                        <input type="text" name="chatContent" class="chat-content-edit editmodeOnly chat-edittext">
                     </div>
                     <div class="chat-timestamp"><%=Chat.timestamp%></div>
                     <input type="hidden" class="chat-id" value="<%=Chat.id%>">
@@ -319,7 +348,7 @@
             });
             listNsp.on('editChatMsg', function (msg) {
                 //edit Chat
-                $('#chat-items').find('[value=' + msg.updatedChatId + ']').parents('.chat-item').find('.chat-content-vd').html(msg.updatedEntryName);
+                $('#chat-items').find('[value=' + msg.updatedChatId + ']').parents('.chat-item').find('.chat-content-vd').html(msg.updatedChatMessage);
             });
             listNsp.on('deleteEntryMsg', function (msg) {
                 //delete Entry
