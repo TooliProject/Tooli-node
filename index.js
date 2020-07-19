@@ -45,6 +45,10 @@ var authenticate = function (req, res) {
 	}
 	return true; //OK
 };
+function formatTimestamp(ts){
+	var d = new Date(ts);
+	return d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' + d.getDate() + '.' + (d.getMonth()+1);
+}
 
 app.get('/', function (req, res) {
 	if (req.session.account) {
@@ -135,6 +139,7 @@ app.post('/list/:listid', function (req, res) {
 		}
 
 	});
+	res.end();
 });
 
 //Edit Entry
@@ -163,6 +168,7 @@ app.post('/entry/:entryid', function (req, res) {
 			});
 		}
 	});
+	res.end();
 });
 
 //Delete Entry
@@ -182,6 +188,7 @@ app.post('/deleteEntry', function (req, res) { // list owner?
 
 		}
 	});
+	res.end();
 });
 
 //Create List
@@ -207,6 +214,7 @@ app.post('/new-list', function (req, res) {
 			});
 		}
 	});
+	res.end();
 });
 
 //Delete List
@@ -235,6 +243,7 @@ app.post('/deleteList', function (req, res) { //can only be done by list owner
 			}
 		});
 	}
+	res.end();
 });
 
 //GET new list 
@@ -288,13 +297,15 @@ app.post('/chat', function (req, res) {
 							console.log(err);
 							res.send(err);
 						} else {
+							console.log(insertedChat.timestamp);
 							nspLists.to('L' + req.session.listid).emit('chatMsg', {
 								message: req.body.chatmessage,
 								senderName: account.name,
 								chatId: result.insertId,
 								senderId: account.id,
-								timestamp: insertedChat.timestamp
+								timestamp: formatTimestamp(insertedChat.timestamp)
 							});
+							/* test setting
 							accounts.findByListId(req.session.listid, function (accsInList, err) {
 								if (err) {
 									console.log(err);
@@ -310,12 +321,14 @@ app.post('/chat', function (req, res) {
 									});
 								}
 							});
+							*/
 						}
 					});
 				}
 			});
 		}
 	});
+	res.end();
 });
 
 //Edit Chat
@@ -344,6 +357,7 @@ app.post('/chat/:chatid', function (req, res) {
 			});
 		}
 	});
+	res.end();
 });
 
 //Delete Chat
@@ -363,6 +377,7 @@ app.post('/deleteChat', function (req, res) {
 			});
 		}
 	});
+	res.end();
 });
 
 //AddUserToList
@@ -385,6 +400,7 @@ app.post('/addUserToList', function (req, res) { //TODO: can only be done by lis
 			});
 		}
 	});
+	res.end();
 
 });
 
@@ -409,6 +425,7 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 			}
 		});
 	}
+	res.end();
 });
 
 //create Account

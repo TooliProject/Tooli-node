@@ -314,7 +314,8 @@ html * {
   width: 25%;
 }
 
-.entry-edittext, .chat-edittext {
+.entry-edittext,
+.chat-edittext {
   border: 0;
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -388,6 +389,8 @@ html * {
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
+  position: relative;
+  min-width: 40%;
 }
 
 .chat-self {
@@ -396,7 +399,7 @@ html * {
 }
 
 .chat-options {
-  position: relative;
+  position: absolute;
   top: 0;
   right: 0;
 }
