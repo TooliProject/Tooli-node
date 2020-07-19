@@ -7,9 +7,12 @@
 
     <script>
         $(document).ready(function () {
-            $('#chat-items').animate({
+            //store accountId in sessionstorage
+            window.sessionStorage.setItem('accountId', '<%=account.id%>');
+            //scroll chat down
+            $('#chat-items').prop({
                 scrollTop: $('#chat-items').prop('scrollHeight')
-            }, 500);
+            });
             $('.ajaxForm').submit(function (e) {
                 e.preventDefault();
                 $.post($(this).attr('action'), $(this).serialize());
@@ -32,28 +35,33 @@
                 e.preventDefault();
                 var entryItem = $(event.target).parents('.entry-item');
                 if (entryItem.hasClass('entry-options-active')) {
-                    if (entryItem.hasClass('entry-editmode')) {
-                        entryItem.removeClass('entry-editmode');
+                    //leave editmode
+                    if (entryItem.hasClass('editmode')) {
+                        entryItem.removeClass('editmode');
                     }
+                    //hide options
                     entryItem.removeClass('entry-options-active');
                     entryItem.find("[class^='entry-option-'],[class*=' entry-option-']").addClass(
                         'invisible').removeClass('visible');
                 } else {
+                    //show options
                     entryItem.addClass('entry-options-active');
+                    entryItem.find('.entry-option-edit').html('E');
+                    entryItem.find('.entry-option-delete').html('D');
                     entryItem.find("[class^='entry-option-'],[class*=' entry-option-']").removeClass(
                         'invisible');
                 }
             });
-            $('.entry-option-confirm').click(function (e) {
+            $('.entry-option-confirmedit').click(function (e) {
                 e.preventDefault();
                 var entryItem = $(event.target).parents('.entry-item');
-                if (entryItem.hasClass('entry-editmode')) { //Confirm Edit
+                if (entryItem.hasClass('editmode')) { //Confirm Edit
                     //submit or post
-                    console.log(entryItem.find('.entry-id').val());
-                    console.log(entryItem.find('.entry-content-edit').val());
-                    $.post('/entry/'+entryItem.find('.entry-id').val(), {entryContent: entryItem.find('.entry-content-edit').val()});
+                    $.post('/entry/' + entryItem.find('.entry-id').val(), {
+                        entryContent: entryItem.find('.entry-content-edit').val()
+                    });
                     //exit editmode
-                    entryItem.removeClass('entry-editmode');
+                    entryItem.removeClass('editmode');
                     //reset edit btn to edit
                     entryItem.find('.entry-option-edit').html('E');
                 } else {
@@ -66,14 +74,14 @@
             $('.entry-option-edit').click(function (e) {
                 e.preventDefault();
                 var entryItem = $(event.target).parents('.entry-item');
-                if (entryItem.hasClass('entry-editmode')) {
+                if (entryItem.hasClass('editmode')) {
                     //exit editmode
-                    entryItem.removeClass('entry-editmode');
+                    entryItem.removeClass('editmode');
                     //reset edit btn to edit
                     entryItem.find('.entry-option-edit').html('E');
                 } else {
                     //enter edit mode
-                    entryItem.addClass('entry-editmode');
+                    entryItem.addClass('editmode');
                     //change edit btn to cancel edit
                     entryItem.find('.entry-option-edit').html('CE');
                     //copy view value to edit field
@@ -86,7 +94,9 @@
                 var entryItem = $(event.target).parents('.entry-item');
                 if (entryItem.find('.entry-option-confirmdelete').hasClass('visible')) {
                     //delete entry
-                    $.post('/deleteEntry', {deleteEntryId: entryItem.find('.entry-id').val()});
+                    $.post('/deleteEntry', {
+                        deleteEntryId: entryItem.find('.entry-id').val()
+                    });
                 } else {
                     //trying to delete on invisible btn
                     createNewNotif({
@@ -108,6 +118,23 @@
                     //show confirmdelete btn
                     entryItem.find('.entry-option-confirmdelete').addClass('visible');
                 }
+            });
+            //TODO editmode for chat
+            $('.chat-option-edit').click(function (e) {
+                e.preventDefault();
+                var chatItem = $(event.target).parents('.chat-item');
+                //Send Edit POST
+                $.post('/chat/' + chatItem.find('.chat-id').val(), {
+                    newChatMessage: chatItem.find('.chat-content-edit').val()
+                });
+            });
+            $('.chat-option-delete').click(function (e) {
+                e.preventDefault();
+                var chatItem = $(event.target).parents('.chat-item');
+                //Send delete POST
+                $.post('/deleteChat', {
+                    deleteChatId: chatItem.find('.chat-id').val()
+                });
             });
             $('#toggleChat').click(function (e) {
                 e.preventDefault();
@@ -142,7 +169,8 @@
             for (const [key, value] of Object.entries(data)) {
                 rawhtml = rawhtml.replace('{{' + key + '}}', value);
             }
-            return $.parseHTML(rawhtml)[1];
+            rawhtml = jQuery.trim(rawhtml);
+            return $($.parseHTML(rawhtml)[0]);
         }
 
         function createNewNotif(data) {
@@ -153,6 +181,7 @@
             $('#notif-container').append(template);
         }
     </script>
+    <!--UPDATE TEMPLATES!!!!-->
     <script id="notif-template" type="text/template">
         <div class="notifbox">
             {{notiftext}}
@@ -160,7 +189,15 @@
     </script>
     <script id="chat-template" type="text/template">
         <div class="chat-item">
-            {{sender}} said: </span> <br> {{message}}
+            <div class="chat-options">
+                <a href="" class="chat-option-edit">E</a>
+                <a href="" class="chat-option-delete">D</a>
+            </div>
+            <div class="chat-sender">{{senderName}}</div>
+            <div class="chat-content">{{message}}</div>
+            <div class="chat-timestamp">{{timestamp}}</div>
+            <input type="hidden" class="chat-id" value="{{chatId}}">
+            <input type="hidden" class="sender-id" value="{{senderId}}">
         </div>
     </script>
 </head>
@@ -184,11 +221,20 @@
         <div id="chat-container">
             <div id="chat-items">
                 <% resChat.forEach(function(Chat){ %>
-                <div <% if (account.id == Chat.senderId) { %> class="chat-item chat-self" 
-                    <% } else { %> class="chat-item"  <% } %> >
-                    <%=Chat.senderName%> said: </span> <br> <%=Chat.message%>
-                    <input type="hidden" class=".chat-id" value="<%=Chat.id%>">
-                    <input type="hidden" class=".sender-id" value="<%=Chat.senderId%>">
+                <div <% if (account.id == Chat.senderId) { %> class="chat-item chat-self" <% } else { %>
+                    class="chat-item" <% } %>>
+                    <div class="chat-options">
+                        <a href="" class="chat-option-edit">E</a>
+                        <a href="" class="chat-option-delete">D</a>
+                    </div>
+                    <div class="chat-sender"><%=Chat.senderName%></div>
+                    <div class="chat-content">
+                        <div class="chat-content-vd viewdata"><%=Chat.message%></div>
+                        <input type="text" name="chatContent" class="chat-content-edit editmodeOnly">
+                    </div>
+                    <div class="chat-timestamp"><%=Chat.timestamp%></div>
+                    <input type="hidden" class="chat-id" value="<%=Chat.id%>">
+                    <input type="hidden" class="sender-id" value="<%=Chat.senderId%>">
                 </div>
                 <% }) %>
             </div>
@@ -210,13 +256,12 @@
             <% resEntry.forEach(function(entry){ %>
             <div class="entry-item">
                 <div class="entry-content">
-                    <div class="viewdata entry-content-vd"><%=entry.name%></div>
-                    <div><input type="text" name="entryContent" class="entry-edittext editmodeOnly entry-content-edit">
-                    </div>
+                    <div class="entry-content-vd viewdata"><%=entry.name%></div>
+                    <input type="text" name="entryContent" class="entry-content-edit editmodeOnly entry-edittext">
                 </div>
                 <div class="entry-options">
                     <a href="" class="toggleEntryOptions">O</a>
-                    <a href="" class="entry-option-confirm editmodeOnly invisible">OKE</a>
+                    <a href="" class="entry-option-confirmedit editmodeOnly invisible">OKE</a>
                     <a href="" class="entry-option-edit invisible">E</a>
                     <a href="" class="entry-option-confirmdelete invisible">OKD</a>
                     <a href="" class="entry-option-delete invisible">D</a>
@@ -242,7 +287,6 @@
             });
             //Status Change
             $('.entryCheck').change(function (e) {
-                //e.preventDefault(); // prevents page reloading
                 var status = 0;
                 if (this.checked)
                     status = 1;
@@ -260,13 +304,30 @@
             });
             listNsp.on('chatMsg', function (msg) {
                 var newChat = createObjFromTemplate('chat-template', msg);
-                $('#chat-items').append(newChat); //TODO fix this
+                //mark as chat-self if message is from myself
+                if(window.sessionStorage.getItem('accountId') == msg.senderId){
+                    newChat.addClass('chat-self');
+                }
+                $('#chat-items').append(newChat);
                 $('#chat-items').animate({
                     scrollTop: $('#chat-items').prop('scrollHeight')
                 }, 500);
             });
             listNsp.on('deleteChatMsg', function (msg) {
-                //TODO deleteChat
+                //remove chat-item div with chat-id hidden input of deleteChatId in msg
+                $('#chat-items').find('[value=' + msg.deleteChatId + ']').parents('.chat-item').remove();
+            });
+            listNsp.on('editChatMsg', function (msg) {
+                //edit Chat
+                $('#chat-items').find('[value=' + msg.updatedChatId + ']').parents('.chat-item').find('.chat-content-vd').html(msg.updatedEntryName);
+            });
+            listNsp.on('deleteEntryMsg', function (msg) {
+                //delete Entry
+                $('#entries-container').find('[value=' + msg.deleteEntryId + ']').parents('.entry-item').remove();
+            });
+            listNsp.on('editEntryMsg', function (msg) {
+                //updated Entry Name in entryitem with id from msg
+                $('#entries-container').find('[value=' + msg.updatedEntryId + ']').parents('.entry-item').find('.entry-content-vd').html(msg.updatedEntryName);
             });
         });
     </script>

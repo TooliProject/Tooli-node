@@ -4,5 +4,11 @@
         userNsp.emit('connectUser', {
             rid: 'U<%=account.id%>'
         });
+
+        userNsp.on('notifMsg', function (msg) {
+            createNewNotif({
+                notiftext: msg.sender + ': ' + msg.message + ' in ' + msg.listid
+            });
+        });
     });
 </script>

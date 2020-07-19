@@ -321,7 +321,6 @@ html * {
 .entry-edittext {
   border: 0;
   background-color: rgba(0, 0, 0, 0.1);
-  display: none;
 }
 
 .entry-options-active .entry-content {
@@ -340,16 +339,16 @@ html * {
   color: lightgray;
 }
 
-.entry-editmode {
+.editmode {
   border-width: 2px;
   border-color: black;
 }
 
-.entry-editmode .editmodeOnly {
+.editmode .editmodeOnly {
   display: unset;
 }
 
-.entry-editmode .viewdata {
+.editmode .viewdata {
   display: none;
 }
 
@@ -398,12 +397,29 @@ html * {
   width: -moz-max-content;
   width: max-content;
   margin: 4px;
-  margin-left: auto;
+  margin-right: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
 }
 
 .chat-self {
-  margin-left: 4px;
-  margin-right: auto;
+  margin-right: 4px;
+  margin-left: auto;
+}
+
+.chat-options {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+.chat-timestamp {
+  font-size: .5rem;
 }
 
 #chatbottombox {

@@ -126,10 +126,10 @@
     height: 100%/$entryverticalratio;
     width: 100%/$entryinfocontrolratio;
 }
-.entry-edittext{
+
+.entry-edittext {
     border: 0;
     background-color: rgba(0, 0, 0, .1);
-    display: none;
 }
 
 .entry-options-active {
@@ -149,13 +149,14 @@
     }
 }
 
-.entry-editmode {
+.editmode {
     border-width: 2px;
     border-color: black;
 
     .editmodeOnly {
         display: unset;
     }
+
     .viewdata {
         display: none;
     }
@@ -195,12 +196,24 @@
     overflow: visible;
     font-size: .8rem;
     width: max-content;
-    margin:4px;
+    margin: 4px;
+    margin-right: auto;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.chat-self {
+    margin-right: 4px;
     margin-left: auto;
 }
-.chat-self{
-    margin-left: 4px;
-    margin-right: auto;
+
+.chat-options {
+    position: relative;
+    top: 0;
+    right: 0;
+}
+.chat-timestamp{
+    font-size: .5rem;
 }
 
 #chatbottombox {

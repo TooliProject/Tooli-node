@@ -116,8 +116,6 @@ app.get('/list/:listid', function (req, res) {
 	});
 });
 
-
-
 //Create Entry
 app.post('/list/:listid', function (req, res) {
 	if (!authenticate(req, res)) {
@@ -137,8 +135,6 @@ app.post('/list/:listid', function (req, res) {
 		}
 
 	});
-
-	res.redirect('/list/' + listid);
 });
 
 //Edit Entry
@@ -148,16 +144,26 @@ app.post('/entry/:entryid', function (req, res) {
 	}
 	var entryid = req.params.entryid;
 
-	entries.updateEntryName(entryid, req.body.entryContent, function(result, err){
+	entries.updateEntryName(entryid, req.body.entryContent, function (result, err) {
 		if (err) {
 			console.log(err);
 			res.send(err);
 		} else {
 			console.log('1 entry updated');
-			console.log(result);
+			entries.findById(entryid, function(updatedEntry, err){
+				if (err) {
+					console.log(err);
+					res.send(err);
+				} else {
+					nspLists.to('L' + req.session.listid).emit('editEntryMsg', {
+						updatedEntryId: updatedEntry.id,
+						updatedEntryName: updatedEntry.name
+					});
+				}
+			});
 		}
 	});
-	
+
 	//TODO emit to list
 });
 
@@ -172,7 +178,10 @@ app.post('/deleteEntry', function (req, res) { // list owner?
 			res.send(err);
 		} else {
 			console.log('1 entry deleted');
-			res.redirect("/list/" + req.session.listid);
+			nspLists.to('L' + req.session.listid).emit('deleteEntryMsg', {
+				deleteEntryId: req.body.deleteEntryId
+			});
+
 		}
 	});
 });
@@ -253,7 +262,6 @@ app.get('/logout', function (req, res) {
 
 //Create Chat
 app.post('/chat', function (req, res) {
-	console.log(req.body);
 	if (!authenticate(req, res)) {
 		return;
 	}
@@ -272,29 +280,37 @@ app.post('/chat', function (req, res) {
 			console.log(err);
 			res.send(err);
 		} else {
-			res.redirect('/list/' + req.session.listid);
-			accounts.findById(req.session.account.id, function (account, err) {
+			chats.findById(result.insertId, function (insertedChat, err) {
 				if (err) {
 					console.log(err);
 					res.send(err);
 				} else {
-					nspLists.to('L' + req.session.listid).emit('chatMsg', {
-						message: req.body.chatmessage,
-						sender: account.name,
-						id: result.insertId
-					});
-					accounts.findByListId(req.session.listid, function (accsInList, err) {
+					accounts.findById(req.session.account.id, function (account, err) {
 						if (err) {
 							console.log(err);
 							res.send(err);
 						} else {
-							accsInList.forEach(element => {
-								nspUsers.to('U' + element.id).emit('notifMsg', {
-									message: req.body.chatmessage,
-									sender: account.name,
-									mid: result.insertId,
-									listid: req.session.listid,
-								});
+							nspLists.to('L' + req.session.listid).emit('chatMsg', {
+								message: req.body.chatmessage,
+								senderName: account.name,
+								chatId: result.insertId,
+								senderId: account.id,
+								timestamp: insertedChat.timestamp
+							});
+							accounts.findByListId(req.session.listid, function (accsInList, err) {
+								if (err) {
+									console.log(err);
+									res.send(err);
+								} else {
+									accsInList.forEach(element => {
+										nspUsers.to('U' + element.id).emit('notifMsg', {
+											message: req.body.chatmessage,
+											sender: account.name,
+											mid: result.insertId,
+											listid: req.session.listid,
+										});
+									});
+								}
 							});
 						}
 					});
@@ -316,7 +332,6 @@ app.post('/deleteChat', function (req, res) {
 			console.log(err);
 			res.send(err);
 		} else {
-			res.redirect('/list/' + req.session.listid);
 			nspLists.to('L' + req.session.listid).emit('deleteChatMsg', {
 				deleteChatId: req.body.deleteChatId
 			});
