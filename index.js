@@ -111,6 +111,65 @@ app.post('/login', function (req, res) {
 	});
 });
 
+//create Account
+app.post('/register', function (req, res) { //TODO: Same username check
+	console.log(req.body);
+	console.log("new registration with uname " + req.body.newUserName);
+
+	if (!(req.body.newUserName && req.body.newPassword && req.body.newEmail)) {
+		res.send({
+			err: 'pls fill out all pls'
+		});
+		return;
+	}
+
+	bcrypt.hash(req.body.newPassword, saltRounds, function (err, hash) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		var confirmationLink = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+		accounts.InsertAccount(req.body.newEmail, req.body.newUserName, hash, confirmationLink, function (result, err) {
+			if (err) {
+				console.log(err);
+				res.send({
+					err: err
+				});
+				return;
+			}
+			console.log('ok');
+			res.send('ok, pls confrim ' + confirmationLink);
+		});
+	});
+});
+
+app.get('/confirmAccount/:confirmationLink', function (req, res) {
+	var confirmationLink = req.params.confirmationLink;
+	accounts.findByConfirmationLink(confirmationLink, function (account, err) {
+		if (err) {
+			res.send({
+				err: err
+			});
+			return;
+		}
+		console.log(account);
+		if (account.status == 0) { //if account is unconfirmed = 0
+			accounts.updateStatus(account.id, 1, function (result, err) { //set status to 1 = confirmed
+				if (err) {
+					res.send({
+						err: err
+					});
+					return;
+				}
+			});
+
+		}
+		res.render('confirmAccount.html', {
+			account: account
+		});
+	});
+});
+
 //GET overview
 app.get('/list/:listid', function (req, res) {
 	if (!authenticate(req, res)) {
@@ -447,7 +506,7 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 		console.log('cant');
 		res.redirect('/list/' + req.session.listid);
 	} else {
-		lists.DeleteListAccRel(leaveListId, accId, function (account, err) {
+		lists.DeleteListAccRel(leaveListId, accId, function (result, err) {
 			if (err) {
 				console.log(err);
 				res.send(err);
@@ -458,47 +517,6 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 	}
 });
 
-//create Account
-app.post('/register', function (req, res) { //TODO: Same username check
-	console.log(req.body);
-	console.log("new registration with uname " + req.body.newUserName);
-
-	if (!(req.body.newUserName && req.body.newPassword && req.body.newEmail)) {
-		res.send({err: 'pls fill out all pls'});
-		return;
-	}
-
-	bcrypt.hash(req.body.newPassword, saltRounds, function (err, hash) {
-		if (err) {
-			res.send(err);
-			return;
-		}
-		accounts.InsertAccount(req.body.newEmail, req.body.newUserName, hash, function (result, err) {
-			if (err) {
-				console.log(err);
-				res.send({
-					err: err
-				});
-				return;
-			}
-			//login
-			accounts.findById(result.insertId, function (account, err) {
-				if (err) {
-					console.log(err);
-					res.send({
-						err: err
-					});
-					return;
-				}
-
-				console.log("valid");
-				req.session.account = account;
-
-				res.redirect("/list/" + account.myListId);
-			});
-		});
-	});
-});
 
 
 const nspLists = io.of('/listNsp');

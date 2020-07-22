@@ -10,12 +10,13 @@
                 e.preventDefault();
                 var req = $.post($(this).attr('action'), $(this).serialize(), function (res) {
                     console.log(res);
-                    if (res && !res.err) {
-                        window.location.href = "/";
-                    } else {
-                        console.log('no');
+                    if (res) {
                         $('#register-responsetext').removeClass('invisible');
-                        $('#register-responsetext').html(res.stringify());
+                        if (res.err) {
+                            $('#register-responsetext').html(res.err);
+                        } else {
+                            $('#register-responsetext').html(res);
+                        }
                     }
                 });
             });
@@ -33,7 +34,7 @@
                     <div id="loginbox">
                         <input id="user-mail" type="text" name="newEmail" placeholder="Email">
                         <input id="user-name" type="text" name="newUserName" placeholder="Username">
-                        <input id="user-pw" type="password" name="newPassword" placeholder="Password">
+                        <input id="user-pw" type="text" name="newPassword" placeholder="Password">
                         <div id="login-controls">
                             <input type="submit" value="Register">
                             <a href="/login">Login</a>
