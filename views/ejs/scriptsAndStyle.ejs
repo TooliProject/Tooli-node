@@ -12,5 +12,6 @@
     //store accountId in sessionstorage
     window.sessionStorage.setItem('accountId', '<%=(typeof account === "undefined") ? null : account.id%>');
     window.sessionStorage.setItem('accountName', '<%=(typeof account === "undefined") ? null : account.name%>');
+    window.sessionStorage.setItem('myListId', '<%=(typeof account === "undefined") ? null : account.myListId%>');
     });
 </script>

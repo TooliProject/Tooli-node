@@ -1,9 +1,9 @@
-#lists-container,
+#sidebar,
 #chat-items {
     overflow-y: auto;
 }
 
-#lists-container {
+#sidebar {
     display: none;
     position: fixed;
     float: left;
@@ -14,6 +14,7 @@
     z-index: 800;
     box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, .2);
 }
+
 #lists-topbar {
     @include lightborder;
     margin: 0 2.5%;
@@ -25,7 +26,13 @@
         width: 100%;
     }
 }
-.list-item{
+
+#list-items {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.list-item {
     display: block;
     @include lightborder;
     min-height: 6vh;
@@ -43,6 +50,30 @@
     box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, .2);
 }
 
+.list-personal{
+    order: -1;
+}
+
+.viewmode-entry-list {
+
+    flex-flow: column nowrap !important;
+    align-items: center !important;
+    .entry-item{
+        max-width: unset !important;
+        width: 90% !important;
+        flex-flow: row nowrap;
+        min-height: unset !important;
+        height: 5rem !important;
+        &>*{
+            height: 100% !important;
+        }
+        .entry-options{
+            order: -1;
+        }
+    }
+
+}
+
 #entries-container {
     display: flex;
     width: auto;
@@ -50,9 +81,7 @@
     justify-content: center;
     padding: 2vh 0;
 
-    flex: {
-        wrap: wrap;
-    }
+    flex-flow: row wrap;
 }
 
 #entries-topbar {
@@ -222,11 +251,11 @@
 @include small-bp() {
 
     #chat-container,
-    #lists-container {
+    #sidebar {
         margin-bottom: $navbardefaultheight/($navbarfactor+0);
     }
 
-    #lists-container {
+    #sidebar {
         height: calc(100vh - #{2 * $navbardefaultheight/($navbarfactor+0)});
     }
 }
@@ -238,13 +267,13 @@
         margin: .3vw;
     }
 
-    #lists-container {
+    #sidebar {
         width: 40%;
         height: calc(100vh - #{2 * $navbardefaultheight/($navbarfactor+1)});
     }
 
     #chat-container,
-    #lists-container {
+    #sidebar {
         margin-bottom: $navbardefaultheight/($navbarfactor+1);
     }
 }
@@ -258,7 +287,7 @@
         margin: .2vw;
     }
 
-    #lists-container {
+    #sidebar {
         width: 20%;
         margin-bottom: 0;
     }
@@ -271,7 +300,7 @@
         margin-bottom: $navbardefaultheight/($navbarfactor+2);
     }
 
-    #lists-container,
+    #sidebar,
     .chatfixed {
         position: sticky;
         top: $navbardefaultheight/($navbarfactor+2);
@@ -286,7 +315,7 @@
         max-height: 200px;
     }
 
-    #lists-container {
+    #sidebar {
         width: 300px;
     }
 
@@ -295,7 +324,7 @@
         ;
     }
 
-    #lists-container,
+    #sidebar,
     .chatfixed {
         top: 45px;
         height: calc(100vh - 45px * 2) !important;

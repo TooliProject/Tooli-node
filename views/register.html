@@ -4,6 +4,23 @@
 <head>
     <title>Create Account</title>
     <%- include ejs/scriptsAndStyle.ejs %>
+    <script>
+        $(document).ready(function () {
+            $('#register-form').submit(function (e) {
+                e.preventDefault();
+                var req = $.post($(this).attr('action'), $(this).serialize(), function (res) {
+                    console.log(res);
+                    if (res && !res.err) {
+                        window.location.href = "/";
+                    } else {
+                        console.log('no');
+                        $('#register-responsetext').removeClass('invisible');
+                        $('#register-responsetext').html(res.stringify());
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -12,14 +29,16 @@
         <div class="centerspace">
             <div class="centerbox">
                 Register
-                <form method="POST" action="/register" class="form-group">
+                <form method="POST" action="/register" id="register-form">
                     <div id="loginbox">
+                        <input id="user-mail" type="text" name="newEmail" placeholder="Email">
                         <input id="user-name" type="text" name="newUserName" placeholder="Username">
-                        <input id="user-mail" type="text" placeholder="Email">
+                        <input id="user-pw" type="password" name="newPassword" placeholder="Password">
                         <div id="login-controls">
                             <input type="submit" value="Register">
                             <a href="/login">Login</a>
                         </div>
+                        <div id="register-responsetext" class="invisible"></div>
                     </div>
                 </form>
             </div>

@@ -27,28 +27,28 @@ module.exports = {
         results.forEach(element => {
             result.push(new List(element.PI, element.name));
         });
-        callback(result, null);
+        callback(result, err);
       }
     });
   },
   InsertList: (newListName, callback) => {
     connection.query(queryInsertList, [newListName], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   DeleteList: (listId, callback) => { //Not needed -> DB trigger
     connection.query(queryDeleteList + queryDeleteListAccRelByListId + queryDeleteChatByListId + queryDeleteEntryByListId, [listId,listId,listId,listId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   DeleteListAccRel: (listId, accountId, callback) => { //Leave list
     connection.query(queryDeleteListAccRel, [listId, accountId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
   InsertListAccRel: (listId, accountId, callback) => {
     connection.query(queryInsertListAccRel, [accountId,listId], (err, result) => {
-      callback(result, null);
+      callback(result, err);
     });
   },
 };

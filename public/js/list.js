@@ -18,6 +18,7 @@ function createNewNotif(data) {
 
 
 //bound functions
+//entry
 function toggleEntryOptions(e) {
     e.preventDefault();
     var entryItem = $(event.target).parents('.entry-item');
@@ -95,6 +96,7 @@ function confirmEntryDelete(e) {
     }
 }
 
+//chat
 function toggleEntryDelete(e) {
     e.preventDefault();
     var entryItem = $(event.target).parents('.entry-item');
@@ -159,6 +161,16 @@ function deleteChat(e) {
     });
 }
 
+//list
+function leaveList(e){
+    e.preventDefault();
+    var listItem = $(event.target).parents('.list-item');
+    $.post('/removeUserFromList', {
+        accountId: window.sessionStorage.getItem('accountId'),
+        leaveListId: listItem.find('.list-id').val()
+    });
+}
+
 $(document).ready(function () {
     const globalSkt = io();
     const listNsp = io('/listNsp');
@@ -171,8 +183,8 @@ $(document).ready(function () {
     //window size functions
     if (window.matchMedia("screen and (min-width: 992px) and (orientation: landscape)")
         .matches) { //shows sidebar on big boy screens
-        $('#lists-container').addClass('visible');
-        $('#lists-container').removeClass('invisible');
+        $('#sidebar').addClass('visible');
+        $('#sidebar').removeClass('invisible');
     } else { //hides chat on smol screens
         $('#chat-container').removeClass('visible').addClass('invisible');
     }
@@ -217,6 +229,9 @@ $(document).ready(function () {
     $('.chat-option-edit').click(enterChatEditMode);
     $('.chat-option-delete').click(deleteChat);
 
+    //list option binds
+    $('.list-option-leave').click(leaveList);
+
 
     //toggle binds
     $('#toggleChat').click(function (e) {
@@ -237,12 +252,20 @@ $(document).ready(function () {
     });
     $('#toggleLists').click(function (e) {
         e.preventDefault();
-        if ($('#lists-container').css('display') != 'none') { //hide
-            $('#lists-container').removeClass('visible');
-            $('#lists-container').addClass('invisible');
+        if ($('#sidebar').css('display') != 'none') { //hide
+            $('#sidebar').removeClass('visible');
+            $('#sidebar').addClass('invisible');
         } else { //show
-            $('#lists-container').addClass('visible');
-            $('#lists-container').removeClass('invisible');
+            $('#sidebar').addClass('visible');
+            $('#sidebar').removeClass('invisible');
+        }
+    });
+    $('#toggleEntryViewMode').click(function (e) {
+        e.preventDefault();
+        if ($('#entries-container').hasClass('viewmode-entry-list')) {
+            $('#entries-container').removeClass('viewmode-entry-list');
+        } else {
+            $('#entries-container').addClass('viewmode-entry-list');
         }
     });
 

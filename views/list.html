@@ -55,25 +55,28 @@
 <body>
     <%- include ejs/navbar.ejs %>
     <div id="content-container">
-        <div id="lists-container">
+        <div id="sidebar">
             <div id="lists-topbar">
                 <form action="/new-list" method="post">
                     <input type="text" name="newListName" placeholder="New List">
                 </form>
             </div>
-            <% resList.forEach(function(list){ %>
-            <div <% if (currentList == list.id) { %> class="list-item list-current" <% } else { %> class="list-item"
-                <% } %>>
-                <a href="/list/<%= list.id %>"><%= list.name %></a>
-                <a href="" class="list-delete">D</a>
+            <div id="list-items">
+                <% resList.forEach(function(list){ %>
+                <div
+                    class="list-item<% if (currentListId == list.id) { %> list-current<% } if(account.myListId == list.id){ %> list-personal<% } %>">
+                    <a href="/list/<%= list.id %>"><%= list.name %></a>
+                    <a href="" class="list-option-leave">L</a>
+                    <input type="hidden" class="list-id" value="<%= list.id %>">
+                </div>
+                <% }) %>
             </div>
-            <% }) %>
         </div>
+        <%if(account.myListId != currentListId){ //do not render chat in privateList %>
         <div id="chat-container">
             <div id="chat-items">
                 <% resChat.forEach(function(Chat){ %>
-                <div <% if (account.id == Chat.senderId) { %> class="chat-item chat-self" <% } else { %>
-                    class="chat-item" <% } %>>
+                <div class="chat-item<% if (account.id == Chat.senderId) { %> chat-self<% } %>">
                     <div class="chat-options">
                         <a href="" class="chat-option-confirmedit editmodeOnly">OKE</a>
                         <a href="" class="chat-option-edit">E</a>
@@ -97,14 +100,21 @@
                 </form>
             </div>
         </div>
+        <% } %>
         <div id="entries-container">
             <div id="entries-topbar">
-                <div><%= resList.filter(list => list.id == currentList)[0].name %></div>
+                <div><%= resList.filter(list => list.id == currentListId)[0].name %></div>
                 <form action="" class="ajaxForm" method="post">
                     <input type="text" class="clearOnSubmit" name="newEntryName" placeholder="Do the dishes">
                     <input type="submit" value="Confirm">
+                </form>
+                <form action="/addUserToList" class="ajaxForm" method="post">
+                    <input type="text" class="clearOnSubmit" name="addUserName" placeholder="Fren">
+                    <input type="submit" value="Add User">
+                </form>
+                <a id="toggleEntryViewMode" href="">Toggle Viewmode</a>
             </div>
-            </form>
+
             <% resEntry.forEach(function(entry){ %>
             <div class="entry-item">
                 <div class="entry-content">

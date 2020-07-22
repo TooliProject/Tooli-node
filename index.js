@@ -45,9 +45,10 @@ var authenticate = function (req, res) {
 	}
 	return true; //OK
 };
-function formatTimestamp(ts){
+
+function formatTimestamp(ts) {
 	var d = new Date(ts);
-	return d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' + d.getDate() + '.' + (d.getMonth()+1);
+	return d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' + d.getDate() + '.' + (d.getMonth() + 1);
 }
 
 app.get('/', function (req, res) {
@@ -66,8 +67,9 @@ app.get('/register', function (req, res) {
 
 //login
 app.post('/login', function (req, res) {
-	console.log(req.body.username + " tried to log in");
-	accounts.findByName(req.body.username, function (account, err) {
+	var loginName = req.body.username.trim();
+	console.log(loginName + " tried to log in");
+	accounts.findByName(loginName, function (account, err) {
 		if (err) {
 			console.log(err);
 			res.send({
@@ -110,7 +112,7 @@ app.get('/list/:listid', function (req, res) {
 								resEntry: resEntry,
 								resChat: resChat,
 								account: req.session.account,
-								currentList: req.session.listid
+								currentListId: req.session.listid
 							});
 						}
 					});
@@ -160,7 +162,7 @@ app.post('/entry/:entryid', function (req, res) {
 			res.send(err);
 		} else {
 			console.log('1 entry updated');
-			entries.findById(entryid, function(updatedEntry, err){
+			entries.findById(entryid, function (updatedEntry, err) {
 				if (err) {
 					console.log(err);
 					res.send(err);
@@ -247,7 +249,6 @@ app.post('/deleteList', function (req, res) { //can only be done by list owner
 			}
 		});
 	}
-	res.end();
 });
 
 //GET new list 
@@ -348,7 +349,7 @@ app.post('/chat/:chatid', function (req, res) {
 			res.send(err);
 		} else {
 			console.log('1 chat updated');
-			chats.findById(chatid, function(updatedChat, err){
+			chats.findById(chatid, function (updatedChat, err) {
 				if (err) {
 					console.log(err);
 					res.send(err);
@@ -404,7 +405,6 @@ app.post('/addUserToList', function (req, res) { //TODO: can only be done by lis
 			});
 		}
 	});
-	res.end();
 
 });
 
@@ -414,8 +414,8 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 		return;
 	}
 	var accId = req.body.accountId;
-	var leaveListId = req.session.listid;
-	console.log(req.body.accountId + ' trying to leave ' + req.session.listid);
+	var leaveListId = req.body.leaveListId;
+	console.log(accId + ' trying to leave ' + leaveListId);
 	if (accId == req.session.account.id && leaveListId == req.session.account.myListId) { //can't leave personal list
 		console.log('cant');
 		res.redirect('/list/' + req.session.listid);
@@ -429,23 +429,26 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 			}
 		});
 	}
-	res.end();
 });
 
 //create Account
 app.post('/register', function (req, res) { //TODO: Same username check
-	console.log(req);
+	console.log(req.body);
 	console.log("new registration with uname " + req.body.newUserName);
-	accounts.InsertAccount(req.body.newUserName, function (result, err) {
+	accounts.InsertAccount(req.body.newEmail, req.body.newUserName, req.body.newPassword, function (result, err) {
 		if (err) {
 			console.log(err);
-			res.send(err);
+			res.send({
+				err: err
+			});
 		} else {
 			//login
 			accounts.findById(result.insertId, function (account, err) {
 				if (err) {
 					console.log(err);
-					res.send(err);
+					res.send({
+						err: err
+					});
 				} else {
 					console.log("valid");
 					req.session.account = account;
