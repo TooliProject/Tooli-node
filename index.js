@@ -6,6 +6,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var mysql = require('mysql');
 var path = require('path');
+var bcrypt = require('bcrypt');
 require('console-stamp')(console, 'dd.mm.yyyy HH:MM:ss');
 
 process.env.PWD = process.cwd();
@@ -33,6 +34,8 @@ app.use(express.json());
 app.use(express.urlencoded({
 	extended: true
 }));
+
+var saltRounds = 10;
 
 /**
  * authentication function
@@ -75,12 +78,36 @@ app.post('/login', function (req, res) {
 			res.send({
 				err: err
 			});
-		} else { //successful login
-			console.log("valid");
+			return;
+		}
+		if (account.id == 1 || account.id == 2) { //DasTool & Testtool need no password
+			console.log("---TESTACCOUNT---");
 			req.session.account = account;
 
 			res.redirect("/list/" + account.myListId);
+			return;
 		}
+		bcrypt.compare(req.body.password, account.password, function (err, result) {
+			if (err) {
+				res.send({
+					err: err
+				});
+				return;
+			}
+			if (result) {
+				console.log("valid");
+				req.session.account = account;
+
+				res.redirect("/list/" + account.myListId);
+				return;
+			} else {
+				res.send({
+					err: 'no'
+				});
+				return;
+			}
+		});
+
 	});
 });
 
@@ -435,13 +462,25 @@ app.post('/removeUserFromList', function (req, res) { //TODO: can only be done b
 app.post('/register', function (req, res) { //TODO: Same username check
 	console.log(req.body);
 	console.log("new registration with uname " + req.body.newUserName);
-	accounts.InsertAccount(req.body.newEmail, req.body.newUserName, req.body.newPassword, function (result, err) {
+
+	if (!(req.body.newUserName && req.body.newPassword && req.body.newEmail)) {
+		res.send({err: 'pls fill out all pls'});
+		return;
+	}
+
+	bcrypt.hash(req.body.newPassword, saltRounds, function (err, hash) {
 		if (err) {
-			console.log(err);
-			res.send({
-				err: err
-			});
-		} else {
+			res.send(err);
+			return;
+		}
+		accounts.InsertAccount(req.body.newEmail, req.body.newUserName, hash, function (result, err) {
+			if (err) {
+				console.log(err);
+				res.send({
+					err: err
+				});
+				return;
+			}
 			//login
 			accounts.findById(result.insertId, function (account, err) {
 				if (err) {
@@ -449,14 +488,15 @@ app.post('/register', function (req, res) { //TODO: Same username check
 					res.send({
 						err: err
 					});
-				} else {
-					console.log("valid");
-					req.session.account = account;
-
-					res.redirect("/list/" + account.myListId);
+					return;
 				}
+
+				console.log("valid");
+				req.session.account = account;
+
+				res.redirect("/list/" + account.myListId);
 			});
-		}
+		});
 	});
 });
 

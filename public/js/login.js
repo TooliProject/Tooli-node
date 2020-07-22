@@ -1,7 +1,8 @@
 function loginUser() {
     let username = $("#user-name").val();
     $.post("/login", {
-            username: username
+            username: username,
+            password: $("#user-pw").val()
         },
         function (data, status) {
             if (data && !data.err) {
