@@ -77,11 +77,13 @@
             <div id="chat-items">
                 <% resChat.forEach(function(Chat){ %>
                 <div class="chat-item<% if (account.id == Chat.senderId) { %> chat-self<% } %>">
+                    <% if (account.id == Chat.senderId) { %>
                     <div class="chat-options">
                         <a href="" class="chat-option-confirmedit editmodeOnly">OKE</a>
                         <a href="" class="chat-option-edit">E</a>
                         <a href="" class="chat-option-delete">D</a>
                     </div>
+                    <% } %>
                     <div class="chat-sender"><%=Chat.senderName%></div>
                     <div class="chat-content">
                         <div class="chat-content-vd viewdata"><%=Chat.message%></div>

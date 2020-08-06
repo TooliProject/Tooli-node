@@ -7,6 +7,7 @@ var io = require('socket.io')(http);
 var mysql = require('mysql');
 var path = require('path');
 var bcrypt = require('bcrypt');
+var nodemailer = require('nodemailer');
 require('console-stamp')(console, 'dd.mm.yyyy HH:MM:ss');
 
 process.env.PWD = process.cwd();
@@ -36,6 +37,15 @@ app.use(express.urlencoded({
 }));
 
 var saltRounds = 10;
+
+// Mailtransporter declaration
+var mailTransporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+	  user: 'tooliproject@gmail.com',
+	  pass: ''
+	}
+  });
 
 /**
  * authentication function
@@ -87,6 +97,12 @@ app.post('/login', function (req, res) {
 			res.redirect("/list/" + account.myListId);
 			return;
 		}
+		if(account.status == 0){
+			res.send({
+				err: 'account not activated'
+			});
+			return;
+		}
 		bcrypt.compare(req.body.password, account.password, function (err, result) {
 			if (err) {
 				res.send({
@@ -102,7 +118,7 @@ app.post('/login', function (req, res) {
 				return;
 			} else {
 				res.send({
-					err: 'no'
+					err: 'wrong password'
 				});
 				return;
 			}
@@ -138,7 +154,23 @@ app.post('/register', function (req, res) { //TODO: Same username check
 				return;
 			}
 			console.log('ok');
-			res.send('ok, pls confrim ' + confirmationLink);
+			//console.log(mailTransporter);
+			var mailOptions = {
+				from: 'tooliproject@gmail.com',
+				to: req.body.newEmail,
+				subject: 'Welcome to the end of your unorganized life',
+				html: '<a href="' + req.headers.host + '/confirmAccount/' + confirmationLink + '">Click to enter the Toolizone</a>'
+			  };
+			  console.log(mailOptions.html);
+			  
+			  mailTransporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+				  console.log(error);
+				} else {
+				  console.log('Email sent: ' + info.response);
+				}
+			  }); 
+			res.send('look at your mail you dumb fuck');
 		});
 	});
 });
