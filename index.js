@@ -246,10 +246,10 @@ app.post('/list/:listid', function (req, res) {
 		return;
 	}
 	var listid = req.params.listid;
-	console.log(listid + " : add entry : " + req.body.newEntryName);
+	console.log(listid + " : add entry : " + req.body.newEntryText);
 	entries.InsertEntry({
 		listId: listid,
-		name: req.body.newEntryName
+		text: req.body.newEntryText
 	}, function (result, err) {
 		if (err) {
 			console.log(err);
@@ -258,7 +258,7 @@ app.post('/list/:listid', function (req, res) {
 			console.log('1 entry inserted');
 			nspLists.to('L' + req.session.listid).emit('newEntryMsg', {
 				entryId: result.insertId,
-				name: req.body.newEntryName,
+				text: req.body.newEntryText,
 				status: 0
 			});
 		}
@@ -274,7 +274,7 @@ app.post('/entry/:entryid', function (req, res) {
 	}
 	var entryid = req.params.entryid;
 
-	entries.updateEntryName(entryid, req.body.entryContent, function (result, err) {
+	entries.updateEntryText(entryid, req.body.entryText, function (result, err) {
 		if (err) {
 			console.log(err);
 			res.send(err);
@@ -287,7 +287,7 @@ app.post('/entry/:entryid', function (req, res) {
 				} else {
 					nspLists.to('L' + req.session.listid).emit('editEntryMsg', {
 						updatedEntryId: updatedEntry.id,
-						updatedEntryName: updatedEntry.name
+						updatedEntryText: updatedEntry.text
 					});
 				}
 			});
@@ -591,6 +591,6 @@ nspLists.on('connection', function (socket) {
 	});
 });
 
-http.listen(8080, function () {
-	console.log("App Started on port 8080");
+http.listen(3000, function () {
+	console.log("App Started on port 3000");
 });

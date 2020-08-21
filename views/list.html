@@ -32,7 +32,7 @@
     <script id="entry-template" type="text/template">
         <div class="entry-item">
             <div class="entry-content">
-                <div class="entry-content-vd viewdata">{{name}}</div>
+                <div class="entry-content-vd viewdata">{{text}}</div>
                 <input type="text" name="entryContent" class="entry-content-edit editmodeOnly entry-edittext">
             </div>
             <div class="entry-options">
@@ -107,7 +107,7 @@
             <div id="entries-topbar">
                 <div><%= resList.filter(list => list.id == currentListId)[0].name %></div>
                 <form action="" class="ajaxForm" method="post">
-                    <input type="text" class="clearOnSubmit" name="newEntryName" placeholder="Do the dishes">
+                    <input type="text" class="clearOnSubmit" name="newEntryText" placeholder="Do the dishes">
                     <input type="submit" value="Confirm">
                 </form>
                 <form action="/addUserToList" class="ajaxForm" method="post">
@@ -120,7 +120,7 @@
             <% resEntry.forEach(function(entry){ %>
             <div class="entry-item">
                 <div class="entry-content">
-                    <div class="entry-content-vd viewdata"><%=entry.name%></div>
+                    <div class="entry-content-vd viewdata"><%=entry.text%></div>
                     <input type="text" name="entryContent" class="entry-content-edit editmodeOnly entry-edittext">
                 </div>
                 <div class="entry-options">
@@ -130,7 +130,7 @@
                     <a href="" class="entry-option-confirmdelete invisible">OKD</a>
                     <a href="" class="entry-option-delete invisible">D</a>
                 </div>
-                <div class="entry-information">information space for future use</div>
+                <div class="entry-information">Created: <%=entry.created%></div>
                 <div class="entry-control"><input id="entryCheck<%=entry.id%>" class="entryCheck" type="checkbox"
                         value="<%=entry.id%>" <% if (entry.status>0) { %> checked <% } %> /></div>
                 <input type="hidden" class="entry-id" value="<%=entry.id%>">

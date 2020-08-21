@@ -47,7 +47,7 @@ function confirmEntryEdit(e) {
     if (entryItem.hasClass('editmode')) { //Confirm Edit
         //submit or post
         $.post('/entry/' + entryItem.find('.entry-id').val(), {
-            entryContent: entryItem.find('.entry-content-edit').val()
+            entryText: entryItem.find('.entry-content-edit').val()
         });
         //exit editmode
         entryItem.removeClass('editmode');
@@ -338,6 +338,6 @@ $(document).ready(function () {
     listNsp.on('editEntryMsg', function (msg) {
         //updated Entry Name in entryitem with id from msg
         $('#entries-container').find('[value=' + msg.updatedEntryId + ']').parents(
-            '.entry-item').find('.entry-content-vd').html(msg.updatedEntryName);
+            '.entry-item').find('.entry-content-vd').html(msg.updatedEntryText);
     });
 });

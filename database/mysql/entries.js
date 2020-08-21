@@ -5,11 +5,11 @@ const Entry = require('../../entity/Entry');
 
 const queryFindByListId = 'SELECT * FROM entry where list_id = ?;';
 const queryFindById = 'SELECT * FROM entry where PI = ?';
-const queryInsertEntry = 'INSERT INTO entry ( list_id , Name , Status ) VALUES (?, ?, 0);';
+const queryInsertEntry = 'INSERT INTO entry ( list_id , text , Status ) VALUES (?, ?, 0);';
 const queryUpdateEntryStatus = 'UPDATE entry SET entry.Status = ? WHERE entry.PI = ?;';
 const queryDeleteById = 'DELETE FROM entry WHERE PI = ?;';
 const queryDeleteByListId = 'DELETE FROM entry WHERE list_id = ?;';
-const queryUpdateEntryName = 'UPDATE entry SET entry.Name = ? WHERE entry.PI = ?;';
+const queryUpdateEntryText = 'UPDATE entry SET entry.text = ? WHERE entry.PI = ?;';
 
 module.exports = {
   findByListId: (listId, callback) => {
@@ -19,9 +19,9 @@ module.exports = {
       if (err) {
         callback([], err);
       } else {
-        //result = new Account(results[0].pi, results[0].name, results[0].mylist_id);
+        //result = new Account(results[0].pi, results[0].text, results[0].mylist_id);
         results.forEach(element => {
-          result.push(new Entry(element.PI, element.Name, element.Status));
+          result.push(new Entry(element.PI, element.text, element.Status, element.created));
         });
         callback(result, err);
       }
@@ -36,7 +36,7 @@ module.exports = {
       } else if (results.length > 1) {
         callback(null, "Multiple entries with id '" + entryid + "' found");
       } else {
-        result = new Entry(results[0].PI, results[0].Name, results[0].Status);
+        result = new Entry(results[0].PI, results[0].text, results[0].Status, results[0].created);
         callback(result, err);
       }
     });
@@ -47,7 +47,7 @@ module.exports = {
     });
   },
   InsertEntry: (newEntry, callback) => {
-    connection.query(queryInsertEntry, [newEntry.listId, newEntry.name], (err, result) => {
+    connection.query(queryInsertEntry, [newEntry.listId, newEntry.text], (err, result) => {
       callback(result, err);
     });
   },
@@ -61,8 +61,8 @@ module.exports = {
       callback(result, err);
     });
   },
-  updateEntryName: (entryId, newName, callback) => {
-    connection.query(queryUpdateEntryName, [newName, entryId], (err, result) => {
+  updateEntryText: (entryId, newText, callback) => {
+    connection.query(queryUpdateEntryText, [newText, entryId], (err, result) => {
       callback(result, err);
     });
   }
