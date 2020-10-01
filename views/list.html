@@ -45,7 +45,7 @@
             <div class="entry-information">information space for future use</div>
             <div class="entry-control">
                 <input id="entryCheck{{entryId}}" class="entryCheck" type="checkbox"
-                    value="{{entryId}}" {{checkedString}} />
+                       value="{{entryId}}" {{checkedString}}/>
             </div>
             <input type="hidden" class="entry-id" value="{{entryId}}">
         </div>
@@ -53,94 +53,116 @@
 </head>
 
 <body>
-    <%- include ejs/navbar.ejs %>
-    <div id="content-container">
-        <div id="sidebar">
-            <div id="lists-topbar">
-                <form action="/new-list" method="post">
-                    <input type="text" name="newListName" placeholder="New List">
-                </form>
-            </div>
-            <div id="list-items">
-                <% resList.forEach(function(list){ %>
-                <div
-                    class="list-item<% if (currentListId == list.id) { %> list-current<% } if(account.myListId == list.id){ %> list-personal<% } %>">
-                    <a href="/list/<%= list.id %>"><%= list.name %></a>
-                    <a href="" class="list-option-leave">L</a>
-                    <input type="hidden" class="list-id" value="<%= list.id %>">
+<%- include ejs/navbar.ejs %>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="/new-list" method="post">
+                        <input type="text" name="newListName" placeholder="New List">
+                    </form>
                 </div>
-                <% }) %>
             </div>
-        </div>
-        <%if(account.myListId != currentListId){ //do not render chat in privateList %>
-        <div id="chat-container">
-            <div id="chat-items">
-                <% resChat.forEach(function(Chat){ %>
-                <div class="chat-item<% if (account.id == Chat.senderId) { %> chat-self<% } %>">
-                    <% if (account.id == Chat.senderId) { %>
-                    <div class="chat-options">
-                        <a href="" class="chat-option-confirmedit editmodeOnly">OKE</a>
-                        <a href="" class="chat-option-edit">E</a>
-                        <a href="" class="chat-option-delete">D</a>
-                    </div>
-                    <% } %>
-                    <div class="chat-sender"><%=Chat.senderName%></div>
-                    <div class="chat-content">
-                        <div class="chat-content-vd viewdata"><%=Chat.message%></div>
-                        <input type="text" name="chatContent" class="chat-content-edit editmodeOnly chat-edittext">
-                    </div>
-                    <div class="chat-timestamp"><%=Chat.timestamp%></div>
-                    <input type="hidden" class="chat-id" value="<%=Chat.id%>">
-                    <input type="hidden" class="sender-id" value="<%=Chat.senderId%>">
-                </div>
-                <% }) %>
-            </div>
-            <div id="chatbottombox">
-                <form method="POST" class="ajaxForm" action="/chat">
-                    <input name="chatmessage" class="clearOnSubmit" placeholder="We should do more tasks"
-                        autocomplete="off" />
-                </form>
-            </div>
-        </div>
-        <% } %>
-        <div id="entries-container">
-            <div id="entries-topbar">
-                <div><%= resList.filter(list => list.id == currentListId)[0].name %></div>
-                <form action="" class="ajaxForm" method="post">
-                    <input type="text" class="clearOnSubmit" name="newEntryText" placeholder="Do the dishes">
-                    <input type="submit" value="Confirm">
-                </form>
-                <form action="/addUserToList" class="ajaxForm" method="post">
-                    <input type="text" class="clearOnSubmit" name="addUserName" placeholder="Fren">
-                    <input type="submit" value="Add User">
-                </form>
-                <a id="toggleEntryViewMode" href="">Toggle Viewmode</a>
-            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list">
+                        <% resList.forEach(function(list){ %>
+                        <li class="list-item <% if (currentListId == list.id) { %> list-item-active <% } if(account.myListId == list.id){ %> list-item-personal <% } %>">
+                            <div class="row">
+                                <div class="col-lg-8 col-xs-8">
+                                    <a href="/list/<%= list.id %>"><%= list.name %></a>
+                                </div>
+                                <div class="col-lg-4 col-xs-4">
+                                    <a href="" class="list-option-leave">Delete</a>
+                                    <input type="hidden" class="list-id" value="<%= list.id %>">
+                                </div>
+                            </div>
 
-            <% resEntry.forEach(function(entry){ %>
-            <div class="entry-item">
-                <div class="entry-content">
-                    <div class="entry-content-vd viewdata"><%=entry.text%></div>
-                    <input type="text" name="entryContent" class="entry-content-edit editmodeOnly entry-edittext">
+                        </li>
+                        <% }) %>
+                    </ul>
                 </div>
-                <div class="entry-options">
-                    <a href="" class="toggleEntryOptions">O</a>
-                    <a href="" class="entry-option-confirmedit editmodeOnly invisible">OKE</a>
-                    <a href="" class="entry-option-edit invisible">E</a>
-                    <a href="" class="entry-option-confirmdelete invisible">OKD</a>
-                    <a href="" class="entry-option-delete invisible">D</a>
-                </div>
-                <div class="entry-information">Created: <%=entry.created%></div>
-                <div class="entry-control"><input id="entryCheck<%=entry.id%>" class="entryCheck" type="checkbox"
-                        value="<%=entry.id%>" <% if (entry.status>0) { %> checked <% } %> /></div>
-                <input type="hidden" class="entry-id" value="<%=entry.id%>">
             </div>
-            <% }) %>
+        </div>
+        <div class="col-lg-9">
+
+            <div id="entries-container">
+                <div id="entries-topbar">
+                    <div><%= resList.filter(list => list.id == currentListId)[0].name %></div>
+                    <form action="" class="ajaxForm" method="post">
+                        <input type="text" class="clearOnSubmit" name="newEntryText" placeholder="Do the dishes">
+                        <input type="submit" value="Confirm">
+                    </form>
+                    <form action="/addUserToList" class="ajaxForm" method="post">
+                        <input type="text" class="clearOnSubmit" name="addUserName" placeholder="Fren">
+                        <input type="submit" value="Add User">
+                    </form>
+                    <a id="toggleEntryViewMode" href="">Toggle Viewmode</a>
+                </div>
+
+                <% resEntry.forEach(function(entry){ %>
+                <div class="entry-item">
+                    <div class="entry-content">
+                        <div class="entry-content-vd viewdata"><%=entry.text%></div>
+                        <input type="text" name="entryContent" class="entry-content-edit editmodeOnly entry-edittext">
+                    </div>
+                    <div class="entry-options">
+                        <a href="" class="toggleEntryOptions">O</a>
+                        <a href="" class="entry-option-confirmedit editmodeOnly invisible">OKE</a>
+                        <a href="" class="entry-option-edit invisible">E</a>
+                        <a href="" class="entry-option-confirmdelete invisible">OKD</a>
+                        <a href="" class="entry-option-delete invisible">D</a>
+                    </div>
+                    <div class="entry-information">Created: <%=entry.created%></div>
+                    <div class="entry-control"><input id="entryCheck<%=entry.id%>" class="entryCheck" type="checkbox"
+                                                      value="<%=entry.id%>" <% if (entry.status>0) { %> checked <% } %> />
+                    </div>
+                    <input type="hidden" class="entry-id" value="<%=entry.id%>">
+                </div>
+                <% }) %>
+            </div>
         </div>
     </div>
-    <div id="notif-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <%if(account.myListId != currentListId){ //do not render chat in privateList %>
+            <div id="chat-container">
+                <div id="chat-items">
+                    <% resChat.forEach(function(Chat){ %>
+                    <div class="chat-item<% if (account.id == Chat.senderId) { %> chat-self<% } %>">
+                        <% if (account.id == Chat.senderId) { %>
+                        <div class="chat-options">
+                            <a href="" class="chat-option-confirmedit editmodeOnly">OKE</a>
+                            <a href="" class="chat-option-edit">E</a>
+                            <a href="" class="chat-option-delete">D</a>
+                        </div>
+                        <% } %>
+                        <div class="chat-sender"><%=Chat.senderName%></div>
+                        <div class="chat-content">
+                            <div class="chat-content-vd viewdata"><%=Chat.message%></div>
+                            <input type="text" name="chatContent" class="chat-content-edit editmodeOnly chat-edittext">
+                        </div>
+                        <div class="chat-timestamp"><%=Chat.timestamp%></div>
+                        <input type="hidden" class="chat-id" value="<%=Chat.id%>">
+                        <input type="hidden" class="sender-id" value="<%=Chat.senderId%>">
+                    </div>
+                    <% }) %>
+                </div>
+                <div id="chatbottombox">
+                    <form method="POST" class="ajaxForm" action="/chat">
+                        <input name="chatmessage" class="clearOnSubmit" placeholder="We should do more tasks"
+                               autocomplete="off"/>
+                    </form>
+                </div>
+            </div>
+            <% } %>
+        </div>
     </div>
-    <% include ejs/footerPublic.ejs %>
+</div>
+<div id="notify-container">
+</div>
+<% include ejs/footerPublic.ejs %>
 </body>
 
 </html>

@@ -1,0 +1,23 @@
+.list {
+  list-style: none;
+  min-width: 100%;
+  width: 100%;
+  padding: 0;
+  font-size: 12pt;
+}
+
+.list-item {
+  border-bottom: 1px solid $color-primary;
+  min-width: 100%;
+  width: 100%;
+  margin-top: 8px;
+  padding: 4px;
+}
+
+.list-item-active {
+  background-color: $color-primary-light;
+}
+
+.list-item-personal{
+  border: 1px solid $color-primary-dark;
+}

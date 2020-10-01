@@ -21,7 +21,7 @@ module.exports = {
       } else {
         //result = new Account(results[0].pi, results[0].text, results[0].mylist_id);
         results.forEach(element => {
-          result.push(new Entry(element.PI, element.text, element.Status, element.created));
+          result.push(new Entry(element.PI, element.Name, element.Status, element.created));
         });
         callback(result, err);
       }
