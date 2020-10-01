@@ -9,21 +9,35 @@
 
 <body>
     <%- include ejs/navbar.ejs %>
-    <div id="content-container">
-        <div class="centerspace">
-            <div class="centerbox">
-                Login
-                <div id="loginbox">
-                    <input id="user-name" type="text" name="username" placeholder="Username">
-                    <input id="user-pw" type="text" name="password" placeholder="Password">
-                    <div id="login-controls">
-                        <input type="button" value="Login" onclick="loginUser()">
-                        <a href="/register">Create New Account</a>
-                        <p id="loginFailedText" style="display: none">
-                            Login failed!
-                        </p>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Login</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-4">
+                <input id="username" type="text" name="username" placeholder="Username">
+            </div>
+        </div>
+        <div class="row mt-16">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <input id="password" type="text" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="row mt-16">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <button class="btn btn-primary" onclick="loginUser()">Submit</button>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <a href="/register">Create New Account</a>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="loginFailedText" style="display: none">
+                Login failed
             </div>
         </div>
     </div>

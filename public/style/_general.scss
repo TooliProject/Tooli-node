@@ -1,200 +1,36 @@
-@import "./variables";
-
-
-@mixin lightborder {
-    border: {
-        width: 1px;
-        style: solid;
-        color: gray;
-        radius: 5px;
-    }
-
-    overflow: hidden;
+.logo {
+  max-height: 100%;
 }
 
-@mixin small-bp {
-    @media only screen and (min-width: 576px) and (orientation: landscape) {
-        @content;
-    }
-}
-
-@mixin medium-bp {
-    @media only screen and (min-width: 768px) and (orientation: landscape) {
-        @content;
-    }
-}
-
-/*it gets bigger when i pull on it*/
-@mixin large-bp {
-    @media only screen and (min-width: 992px) and (orientation: landscape) {
-        @content;
-    }
-}
-
-@mixin xlarge-bp {
-    @media only screen and (min-width: 1200px) and (orientation: landscape) {
-        @content;
-    }
-}
-
-html {
-    font: {
-        family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        weight: 400;
-        size: 5vw;
-    }
-
-    line-height: 1.5;
-    color: #212529;
-    text-align: left;
-
-    * {
-        box-sizing: border-box;
-    }
-}
-
-.navbartop {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    top: 0;
-    height: $navbardefaultheight;
-    width: 100%;
-    position: fixed;
-    background-color: $cprimary;
-    z-index: 900;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
+.navbar {
+  height: 9vw;
+  max-height: 50px;
+  margin-bottom: 10px;
+  background-color: $color-primary;
 }
 
 .navbar-right {
-    margin-left: auto;
+  float: right;
+  margin-top: 15px;
 }
 
-#content-container {
-    width: auto;
-    margin-top: $navbardefaultheight;
-    margin-bottom: $navbardefaultheight;
+@media only screen and (max-width: 600px) {
+  .navbar {
+    height: 18vw;
+    max-height: 18vw;
+    min-height: 50px;
+  }
+  .navbar-right {
+    margin-top: 15px;
+  }
 }
 
-.centerspace {
-    padding: 10px;
+.mt-4 {
+  margin-top: 4px;
 }
-
-#notif-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-flow: column-reverse nowrap;
-    z-index: 1000;
-    background-color: $csecondary;
+.mt-8 {
+  margin-top: 8px;
 }
-
-.notifbox {
-    width: 80vw;
-    height: 10vh;
-    @include lightborder();
-}
-
-.footer {
-    @extend .navbartop;
-    top: unset;
-    bottom: 0;
-    justify-content: center;
-    z-index: 900;
-    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, .2);
-}
-
-@include small-bp() {
-
-    html {
-        font-size: 4vw;
-    }
-
-    .navbartop,
-    .footer {
-        height: $navbardefaultheight/($navbarfactor+0);
-    }
-
-    #content-container {
-        margin-top: $navbardefaultheight/($navbarfactor+0);
-        margin-bottom: $navbardefaultheight/($navbarfactor+0);
-    }
-}
-
-@include medium-bp() {
-
-    html {
-        font-size: 3vw;
-    }
-
-    .navbartop,
-    .footer {
-        height: $navbardefaultheight/($navbarfactor+1);
-    }
-
-    #content-container {
-        margin-top: $navbardefaultheight/($navbarfactor+1);
-        margin-bottom: $navbardefaultheight/($navbarfactor+1);
-    }
-
-    .centerspace {
-        margin: 0 20%;
-    }
-
-    .notifbox {
-        width: 40vw;
-        height: 5vh;
-        min-height: 10vw;
-    }
-}
-
-/*it gets bigger when i pull on it*/
-@include large-bp() {
-    html {
-        font-size: 2vw;
-    }
-
-    .navbartop,
-    .footer {
-        height: $navbardefaultheight/($navbarfactor+2);
-    }
-
-    #content-container {
-        margin-top: $navbardefaultheight/($navbarfactor+2);
-        margin-bottom: $navbardefaultheight/($navbarfactor+2);
-    }
-
-    .notifbox {
-        width: 200px;
-        height: 50px;
-        min-height: unset;
-    }
-}
-
-@include xlarge-bp() {
-
-    html {
-        font-size: 18px;
-    }
-
-    .navbartop,
-    .footer {
-        height: 45px;
-    }
-
-    #content-container {
-        margin-top: 45px;
-        margin-bottom: 45px;
-    }
-}
-
-
-
-.visible {
-    display: block !important;
-}
-
-.invisible {
-    display: none !important;
+.mt-16 {
+   margin-top: 16px;
 }
