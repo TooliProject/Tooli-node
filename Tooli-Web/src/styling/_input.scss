@@ -1,0 +1,9 @@
+input {
+  margin: 0 8px 0 8px;
+  border: none;
+  border-bottom: 1px solid $color-primary;
+}
+
+input:active, input:focus {
+  outline: none;
+}
