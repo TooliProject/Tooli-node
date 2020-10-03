@@ -1,0 +1,14 @@
+<ul>
+  <app-list *ngFor="let list of lists"
+            [list]="list"
+            (listChange)="onListChange($event)"
+            (listDelete)="onListDelete($event)"
+  ></app-list>
+</ul>
+<div class="form">
+  <input type="text" [(ngModel)]="listName" placeholder="My New List">
+  <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+</div>
+<div class="panel-error" *ngIf="error">
+  {{error}}
+</div>

@@ -1,0 +1,32 @@
+<li *ngIf="list && !isEditing">
+  {{list.id}}
+  -
+  <span (dblclick)="onListDoubleClick()">
+    {{list.name}}
+  </span>
+  -
+  <span *ngIf="list.created">
+    {{list.created.toDateString()}}
+  </span>
+
+  <app-trash-icon (click)="delete()" *ngIf="!isDeleting"></app-trash-icon>
+
+  <span *ngIf="isDeleting">
+    <app-check-icon (click)="confirmDelete()"></app-check-icon>
+    <app-x-icon (click)="cancelDelete()"></app-x-icon>
+  </span>
+</li>
+<li *ngIf="list && isEditing">
+  {{list.id}}
+  -
+  <input
+    type="text"
+    [(ngModel)]="listName"
+    placeholder="My List"
+    (keydown)="onListNameKeyDown($event)"
+  >
+  -
+  <span *ngIf="list.created">
+    {{list.created.toDateString()}}
+  </span>
+</li>

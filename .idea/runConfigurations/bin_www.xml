@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="bin/www" type="NodeJSConfigurationType" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$/Tool-API">
+    <envs>
+      <env name="DEBUG" value="tool-api:*" />
+      <env name="PGUSER" value="postgres" />
+      <env name="PGHOST" value="127.0.0.1" />
+      <env name="PGPASSWORD" value="nXj9I9N3Kz!lUdoL4udFbxR3Opv&amp;Mqx1" />
+      <env name="PGPORT" value="5432" />
+      <env name="PGDATABASE" value="tooli" />
+    </envs>
+    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
+      <browser url="http://localhost:3000/" />
+    </EXTENSION>
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,18 @@
+.btn {
+  padding: 4px;
+  color: $color-text-primary;
+  border-radius: 2px;
+  border: none;
+}
+
+.btn-primary {
+  background-color: $color-primary;
+}
+
+.btn-primary:active {
+  background-color: $color-primary-light;
+}
+
+.btn-primary:active, .btn-primary:focus {
+  outline: none;
+}
