@@ -1,5 +1,6 @@
 export class ResponseHandler {
   handleDefaultResponse(response: any, resolve: any, reject: any, resolveParameter?: any) {
+    console.log(response);
     if (response && response.error) {
       if (response.error.message) {
         reject(response.error.message);
@@ -16,6 +17,7 @@ export class ResponseHandler {
   }
 
   handleResponse(response: any, reject: any, next: () => void) {
+    console.log(response);
     if (response && response.error) {
       if (response.error.message) {
         reject(response.error.message);

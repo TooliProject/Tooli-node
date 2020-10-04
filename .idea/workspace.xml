@@ -2,125 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f41de69c-86cf-4e92-9acd-a8b4c1421d59" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Tooli-node.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Database/database.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/Tool-API.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/bin/www" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/data/database/list.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/entity/List.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/error/error.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/routes/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tool-API/routes/list.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/Tooli-Web.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/angular.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/browserslist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/e2e/protractor.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/e2e/src/app.e2e-spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/e2e/src/app.po.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/e2e/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/karma.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/entity/List.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/check-icon/check-icon.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/check-icon/check-icon.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/trash-icon/trash-icon.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/trash-icon/trash-icon.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/x-icon/x-icon.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/x-icon/x-icon.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/service/ResponseHandler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/service/list.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/service/list.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/assets/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/environments/environment.prod.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/environments/environment.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/main.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/polyfills.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styles.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_button.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_color.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_icon.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_input.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_list.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_panel.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/tsconfig.app.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/tsconfig.spec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/tslint.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/mysql/accounts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/mysql/chats.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/mysql/connection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/mysql/entries.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/mysql/lists.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity/Account.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity/Chat.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity/Entry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity/List.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/run-dev-db.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/setup-db.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Tooli.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Tooli2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Tooli2ChristmasHat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Tooli2Wbg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Tooli_Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/chatTMP.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/toolistyle.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/list.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/login.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/_button.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/_colors.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/_footer.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/_general.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/_input.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/_list.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/style.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/style/style.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/testbild.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/confirmAccount.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/ejs/footerPublic.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/ejs/navbar.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/ejs/scriptsAndStyle.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/list_old.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/list_overview.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/new_list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/register.html" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tooli-Web/build.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="stylerework-login" />
+        <entry key="$PROJECT_DIR$" value="v3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -175,23 +58,27 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.12.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.11.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Tooli-Web" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Tool-API/credentials" />
     <property name="nodejs.protractor.protractor_package" value="$PROJECT_DIR$/Tooli-Web/node_modules/protractor" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/Tooli-Web/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Tooli-Web/src/app/service/live" />
       <recent name="$PROJECT_DIR$/Tooli-Web/src/app/service" />
       <recent name="$PROJECT_DIR$/Tooli-Web/src/styling" />
       <recent name="$PROJECT_DIR$/Tooli-Web/src" />
       <recent name="$PROJECT_DIR$/Tooli-Web/src/app/lists" />
-      <recent name="$PROJECT_DIR$/Tooli-Web/src/app" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Tool-API/credentials" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.bin/www">
@@ -271,7 +158,9 @@
       <workItem from="1601568998347" duration="5768000" />
       <workItem from="1601574804913" duration="4081000" />
       <workItem from="1601638207048" duration="7000" />
-      <workItem from="1601746830298" duration="11615000" />
+      <workItem from="1601746830298" duration="19076000" />
+      <workItem from="1601803894206" duration="642000" />
+      <workItem from="1601820023150" duration="1528000" />
     </task>
     <task id="LOCAL-00001" summary="Redesigned login page">
       <created>1601574450059</created>
@@ -287,7 +176,21 @@
       <option name="project" value="LOCAL" />
       <updated>1601586235881</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Redesigned main page">
+      <created>1601759983466</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1601759983466</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added sso login flow">
+      <created>1601821525511</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1601821525511</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,7 +199,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Redesigned login page" />
     <MESSAGE value="Redesigned main page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Redesigned main page" />
+    <MESSAGE value="Added sso login flow" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added sso login flow" />
   </component>
   <component name="WindowStateProjectService">
     <state x="746" y="671" width="1024" height="847" key="#Project_Structure" timestamp="1601747065553">
@@ -307,118 +211,152 @@
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state x="378" y="915" width="1761" height="360" key="#SQL_Dialects/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601749316651" />
-    <state x="4529" y="195" width="1030" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601750012499">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state x="387" y="814" width="1030" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601762291882">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
-    <state x="1378" y="751" width="1181" height="873" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601749430756" />
+    <state x="387" y="814" width="1181" height="873" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601762291882" />
     <state x="4529" y="195" width="1030" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601750012499" />
     <state x="1378" y="754" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601569555029" />
-    <state x="4444" y="319" width="701" height="444" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601753601188">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state x="1208" y="658" width="701" height="444" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601820503438">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state x="1208" y="658" key="#com.intellij.fileTypes.FileTypeChooser/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601820503438" />
     <state x="4444" y="319" width="701" height="444" key="#com.intellij.fileTypes.FileTypeChooser/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601753601188" />
-    <state x="4561" y="191" width="468" height="699" key="#com.intellij.ide.util.MemberChooser" timestamp="1601756233622">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state x="1442" y="405" width="468" height="699" key="#com.intellij.ide.util.MemberChooser" timestamp="1601820830125">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state x="1442" y="405" width="468" height="699" key="#com.intellij.ide.util.MemberChooser/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601820830125" />
     <state x="4561" y="191" width="468" height="699" key="#com.intellij.ide.util.MemberChooser/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601756233622" />
     <state x="4187" y="411" width="474" height="261" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601759391344">
       <screen x="3840" y="0" width="1920" height="1080" />
     </state>
     <state x="4187" y="411" width="474" height="261" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759391344" />
     <state x="693" y="842" width="524" height="514" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601571445680" />
-    <state x="453" y="581" width="1004" height="1037" key="CommitChangelistDialog2" timestamp="1601586235690">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state x="699" y="774" key="#xdebugger.evaluate" timestamp="1601821306329">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state x="699" y="774" key="#xdebugger.evaluate/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821306329" />
+    <state x="1206" y="80" width="1982" height="1791" key="CommitChangelistDialog2" timestamp="1601821525360">
+      <screen x="0" y="28" width="3840" height="2132" />
+    </state>
+    <state x="1206" y="80" width="1982" height="1791" key="CommitChangelistDialog2/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821525360" />
+    <state x="1619" y="467" width="1569" height="1404" key="CommitChangelistDialog2/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759983290" />
     <state x="453" y="581" width="1004" height="1037" key="CommitChangelistDialog2/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601586235690" />
-    <state x="4845" y="194" width="537" height="685" key="EnvironmentVariablesDialog" timestamp="1601750010200">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state x="443" y="598" width="537" height="685" key="EnvironmentVariablesDialog" timestamp="1601762289751">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state x="443" y="598" key="EnvironmentVariablesDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601762289751" />
     <state x="4845" y="194" width="537" height="685" key="EnvironmentVariablesDialog/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601750010200" />
     <state x="1041" y="802" width="424" height="587" key="FileChooserDialogImpl" timestamp="1601747056360">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state x="1041" y="802" width="424" height="587" key="FileChooserDialogImpl/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601747056360" />
-    <state width="1860" height="185" key="GridCell.Tab.0.bottom" timestamp="1601759888549">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state width="1940" height="570" key="GridCell.Tab.0.bottom" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.0.bottom/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1860" height="185" key="GridCell.Tab.0.bottom/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
     <state width="1276" height="766" key="GridCell.Tab.0.bottom/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
-    <state width="1860" height="185" key="GridCell.Tab.0.center" timestamp="1601759888549">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state width="1940" height="570" key="GridCell.Tab.0.center" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.0.center/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1860" height="185" key="GridCell.Tab.0.center/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
     <state width="1276" height="766" key="GridCell.Tab.0.center/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
-    <state width="1860" height="185" key="GridCell.Tab.0.left" timestamp="1601759888549">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state width="1940" height="570" key="GridCell.Tab.0.left" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.0.left/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1860" height="185" key="GridCell.Tab.0.left/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
     <state width="1276" height="766" key="GridCell.Tab.0.left/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
-    <state width="1860" height="185" key="GridCell.Tab.0.right" timestamp="1601759888549">
-      <screen x="3840" y="0" width="1920" height="1080" />
+    <state width="1940" height="570" key="GridCell.Tab.0.right" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.0.right/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1860" height="185" key="GridCell.Tab.0.right/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
     <state width="1276" height="766" key="GridCell.Tab.0.right/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
-    <state width="1276" height="766" key="GridCell.Tab.1.bottom" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.1.bottom" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.1.bottom/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.1.bottom/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.1.center" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.1.center" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.1.center/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.1.center/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.1.left" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.1.left" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.1.left/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.1.left/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.1.right" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.1.right" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.1.right/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.1.right/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.2.bottom" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.2.bottom" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.2.bottom/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.2.bottom/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.2.center" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.2.center" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.2.center/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.2.center/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.2.left" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.2.left" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.2.left/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.2.left/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.2.right" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.2.right" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.2.right/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.2.right/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.3.bottom" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.3.bottom" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.3.bottom/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.3.bottom/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.3.center" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.3.center" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.3.center/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.3.center/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.3.left" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.3.left" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.3.left/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.3.left/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
-    <state width="1276" height="766" key="GridCell.Tab.3.right" timestamp="1601587123734">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state width="1940" height="570" key="GridCell.Tab.3.right" timestamp="1601821536629">
+      <screen x="0" y="28" width="3840" height="2132" />
     </state>
+    <state width="1940" height="570" key="GridCell.Tab.3.right/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601821536629" />
     <state width="1276" height="766" key="GridCell.Tab.3.right/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123734" />
     <state x="895" y="841" width="716" height="509" key="NewModule_or_Project.wizard" timestamp="1601747062555">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state x="895" y="841" width="716" height="509" key="NewModule_or_Project.wizard/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601747062555" />
+    <state x="374" y="674" width="585" height="842" key="RollbackChangesDialog" timestamp="1601762350820">
+      <screen x="0" y="28" width="3840" height="2132" />
+    </state>
+    <state x="374" y="674" width="585" height="842" key="RollbackChangesDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601762350820" />
     <state x="4220" y="173" width="1125" height="907" key="SettingsEditor" timestamp="1601752599382">
       <screen x="3840" y="0" width="1920" height="1080" />
     </state>
     <state x="760" y="729" width="2239" height="909" key="SettingsEditor/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601749476799" />
     <state x="4220" y="173" width="1125" height="907" key="SettingsEditor/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601752599382" />
-    <state x="555" y="813" width="800" height="573" key="Vcs.Push.Dialog.v2" timestamp="1601586237117">
-      <screen x="0" y="32" width="3840" height="2128" />
+    <state x="4118" y="396" width="728" height="291" key="Vcs.Push.Dialog.v2" timestamp="1601759985389">
+      <screen x="3840" y="0" width="1920" height="1080" />
     </state>
+    <state x="4118" y="396" width="728" height="291" key="Vcs.Push.Dialog.v2/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759985389" />
     <state x="555" y="813" width="800" height="573" key="Vcs.Push.Dialog.v2/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601586237117" />
+    <state width="671" height="1066" key="XDebugger.FullValuePopup" timestamp="1601764318970">
+      <screen x="0" y="28" width="3840" height="2132" />
+    </state>
+    <state width="671" height="1066" key="XDebugger.FullValuePopup/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601764318970" />
     <state x="815" y="682" width="887" height="825" key="new project wizard" timestamp="1601746952443">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
