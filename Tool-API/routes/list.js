@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    new ListRepository().findAll((err, lists) => {
+    new ListRepository(req.session.email).findAll((err, lists) => {
         if (err) {
             console.log(err);
             res.send({error: err});
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     if (req.body && req.body.name) {
         const listName = req.body.name;
-        new ListRepository().insert(listName, (err) => {
+        new ListRepository(req.session.email).insert(listName, (err) => {
            if (err) {
                res.send({error: err});
            } else {
@@ -42,7 +42,7 @@ router.put('/', (req, res) => {
         const id = req.body.id;
         const name = req.body.name;
 
-        new ListRepository().update(id, name, (err) => {
+        new ListRepository(req.session.email).update(id, name, (err) => {
             if (err) {
                 new ErrorHandler().sendError(res, 500, err);
             } else {
@@ -55,7 +55,7 @@ router.put('/', (req, res) => {
 router.delete('/:id', (req, res) => {
    if (req.params.id) {
        const id = req.params.id;
-       new ListRepository().delete(id, (err) => {
+       new ListRepository(req.session.email).delete(id, (err) => {
            if (err) {
                new ErrorHandler().sendError(res, 500, err);
            } else {
