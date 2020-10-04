@@ -10,6 +10,11 @@ import {FormsModule} from "@angular/forms";
 import { TrashIconComponent } from './icon/trash-icon/trash-icon.component';
 import { CheckIconComponent } from './icon/check-icon/check-icon.component';
 import { XIconComponent } from './icon/x-icon/x-icon.component';
+import {CookieService} from "ngx-cookie-service";
+import {environment} from "../environments/environment";
+import {ListService} from "./service/list.service";
+import {HttpListRepositoryService} from "./service/live/http-list-repository.service";
+import {MockListRepositoryService} from "./service/mock/mock-list-repository.service";
 
 @NgModule({
   declarations: [
@@ -27,6 +32,11 @@ import { XIconComponent } from './icon/x-icon/x-icon.component';
     HttpClientModule
   ],
   providers: [
+    CookieService,
+    ListService,
+    HttpListRepositoryService,
+    MockListRepositoryService,
+    {provide: 'ListRepositoryService', useClass: environment.listRepositoryServiceType}
   ],
   bootstrap: [AppComponent]
 })
