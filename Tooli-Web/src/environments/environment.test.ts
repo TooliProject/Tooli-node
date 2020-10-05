@@ -8,5 +8,6 @@ import {HttpListRepositoryService} from "../app/service/live/http-list-repositor
 export const environment = {
   production: true,
   api_url: 'http://localhost:3000/api/v1/',
-  listRepositoryServiceType: HttpListRepositoryService
+  listRepositoryServiceType: HttpListRepositoryService,
+  loginUrl: '/api/v1/sso/google/login?state=/lists'
 };

@@ -3,6 +3,34 @@
 
 * {
   font-family: sans-serif;
+  font-size: 2vh;
   margin: 0;
   padding: 0;
+}
+
+.mt-8 {
+  margin-top: 8px;
+}
+.mb-8 {
+  margin-bottom: 8px;
+}
+
+.mb-32 {
+  margin-bottom: 32px;
+}
+
+.m-4 {
+  margin: 4px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.mascot {
+  height: 50vh;
+}
+
+hr {
+  border: 1px solid $color-primary;
 }

@@ -1,0 +1,21 @@
+{
+  "vars": {},
+  "css": [
+    "print.less",
+    "type.less",
+    "code.less",
+    "grid.less",
+    "responsive-utilities.less",
+    "glyphicons.less",
+    "responsive-embed.less",
+    "close.less",
+    "component-animations.less",
+    "tooltip.less"
+  ],
+  "js": [
+    "tooltip.js",
+    "popover.js",
+    "scrollspy.js",
+    "transition.js"
+  ]
+}
