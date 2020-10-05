@@ -3,7 +3,11 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-const redirectUri = 'http://localhost:3000/api/v1/sso/google'
+const AccountRepository = require('../../data/database/account');
+const ErrorHandler = require('../../error/error');
+
+const REDIRECT_URI = 'http://localhost:3000/api/v1/sso/google'
+const PROVIDER_GOOGLE = 'GOOGLE';
 
 router.get('/login', (req, res) => {
    res.redirect("https://accounts.google.com/o/oauth2/v2/auth?" +
@@ -12,8 +16,15 @@ router.get('/login', (req, res) => {
        "include_granted_scopes=true&" +
        "response_type=code&" +
        "state=" + req.query.state + "&" +
-       "redirect_uri=" + redirectUri + "&" +
+       "redirect_uri=" + REDIRECT_URI + "&" +
        "client_id=" + googleCredentials.web.client_id);
+});
+
+router.get('/logout', (req, res) => {
+   delete req.session.email;
+   delete req.session.expires;
+   delete req.session.accessHeader;
+   res.redirect('/');
 });
 
 router.get('/', (req, res) => {
@@ -23,7 +34,7 @@ router.get('/', (req, res) => {
         'code=' + code + '&' +
         'client_id=' + googleCredentials.web.client_id + '&' +
         'client_secret=' + googleCredentials.web.client_secret + '&' +
-        'redirect_uri=' + redirectUri + '&' +
+        'redirect_uri=' + REDIRECT_URI + '&' +
         'grant_type=authorization_code';
     axios.post(url)
         .then(response => {
@@ -33,7 +44,14 @@ router.get('/', (req, res) => {
             req.session.email = meta.email;
             req.session.expires = meta.exp;
             req.session.accessHeader = response.data;
-            res.redirect(state);
+
+            new AccountRepository().insertIfNotExists(meta.email, PROVIDER_GOOGLE, (err) => {
+                if (err) {
+                    new ErrorHandler().sendError(res, 500, err);
+                } else {
+                    res.redirect(state);
+                }
+            });
         })
         .catch(err => {
             console.log(err);
