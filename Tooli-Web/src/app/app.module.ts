@@ -15,6 +15,7 @@ import {environment} from "../environments/environment";
 import {ListService} from "./service/list.service";
 import {HttpListRepositoryService} from "./service/live/http-list-repository.service";
 import {MockListRepositoryService} from "./service/mock/mock-list-repository.service";
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {MockListRepositoryService} from "./service/mock/mock-list-repository.ser
     ListsComponent,
     TrashIconComponent,
     CheckIconComponent,
-    XIconComponent
+    XIconComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

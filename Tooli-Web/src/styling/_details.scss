@@ -1,0 +1,11 @@
+.bordered {
+  border: 1px solid $color-primary;
+  border-radius: 2px;
+  padding-bottom: 8px;
+  box-shadow: 2px 2px 2px -2px black;
+}
+
+.bordered-background {
+  background-color: $color-primary;
+  color: $color-text-primary;
+}

@@ -13,31 +13,12 @@ var GoogleAuth; // Google Auth object.
 })
 export class AppComponent implements OnInit{
   title = 'Tooli-Web';
-  isSignedIn = false;
 
   constructor(
-    private _http: HttpClient
   ) {  }
 
   ngOnInit(): void {
-    if (environment.production) {
-      this._http.get(environment.api_url + "sso/google/isSignedIn")
-        .subscribe(
-          (response: any) => {
-            console.log(response);
-            if (!response.isSignedIn) {
-              window.location.href = environment.api_url + "sso/google/login?state=/";
-            } else {
-              this.isSignedIn = true;
-            }
-          },
-          err => {
-            console.log(err);
-          }
-        );
-    } else {
-      this.isSignedIn = true;
-    }
+
   }
 
 

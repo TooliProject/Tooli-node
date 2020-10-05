@@ -7,7 +7,8 @@ import {MockListRepositoryService} from "../app/service/mock/mock-list-repositor
 export const environment = {
   production: false,
   api_url: 'http://localhost:3000/api/v1/',
-  listRepositoryServiceType: MockListRepositoryService
+  listRepositoryServiceType: MockListRepositoryService,
+  loginUrl: 'lists'
 };
 
 /*

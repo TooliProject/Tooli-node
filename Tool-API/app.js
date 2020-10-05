@@ -18,7 +18,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
     const paths = [
@@ -35,8 +34,16 @@ app.use((req, res, next) => {
    }
 });
 
-app.use('/', indexRouter);
 app.use('/api/v1/list', listRouter);
 app.use('/api/v1/sso/google', ssoGoogleRouter);
 
+app
+    .use(express.static(path.join(__dirname, 'public')))
+    .all('/*', ((req, res) => {
+        console.log('All');
+        res
+            .status( 200 )
+            .set( { 'content-type': 'text/html; charset=utf-8' } )
+            .sendfile('public/index.html' );
+    }));
 module.exports = app;

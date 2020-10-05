@@ -1,0 +1,17 @@
+.btn-google {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.btn-google-img {
+  content: url("assets/pictures/google/btn_google_signin_dark_normal_web.png");
+}
+
+.btn-google-img:active {
+  content: url("assets/pictures/google/btn_google_signin_dark_pressed_web.png");
+}
+
+.btn-google-img:focus {
+  content: url("assets/pictures/google/btn_google_signin_dark_focus_web.png");
+}
