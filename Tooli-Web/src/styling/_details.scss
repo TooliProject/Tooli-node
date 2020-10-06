@@ -9,3 +9,18 @@
   background-color: $color-primary;
   color: $color-text-primary;
 }
+
+.banner {
+  margin-bottom: 16vh;
+}
+
+.banner-content {
+  width: 100%;
+  max-width: 1600px;
+}
+
+@media screen and (min-height: 1500px){
+  .banner {
+    margin-top: 25%;
+  }
+}
