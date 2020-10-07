@@ -12,9 +12,15 @@ module.exports = class ErrorHandler {
         this.sendError(res, 400, 'No body');
     }
 
-    sendNoParameterError(res, parameterName) {
+    sendNoParameterInBodyError(res, parameterName) {
         this.sendError(res,
             400,
             `Body has no parameter \'${parameterName}\'`);
+    }
+
+    sendNoParameterError(res, parameterName) {
+        this.sendError(res,
+            400,
+            `Parameter \'${parameterName}\' not found`);
     }
 }
