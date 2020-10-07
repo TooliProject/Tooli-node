@@ -15,7 +15,6 @@ router.get('/:listId', (req, res) => {
                 res.send(tasks);
             }
         });
-
     } else {
         new ErrorHandler().sendNoParameterError(res, 'listId');
     }
