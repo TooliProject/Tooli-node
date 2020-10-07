@@ -17,6 +17,7 @@ import {HttpListRepositoryService} from "./service/live/http-list-repository.ser
 import {MockListRepositoryService} from "./service/mock/mock-list-repository.service";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { TaskComponent } from './tasks/task/task.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TasksComponent } from './tasks/tasks.component';
     CheckIconComponent,
     XIconComponent,
     LandingPageComponent,
-    TasksComponent
+    TasksComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { TasksComponent } from './tasks/tasks.component';
     ListService,
     HttpListRepositoryService,
     MockListRepositoryService,
-    {provide: 'ListRepositoryService', useClass: environment.listRepositoryServiceType}
+    {provide: 'ListRepositoryService', useClass: environment.listRepositoryServiceType},
+    {provide: 'TaskRepositoryService', useClass: environment.taskRepositoryServiceType}
   ],
   bootstrap: [AppComponent]
 })
