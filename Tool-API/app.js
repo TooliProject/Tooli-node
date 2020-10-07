@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const listRouter = require('./routes/list');
+const taskRouter = require('./routes/task');
 const ssoGoogleRouter = require('./routes/sso/google');
 
 const app = express();
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/v1/list', listRouter);
+app.use('/api/v1/task', taskRouter);
 app.use('/api/v1/sso/google', ssoGoogleRouter);
 
 app

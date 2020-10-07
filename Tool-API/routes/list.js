@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
            }
         });
     } else {
-        new ErrorHandler().sendNoParameterError(res, 'name');
+        new ErrorHandler().sendNoParameterInBodyError(res, 'name');
     }
 });
 
@@ -34,10 +34,10 @@ router.put('/', (req, res) => {
         new ErrorHandler().sendEmptyBodyError(res);
     }
     else if (!req.body.id) {
-        new ErrorHandler().sendNoParameterError(res, 'id');
+        new ErrorHandler().sendNoParameterInBodyError(res, 'id');
     }
     else if (!req.body.name) {
-        new ErrorHandler().sendNoParameterError(res, 'name');
+        new ErrorHandler().sendNoParameterInBodyError(res, 'name');
     } else {
         const id = req.body.id;
         const name = req.body.name;
