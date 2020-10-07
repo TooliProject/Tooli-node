@@ -2,13 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f41de69c-86cf-4e92-9acd-a8b4c1421d59" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_navbar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/entity/Task.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/service/contract/TaskRepositoryService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/icon/check-icon/check-icon.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/check-icon/check-icon.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/icon/trash-icon/trash-icon.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/trash-icon/trash-icon.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/icon/x-icon/x-icon.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/x-icon/x-icon.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/landing-page/landing-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/landing-page/landing-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/service/list.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/service/list.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_button.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_button.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_color.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_color.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_footer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_google.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_google.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_input.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_input.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_list.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_navbar.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +47,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="check-profile-id" />
+        <entry key="$PROJECT_DIR$" value="button-fix" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,7 +87,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/Tooli-Web/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
@@ -89,13 +105,15 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.Angular CLI Server (Tooli-Web)">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -173,6 +191,7 @@
       <workItem from="1601928760795" duration="2071000" />
       <workItem from="1601997306976" duration="4188000" />
       <workItem from="1602090770906" duration="1137000" />
+      <workItem from="1602096429695" duration="7235000" />
     </task>
     <task id="LOCAL-00001" summary="Redesigned login page">
       <created>1601574450059</created>
@@ -259,10 +278,10 @@
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state x="186" y="933" width="1609" height="324" key="#SQL_Resolution_Scopes/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601855923645" />
-    <state x="387" y="814" width="1030" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601914937708">
+    <state x="387" y="814" width="1030" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602096455947">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
-    <state x="387" y="814" width="1181" height="873" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601914937708" />
+    <state x="387" y="814" width="1181" height="873" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602096455947" />
     <state x="4529" y="195" width="1030" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601750012499" />
     <state x="1378" y="754" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601569555029" />
     <state x="1208" y="658" width="701" height="444" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601820503438">
@@ -270,11 +289,11 @@
     </state>
     <state x="1208" y="658" key="#com.intellij.fileTypes.FileTypeChooser/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601820503438" />
     <state x="4444" y="319" width="701" height="444" key="#com.intellij.fileTypes.FileTypeChooser/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601753601188" />
-    <state x="1442" y="405" width="468" height="699" key="#com.intellij.ide.util.MemberChooser" timestamp="1601820830125">
-      <screen x="0" y="28" width="3840" height="2132" />
+    <state x="4561" y="191" width="468" height="699" key="#com.intellij.ide.util.MemberChooser" timestamp="1602103151478">
+      <screen x="3840" y="0" width="1920" height="1080" />
     </state>
     <state x="1442" y="405" width="468" height="699" key="#com.intellij.ide.util.MemberChooser/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601820830125" />
-    <state x="4561" y="191" width="468" height="699" key="#com.intellij.ide.util.MemberChooser/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601756233622" />
+    <state x="4561" y="191" width="468" height="699" key="#com.intellij.ide.util.MemberChooser/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602103151478" />
     <state x="4187" y="411" width="474" height="261" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601759391344">
       <screen x="3840" y="0" width="1920" height="1080" />
     </state>
@@ -290,38 +309,38 @@
     <state x="1206" y="80" width="1982" height="1791" key="CommitChangelistDialog2/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602000729415" />
     <state x="1619" y="467" width="1569" height="1404" key="CommitChangelistDialog2/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759983290" />
     <state x="453" y="581" width="1004" height="1037" key="CommitChangelistDialog2/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601586235690" />
-    <state x="443" y="598" width="537" height="685" key="EnvironmentVariablesDialog" timestamp="1601762289751">
+    <state x="443" y="598" width="1091" height="685" key="EnvironmentVariablesDialog" timestamp="1602096454861">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
-    <state x="443" y="598" key="EnvironmentVariablesDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601762289751" />
+    <state x="443" y="598" width="1091" height="685" key="EnvironmentVariablesDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602096454861" />
     <state x="4845" y="194" width="537" height="685" key="EnvironmentVariablesDialog/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601750010200" />
     <state x="1041" y="802" width="424" height="587" key="FileChooserDialogImpl" timestamp="1601747056360">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state x="1041" y="802" width="424" height="587" key="FileChooserDialogImpl/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601747056360" />
-    <state width="1649" height="450" key="GridCell.Tab.0.bottom" timestamp="1602016226144">
-      <screen x="0" y="28" width="3840" height="2132" />
+    <state width="918" height="204" key="GridCell.Tab.0.bottom" timestamp="1602102542487">
+      <screen x="3840" y="0" width="1920" height="1080" />
     </state>
-    <state width="1649" height="450" key="GridCell.Tab.0.bottom/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602016226144" />
-    <state width="1860" height="185" key="GridCell.Tab.0.bottom/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
+    <state width="1848" height="450" key="GridCell.Tab.0.bottom/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602095203762" />
+    <state width="918" height="204" key="GridCell.Tab.0.bottom/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602102542487" />
     <state width="1276" height="766" key="GridCell.Tab.0.bottom/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
-    <state width="1649" height="450" key="GridCell.Tab.0.center" timestamp="1602016226144">
-      <screen x="0" y="28" width="3840" height="2132" />
+    <state width="918" height="204" key="GridCell.Tab.0.center" timestamp="1602102542487">
+      <screen x="3840" y="0" width="1920" height="1080" />
     </state>
-    <state width="1649" height="450" key="GridCell.Tab.0.center/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602016226144" />
-    <state width="1860" height="185" key="GridCell.Tab.0.center/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
+    <state width="1848" height="450" key="GridCell.Tab.0.center/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602095203762" />
+    <state width="918" height="204" key="GridCell.Tab.0.center/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602102542487" />
     <state width="1276" height="766" key="GridCell.Tab.0.center/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
-    <state width="1649" height="450" key="GridCell.Tab.0.left" timestamp="1602016226144">
-      <screen x="0" y="28" width="3840" height="2132" />
+    <state width="918" height="204" key="GridCell.Tab.0.left" timestamp="1602102542487">
+      <screen x="3840" y="0" width="1920" height="1080" />
     </state>
-    <state width="1649" height="450" key="GridCell.Tab.0.left/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602016226144" />
-    <state width="1860" height="185" key="GridCell.Tab.0.left/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
+    <state width="1848" height="450" key="GridCell.Tab.0.left/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602095203761" />
+    <state width="918" height="204" key="GridCell.Tab.0.left/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602102542487" />
     <state width="1276" height="766" key="GridCell.Tab.0.left/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
-    <state width="1649" height="450" key="GridCell.Tab.0.right" timestamp="1602016226144">
-      <screen x="0" y="28" width="3840" height="2132" />
+    <state width="918" height="204" key="GridCell.Tab.0.right" timestamp="1602102542487">
+      <screen x="3840" y="0" width="1920" height="1080" />
     </state>
-    <state width="1649" height="450" key="GridCell.Tab.0.right/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602016226144" />
-    <state width="1860" height="185" key="GridCell.Tab.0.right/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759888549" />
+    <state width="1848" height="450" key="GridCell.Tab.0.right/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602095203762" />
+    <state width="918" height="204" key="GridCell.Tab.0.right/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602102542487" />
     <state width="1276" height="766" key="GridCell.Tab.0.right/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601587123812" />
     <state width="1930" height="570" key="GridCell.Tab.1.bottom" timestamp="1601856534087">
       <screen x="0" y="28" width="3840" height="2132" />
@@ -391,19 +410,19 @@
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state x="374" y="674" width="585" height="842" key="RollbackChangesDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601762350820" />
-    <state x="4220" y="173" width="1125" height="907" key="SettingsEditor" timestamp="1601752599382">
+    <state x="4220" y="171" width="1125" height="909" key="SettingsEditor" timestamp="1602097877895">
       <screen x="3840" y="0" width="1920" height="1080" />
     </state>
     <state x="760" y="729" width="2239" height="909" key="SettingsEditor/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601749476799" />
-    <state x="4220" y="173" width="1125" height="907" key="SettingsEditor/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601752599382" />
+    <state x="4220" y="171" width="1125" height="909" key="SettingsEditor/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602097877895" />
     <state width="250" height="654" key="SqlResolveConfigurable" timestamp="1601855922975">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state width="250" height="654" key="SqlResolveConfigurable/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601855922975" />
-    <state x="556" y="810" width="1000" height="693" key="Vcs.Push.Dialog.v2" timestamp="1602000731077">
+    <state x="556" y="810" width="1000" height="693" key="Vcs.Push.Dialog.v2" timestamp="1602092236450">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
-    <state x="556" y="810" width="1000" height="693" key="Vcs.Push.Dialog.v2/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602000731077" />
+    <state x="556" y="810" width="1000" height="693" key="Vcs.Push.Dialog.v2/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602092236450" />
     <state x="4118" y="396" width="728" height="291" key="Vcs.Push.Dialog.v2/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759985389" />
     <state x="555" y="813" width="800" height="573" key="Vcs.Push.Dialog.v2/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601586237117" />
     <state width="671" height="1066" key="XDebugger.FullValuePopup" timestamp="1601764318970">
@@ -414,6 +433,15 @@
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state x="812" y="459" width="358" height="1272" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601855615498" />
+    <state x="3961" y="153" width="713" height="775" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1602102648536">
+      <screen x="3840" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3961" y="153" width="713" height="775" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602102648536" />
+    <state x="4178" y="486" width="369" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602101464764">
+      <screen x="3840" y="0" width="1920" height="1080" />
+    </state>
+    <state x="676" y="988" width="538" height="214" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602097816235" />
+    <state x="4178" y="486" width="369" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1602101464764" />
     <state x="815" y="682" width="1153" height="825" key="new project wizard" timestamp="1602016221977">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>

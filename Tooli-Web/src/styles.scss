@@ -1,9 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "styling";
 
-html {
-  font-family: sans-serif;
-  font-size: 3vw;
+body {
+  font-family: Roboto, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -15,12 +14,6 @@ html {
 .container {
   height: 100%;
 }
-//
-//@media screen and (min-width: 1930px){
-//  * {
-//    font-size: 1vh;
-//  }
-//}
 
 .mt-0 {
   margin-top: 0;
@@ -43,8 +36,20 @@ html {
   margin-left: 4px;
 }
 
+.ml-8{
+  margin-left: 8px;
+}
+
 .mr-4 {
   margin-right: 4px;
+}
+
+.mr-6 {
+  margin-right: 6px;
+}
+
+.mr-8 {
+  margin-right: 8px;
 }
 
 .m-4 {
