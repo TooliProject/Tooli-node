@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
-const sessionSecret = require('./credentials/session_secret.json');
+const randomstring = require('randomstring');
+const sessionSecret = randomstring.generate(32);
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -13,7 +14,7 @@ const ssoGoogleRouter = require('./routes/sso/google');
 
 const app = express();
 
-app.use(session({secret: sessionSecret.secret, saveUninitialized: false, resave: false}));
+app.use(session({secret: sessionSecret, saveUninitialized: false, resave: false}));
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
