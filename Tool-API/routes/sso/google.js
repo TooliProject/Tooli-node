@@ -1,4 +1,4 @@
-const googleCredentials = require('../../credentials/client_secret.json');
+const googleCredentials = JSON.parse(process.env.GOOGLE_CREDENTIALS || '{}');
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
