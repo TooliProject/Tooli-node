@@ -47,6 +47,8 @@ app
         res
             .status( 200 )
             .set( { 'content-type': 'text/html; charset=utf-8' } )
-            .sendfile('public/index.html' );
+            .sendFile('public/index.html', (err) => {
+                console.log(err);
+            });
     }));
 module.exports = app;
