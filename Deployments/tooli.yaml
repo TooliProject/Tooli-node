@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tooli-service
+  namespace: tooli
+spec:
+  selector:
+    app: tooli
+    project: tooli
+  ports:
+    - port: 3000
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tooli-deployment
+  namespace: tooli
+  labels:
+    app: tooli
+    project: tooli
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tooli
+      project: tooli
+  template:
+    metadata:
+      name: tooli
+      namespace: tooli
+      labels:
+        app: tooli
+        project: tooli
+    spec:
+      containers:
+        - name: tooli
+          image: meik99/tooli-api
+          ports:
+            - containerPort: 3000
+          env:
+          - name: PGHOST
+            value: postgres-service
+          - name: PGDATABASE
+            valueFrom:
+              secretKeyRef:
+                key: PGDATABASE
+                name: postgres
+          - name: PGPORT
+            valueFrom:
+              secretKeyRef:
+                key: PGPORT
+                name: postgres
+          - name: PGUSER
+            valueFrom:
+              secretKeyRef:
+                key: PGUSER
+                name: postgres
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: PGPASSWORD
+                name: postgres
+          - name: GOOGLE_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                key: CREDENTIALS
+                name: google
