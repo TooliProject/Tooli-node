@@ -2,11 +2,12 @@
   <configuration default="false" name="bin/www" type="NodeJSConfigurationType" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$/Tool-API">
     <envs>
       <env name="DEBUG" value="tool-api:*" />
-      <env name="PGUSER" value="postgres" />
+      <env name="PGUSER" value="tooli" />
       <env name="PGHOST" value="127.0.0.1" />
-      <env name="PGPASSWORD" value="nXj9I9N3Kz!lUdoL4udFbxR3Opv&amp;Mqx1" />
+      <env name="PGPASSWORD" value="njSUlazSoa89G1zdiPJdclwSTR0hJQif" />
       <env name="PGPORT" value="5432" />
       <env name="PGDATABASE" value="tooli" />
+      <env name="GOOGLE_CREDENTIALS" value="{&quot;web&quot;:{&quot;client_id&quot;:&quot;440481951731-m24gluvamkm1baaecfj0daorilpb6m11.apps.googleusercontent.com&quot;,&quot;project_id&quot;:&quot;main-cedar-290823&quot;,&quot;auth_uri&quot;:&quot;https://accounts.google.com/o/oauth2/auth&quot;,&quot;token_uri&quot;:&quot;https://oauth2.googleapis.com/token&quot;,&quot;auth_provider_x509_cert_url&quot;:&quot;https://www.googleapis.com/oauth2/v1/certs&quot;,&quot;client_secret&quot;:&quot;Pc0RnohQMOvUT4mFRqydJfiV&quot;,&quot;redirect_uris&quot;:[&quot;http://localhost/api/v1/sso/google&quot;,&quot;http://localhost&quot;,&quot;http://localhost:4200&quot;,&quot;http://localhost:3000&quot;],&quot;javascript_origins&quot;:[&quot;http://localhost&quot;,&quot;http://localhost:4200&quot;,&quot;http://localhost:3000&quot;]}}" />
     </envs>
     <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
       <browser url="http://localhost:3000/" />

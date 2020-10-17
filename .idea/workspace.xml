@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="f41de69c-86cf-4e92-9acd-a8b4c1421d59" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/entity/Task.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tooli-Web/src/app/service/contract/TaskRepositoryService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/icon/check-icon/check-icon.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/check-icon/check-icon.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/icon/trash-icon/trash-icon.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/trash-icon/trash-icon.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/icon/x-icon/x-icon.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/icon/x-icon/x-icon.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/landing-page/landing-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/landing-page/landing-page.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/list/list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/lists/lists.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/service/list.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/service/list.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/app/tasks/tasks.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/environments/environment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_button.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_button.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_color.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_color.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_footer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_input.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_input.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_list.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_list.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tooli-Web/src/styling/_navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Tooli-Web/src/styling/_navbar.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,6 +243,18 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Redesigned login page" />
     <MESSAGE value="Redesigned main page" />
@@ -419,12 +419,13 @@
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
     <state width="250" height="654" key="SqlResolveConfigurable/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1601855922975" />
-    <state x="556" y="810" width="1000" height="693" key="Vcs.Push.Dialog.v2" timestamp="1602092236450">
-      <screen x="0" y="28" width="3840" height="2132" />
+    <state x="556" y="777" width="1000" height="693" key="Vcs.Push.Dialog.v2" timestamp="1602931702541">
+      <screen x="0" y="46" width="3840" height="1992" />
     </state>
     <state x="556" y="810" width="1000" height="693" key="Vcs.Push.Dialog.v2/0.28.3840.2132/3840.0.1920.1080@0.28.3840.2132" timestamp="1602092236450" />
     <state x="4118" y="396" width="728" height="291" key="Vcs.Push.Dialog.v2/0.28.3840.2132/3840.0.1920.1080@3840.0.1920.1080" timestamp="1601759985389" />
     <state x="555" y="813" width="800" height="573" key="Vcs.Push.Dialog.v2/0.32.3840.2128/3840.0.1920.1080@0.32.3840.2128" timestamp="1601586237117" />
+    <state x="556" y="777" key="Vcs.Push.Dialog.v2/0.46.3840.1992/3840.0.1920.1080@0.46.3840.1992" timestamp="1602931702541" />
     <state width="671" height="1066" key="XDebugger.FullValuePopup" timestamp="1601764318970">
       <screen x="0" y="28" width="3840" height="2132" />
     </state>
