@@ -64,5 +64,13 @@ spec:
                 secretKeyRef:
                   key: PGPASSWORD
                   name: postgres
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: PGUSER
+                  name: postgres
             - name: POSTGRES_DB
-              value: tooli
+              valueFrom:
+                secretKeyRef:
+                  key: PGDATABASE
+                  name: postgres
