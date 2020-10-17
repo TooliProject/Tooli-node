@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: tooli
+spec:
+  selector:
+    app: postgres
+    project: tooli
+  ports:
+    - port: 5432
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: postgres-deployment
+    namespace: tooli
+    labels:
+      app: postgres
+      project: tooli
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+      project: tooli
+  template:
+    metadata:
+      name: postgres
+      namespace: tooli
+      labels:
+        app: postgres
+        project: tooli
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: PGDATABASE
+                  name: postgres
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  key: PGPORT
+                  name: postgres
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  key: PGUSER
+                  name: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PGPASSWORD
+                  name: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PGPASSWORD
+                  name: postgres
+            - name: POSTGRES_DB
+              value: tooli
