@@ -1,4 +1,71 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-script
+  namespace: tooli
+data:
+  initScript.sql: |-
+    DROP TABLE IF EXISTS ACCOUNT_TASK;
+    DROP TABLE IF EXISTS ACCOUNT_LIST;
+    DROP TABLE IF EXISTS ACCOUNT;
+    DROP TABLE IF EXISTS TASK;
+    DROP TABLE IF EXISTS LIST;
+
+    CREATE TABLE LIST (
+    	ID SERIAL PRIMARY KEY,
+    	NAME TEXT,
+    	CREATED TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+
+    INSERT INTO LIST(NAME) VALUES ('my todo list');
+    INSERT INTO LIST(NAME) VALUES ('Chores');
+    INSERT INTO LIST(NAME) VALUES ('To Delete');
+
+    CREATE TABLE TASK (
+    	ID SERIAL PRIMARY KEY,
+    	DESCRIPTION TEXT NOT NULL,
+    	CREATED TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    	DONE BOOL DEFAULT FALSE,
+    	LIST_ID INT NOT NULL,
+    	CONSTRAINT TASK_LIST FOREIGN KEY(LIST_ID) REFERENCES LIST(ID) ON DELETE CASCADE
+    );
+
+    INSERT INTO TASK(DESCRIPTION, LIST_ID) VALUES('Doing the dishes', 2);
+    INSERT INTO TASK(DESCRIPTION, LIST_ID) VALUES('to delete', 3);
+    DELETE FROM LIST WHERE ID=3;
+
+    CREATE TABLE ACCOUNT(
+    	PROFILE_ID TEXT PRIMARY KEY,
+    	PROVIDER TEXT NOT NULL DEFAULT 'GOOGLE'
+    );
+
+    INSERT INTO ACCOUNT(PROFILE_ID) VALUES('michaelrynkiewicz3@gmail.com');
+
+    CREATE TABLE ACCOUNT_LIST(
+    	ACCOUNT_ID TEXT,
+    	LIST_ID INT,
+    	CONSTRAINT LIST_ACCOUNT FOREIGN KEY(LIST_ID) REFERENCES LIST(ID) ON DELETE CASCADE,
+    	CONSTRAINT ACCOUNT_LIST FOREIGN KEY(ACCOUNT_ID) REFERENCES ACCOUNT(PROFILE_ID) ON DELETE CASCADE
+    );
+
+    INSERT INTO ACCOUNT_LIST(ACCOUNT_ID, LIST_ID) VALUES('michaelrynkiewicz3@gmail.com', 2);
+    INSERT INTO ACCOUNT_LIST(ACCOUNT_ID, LIST_ID) VALUES('michaelrynkiewicz3@gmail.com', 1);
+
+    CREATE TABLE ACCOUNT_TASK(
+    	ACCOUNT_ID TEXT,
+    	TASK_ID INT,
+    	CONSTRAINT TASK_ACCOUNT FOREIGN KEY(TASK_ID) REFERENCES TASK(ID) ON DELETE CASCADE,
+    	CONSTRAINT ACCOUNT_TASK FOREIGN KEY(ACCOUNT_ID) REFERENCES ACCOUNT(PROFILE_ID) ON DELETE CASCADE
+    );
+
+    INSERT INTO ACCOUNT_TASK(ACCOUNT_ID, TASK_ID) VALUES('michaelrynkiewicz3@gmail.com', 1);
+
+    SELECT L.name, A.profile_id
+    	FROM LIST L, ACCOUNT A, ACCOUNT_LIST AL
+    	WHERE L.ID = AL.LIST_ID AND A.PROFILE_ID = AL.ACCOUNT_ID;
+
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: postgres-service
@@ -33,9 +100,14 @@ spec:
         app: postgres
         project: tooli
     spec:
+      volumes:
+        - name: init-script
+          configMap:
+            name: postgres-init-script
       containers:
         - name: postgres
           image: postgres:latest
+#          command: [ "bin/sh", "-c", "psql -a -f /initScript.sql" ]
           ports:
             - containerPort: 5432
           env:
@@ -74,3 +146,6 @@ spec:
                 secretKeyRef:
                   key: PGDATABASE
                   name: postgres
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: init-script
