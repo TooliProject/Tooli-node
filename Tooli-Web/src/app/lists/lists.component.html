@@ -1,15 +1,35 @@
-<ul>
-  <app-list *ngFor="let list of lists"
-            [list]="list"
-            (listChange)="onListChange($event)"
-            (listDelete)="onListDelete($event)"
-  ></app-list>
-</ul>
-<div class="form">
-  <input type="text" [(ngModel)]="listName" placeholder="My New List">
-  <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
-</div>
-<div class="panel-error" *ngIf="error">
-  {{error}}
+<div class="container-fluid mt-32">
+  <div class="row" *ngIf="error">
+    <div class="panel-error">
+      {{error}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
+      <ul>
+        <app-list *ngFor="let list of lists"
+                  [list]="list"
+                  (listChange)="onListChange($event)"
+                  (listDelete)="onListDelete($event)"
+                  (click)="onListSelect(list)"
+        ></app-list>
+      </ul>
+      <div class="form">
+        <div class="row mt-8">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <input type="text" [(ngModel)]="listName" placeholder="My New List">
+          </div>
+        </div>
+        <div class="row mt-8 mb-8">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-7 col-xs-12">
+      <app-tasks [list]="selectedList"></app-tasks>
+    </div>
+  </div>
 </div>
 <app-tasks></app-tasks>

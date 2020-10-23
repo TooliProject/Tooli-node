@@ -12,6 +12,7 @@ export class ListsComponent implements OnInit {
   listName: string = '';
   lists: List[] = [];
   error: any = null;
+  selectedList: List = null;
 
   constructor(
     private _listService: ListService
@@ -41,6 +42,10 @@ export class ListsComponent implements OnInit {
       .then(lists => {
         this.lists = lists;
         this.error = null;
+
+        if (this.selectedList === null) {
+          this.selectedList = this.lists[0];
+        }
       })
       .catch(err => {
         this.error = err;
@@ -70,5 +75,9 @@ export class ListsComponent implements OnInit {
         this.error = err;
         console.log(this.error);
       });
+  }
+
+  onListSelect(list: List) {
+    this.selectedList = list;
   }
 }

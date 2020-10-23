@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.get('/:listId', (req, res) => {
     if (req.params.listId) {
-
         new TaskRepository(req.session.email).findByListId(req.params.listId, (err, tasks) => {
             if (err) {
                 console.log(err);
@@ -16,7 +15,6 @@ router.get('/:listId', (req, res) => {
                 res.send(tasks);
             }
         });
-
     } else {
         new ErrorHandler().sendNoParameterError(res, 'listId');
     }

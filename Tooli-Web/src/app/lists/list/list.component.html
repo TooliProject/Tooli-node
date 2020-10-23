@@ -1,32 +1,29 @@
 <li *ngIf="list && !isEditing">
-  {{list.id}}
-  -
-  <span (dblclick)="onListDoubleClick()">
-    {{list.name}}
-  </span>
-  -
-  <span *ngIf="list.created">
-    {{list.created.toDateString()}}
-  </span>
+  <div class="row">
+    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+      <span (dblclick)="onListDoubleClick()">
+        {{list.name}}
+      </span>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" *ngIf="!isDeleting">
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" *ngIf="!isDeleting">
+      <app-trash-icon (click)="delete()" ></app-trash-icon>
 
-  <app-trash-icon (click)="delete()" *ngIf="!isDeleting"></app-trash-icon>
-
-  <span *ngIf="isDeleting">
-    <app-check-icon (click)="confirmDelete()"></app-check-icon>
-    <app-x-icon (click)="cancelDelete()"></app-x-icon>
-  </span>
+    </div>
+    <div *ngIf="isDeleting"  class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >
+        <app-check-icon (click)="confirmDelete()"></app-check-icon>
+    </div>
+    <div *ngIf="isDeleting"  class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >
+        <app-x-icon (click)="cancelDelete()"></app-x-icon>
+    </div>
+  </div>
 </li>
 <li *ngIf="list && isEditing">
-  {{list.id}}
-  -
   <input
     type="text"
     [(ngModel)]="listName"
     placeholder="My List"
     (keydown)="onListNameKeyDown($event)"
   >
-  -
-  <span *ngIf="list.created">
-    {{list.created.toDateString()}}
-  </span>
 </li>

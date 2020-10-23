@@ -9,23 +9,23 @@ export class ListService implements ListRepositoryService{
 
   constructor(
     @Inject('ListRepositoryService')
-    private listRepositoryService: ListRepositoryService
+    private _listRepositoryService: ListRepositoryService
   ) { }
 
   findAll(): Promise<List[]> {
-    return this.listRepositoryService.findAll();
+    return this._listRepositoryService.findAll();
   }
 
   insert(listName: string): Promise<void> {
-    return this.listRepositoryService.insert(listName);
+    return this._listRepositoryService.insert(listName);
   }
 
   update(changedList: List): Promise<void> {
-    return this.listRepositoryService.update(changedList);
+    return this._listRepositoryService.update(changedList);
   }
 
   delete(deletedList: List): Promise<void> {
-    return this.listRepositoryService.delete(deletedList);
+    return this._listRepositoryService.delete(deletedList);
   }
 
 

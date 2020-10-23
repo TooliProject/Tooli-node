@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
-const sessionSecret = require('./credentials/session_secret.json');
+const randomstring = require('randomstring');
+const sessionSecret = randomstring.generate(32);
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -13,7 +14,7 @@ const ssoGoogleRouter = require('./routes/sso/google');
 
 const app = express();
 
-app.use(session({secret: sessionSecret.secret, saveUninitialized: false, resave: false}));
+app.use(session({secret: sessionSecret, saveUninitialized: false, resave: false}));
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -39,13 +40,27 @@ app.use('/api/v1/list', listRouter);
 app.use('/api/v1/task', taskRouter);
 app.use('/api/v1/sso/google', ssoGoogleRouter);
 
-app
-    .use(express.static(path.join(__dirname, 'public')))
-    .all('/*', ((req, res) => {
-        console.log('All');
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.all('/*', ((req, res) => {
+        let file = req.path.substring(
+            '/apps/tooli/'.length
+        );
+
+        if (file === '') {
+            file = 'index.html';
+        }
+
+        let contentType =
+            file.endsWith(".html") ? "text/html" :
+            file.endsWith(".js") ? "text/javascript" :
+                "text/css";
+
         res
             .status( 200 )
-            .set( { 'content-type': 'text/html; charset=utf-8' } )
-            .sendfile('public/index.html' );
+            .set( { 'content-type': `${contentType}; charset=utf-8` } )
+            .sendFile(path.join(__dirname, './public', file), (err) => {
+                console.log(err);
+            });
     }));
 module.exports = app;
