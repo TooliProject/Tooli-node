@@ -6,9 +6,10 @@
   </div>
   <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
-      <ul>
+      <ul class="list-list">
         <app-list *ngFor="let list of lists"
                   [list]="list"
+                  [selected]="selectedList.id === list.id"
                   (listChange)="onListChange($event)"
                   (listDelete)="onListDelete($event)"
                   (click)="onListSelect(list)"
@@ -17,7 +18,11 @@
       <div class="form">
         <div class="row mt-8">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <input type="text" [(ngModel)]="listName" placeholder="My New List">
+
+            <label for="list-name" class="mb-8">Add List</label>
+            <input type="text" [(ngModel)]="listName" placeholder="My New List" name="list-name" id="list-name">
+
+
           </div>
         </div>
         <div class="row mt-8 mb-8">

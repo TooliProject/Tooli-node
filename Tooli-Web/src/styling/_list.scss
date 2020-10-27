@@ -6,13 +6,15 @@ ul {
 
 li {
   margin: 4px 0 4px 0;
-  padding: 12px 0px 4px 4px;
+  padding: 16px 8px 16px 8px;
 
-  border-bottom: 1px solid $color-primary;
+}
+.active {
+  background-color: $color-super-light-gray;
 }
 
 li:hover {
-  box-shadow: 0 2px 4px -1px $color-primary;
+  background-color: $color-super-light-gray;
 }
 
 li:active {
@@ -24,4 +26,8 @@ li:active {
   color: gray;
   border-bottom: 1px solid gray;
   //box-shadow: inset 0 0px 2px -1px $color-primary;
+}
+
+.list-list {
+  border-bottom: 1px solid $color-super-light-gray;
 }

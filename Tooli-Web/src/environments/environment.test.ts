@@ -9,5 +9,6 @@ export const environment = {
   production: true,
   api_url: 'http://localhost:3000/api/v1/',
   listRepositoryServiceType: HttpListRepositoryService,
-  loginUrl: '/api/v1/sso/google/login?state=/lists'
+  loginUrl: '/api/v1/sso/google/login?state=/lists',
+  path: '/'
 };
