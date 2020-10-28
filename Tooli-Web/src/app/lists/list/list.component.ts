@@ -13,6 +13,9 @@ export class ListComponent implements OnInit {
   listName = '';
   isDeleting = false;
 
+  @Input()
+  selected = false;
+
   @Output()
   listChange = new EventEmitter<List>();
   @Output()

@@ -7,5 +7,6 @@ export const environment = {
   api_url: 'https://server.rynkbit.com/apps/tooli/api/v1/',
   listRepositoryServiceType: HttpListRepositoryService,
   taskRepositoryServiceType: MockTaskRepositoryService,
-  loginUrl: '/apps/tooli/api/v1/sso/google/login?state=/lists'
+  loginUrl: '/apps/tooli/api/v1/sso/google/login?state=/lists',
+  path: '/apps/tooli/'
 };

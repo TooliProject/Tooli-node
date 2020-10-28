@@ -10,7 +10,8 @@ export const environment = {
   api_url: 'http://localhost:3000/api/v1/',
   listRepositoryServiceType: MockListRepositoryService,
   taskRepositoryServiceType: MockTaskRepositoryService,
-  loginUrl: 'lists'
+  loginUrl: 'lists',
+  path: '/'
 };
 
 /*
